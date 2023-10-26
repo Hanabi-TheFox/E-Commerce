@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="entity.Client">
+        <table name="client" schema="e_commerce" catalog=""/>
+        <attributes>
+            <id name="idClient">
+                <column name="id_client" precision="-1"/>
+            </id>
+            <basic name="idCommande">
+                <column name="id_commande" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="compteBancaireNum">
+                <column name="compteBancaireNum" length="19"/>
+            </basic>
+            <basic name="compteBancaireSolde">
+                <column name="compteBancaireSolde" nullable="false" precision="2"/>
+            </basic>
+            <basic name="droits">
+                <column name="droits" length="5"/>
+            </basic>
+            <many-to-one name="commandeByIdCommande" optional="true" target-entity="entity.Commande">
+                <join-column name="id_commande" nullable="false" referenced-column-name="id_commande"/>
+            </many-to-one>
+            <one-to-one name="utilisateurByIdClient" optional="true" target-entity="entity.Utilisateur">
+                <join-column name="id_client" referenced-column-name="id_utilisateur"/>
+            </one-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

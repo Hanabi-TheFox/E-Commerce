@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="entity.Commande">
+        <table name="commande" schema="e_commerce" catalog=""/>
+        <attributes>
+            <id name="idCommande">
+                <column name="id_commande" precision="-1"/>
+            </id>
+            <basic name="prix">
+                <column name="prix" precision="2"/>
+            </basic>
+            <basic name="status">
+                <column name="status" length="50"/>
+            </basic>
+            <one-to-many name="clientsByIdCommande" mapped-by="commandeByIdCommande" target-entity="entity.Client"/>
+            <one-to-many name="commandeProduitsByIdCommande" mapped-by="commandeByIdCommande"
+                         target-entity="entity.CommandeProduit"/>
+        </attributes>
+    </entity>
+</entity-mappings>
