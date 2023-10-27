@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.CommandeProduit" table="commande_produit" schema="e_commerce">
+        <id name="idCommandeProd">
+            <column name="id_commandeProd" sql-type="int"/>
+        </id>
+        <property name="idCommande">
+            <column name="id_commande" sql-type="int" not-null="true"/>
+        </property>
+        <property name="idProduit">
+            <column name="id_produit" sql-type="int" not-null="true"/>
+        </property>
+        <property name="quantite">
+            <column name="quantite" sql-type="int" not-null="true"/>
+        </property>
+        <many-to-one name="produitByIdProduit" class="entity.Produit">
+            <column name="id_produit" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

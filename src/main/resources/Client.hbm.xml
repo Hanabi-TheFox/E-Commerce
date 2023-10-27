@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="entity.Client" table="client" schema="e_commerce">
+        <id name="idClient">
+            <column name="id_client" sql-type="int"/>
+        </id>
+        <property name="idCommande">
+            <column name="id_commande" sql-type="int" not-null="true"/>
+        </property>
+        <property name="compteBancaireNum">
+            <column name="compteBancaireNum" sql-type="varchar(19)" length="19"/>
+        </property>
+        <property name="compteBancaireSolde">
+            <column name="compteBancaireSolde" sql-type="decimal(10,2)" precision="10" scale="2" not-null="true"/>
+        </property>
+        <property name="droits">
+            <column name="droits" sql-type="varchar(5)" length="5"/>
+        </property>
+        <many-to-one name="commandeByIdCommande" class="entity.Commande">
+            <column name="id_commande" not-null="true"/>
+        </many-to-one>
+        <one-to-one name="utilisateurByIdClient" class="entity.Utilisateur"/>
+    </class>
+</hibernate-mapping>
