@@ -25,3 +25,5 @@
 <p><a href="ServletDeDeconnexion">Déconnexion</a></p> <!-- Lien pour se déconnecter -->
 </body>
 </html>
+<!-- fin du jsp -->
+<!-- fin du jsp -->
