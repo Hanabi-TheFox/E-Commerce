@@ -26,4 +26,3 @@
 </body>
 </html>
 <!-- fin du jsp -->
-<!-- fin du jsp -->
