@@ -11,6 +11,8 @@ import java.io.IOException;
 public class ServletDInscription extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO : Traitement pour la méthode GET
+        request.getRequestDispatcher("/WEB-INF/pageInscription.jsp").forward(request, response);
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

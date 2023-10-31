@@ -12,6 +12,7 @@ public class ServletDeConnexion extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
+        request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

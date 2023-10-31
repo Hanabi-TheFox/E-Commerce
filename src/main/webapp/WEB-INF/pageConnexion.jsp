@@ -21,6 +21,6 @@
     <br>
     <input type="submit" value="Se connecter">
 </form>
-<p>Pas encore de compte ? <a href="pageInscription.jsp">Inscrivez-vous ici</a></p>
+<p>Pas encore de compte ? <a href="ServletDInscription">Inscrivez-vous ici</a></p>
 </body>
 </html>
