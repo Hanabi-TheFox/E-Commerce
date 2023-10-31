@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS E_commerce;
+USE e_commerce;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -65,22 +66,22 @@ INSERT IGNORE INTO Utilisateur (nom, prenom, mail, motDePasse, typeDeCompte) VAL
 	('Pinto', 'Ethan', 'Hanabi@gmail.com', '1234', 'Client'),
 	('NASCIMENTO ARDILES', 'Renato', 'RDNATOS@gmail.com', '1234', 'Client');
 
-INSERT IGNORE INTO Produit (nom, prix, stock) VALUES
-	('Table', 79.99, 230),
-	('Chaise', 24.99, 400),
-	('ventilateur', 81.63, 40),
-	('tasse', 9.99, 53),
-	('ordinateur', 1199.99, 10),
-	('ballon de foot', 14.99, 60),
-	('Lampe de bureau', 30, 75);
+INSERT IGNORE INTO Produit (nom, prix, description, stock) VALUES
+	('Table', 79.99, '', 230),
+	('Chaise', 24.99, '', 400),
+	('ventilateur', 81.63, '', 40),
+	('tasse', 9.99, '', 53),
+	('ordinateur', 1199.99, '', 10),
+	('ballon de foot', 14.99, '', 60),
+	('Lampe de bureau', 30, '', 75);
 
 INSERT IGNORE INTO Client (id_client, compteBancaireNum, compteBancaireSolde, droits, points)
-	SELECT id_utilisateur, "1234 5678 9123 4567", 0, "000", 0
+	SELECT id_utilisateur, '1234 5678 9123 4567', 0, '00000', 0
 	FROM Utilisateur
 	WHERE TypeDeCompte = 'Client';
     
 INSERT IGNORE INTO Moderateur (id_moderateur, droits)
-	SELECT id_utilisateur, "101"
+	SELECT id_utilisateur, '101'
 	FROM Utilisateur
 	WHERE TypeDeCompte = 'Moderateur';
 
