@@ -52,5 +52,16 @@ H:/Desktop/RENATO/CY Tech/4eme année/Semestre 1/Java JEE/E-Commerce/src/main/re
       <jdbc-url>jdbc:mysql://localhost:3306/e_commerce</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="hibernate.cfg.xml/Hibernate" uuid="92624049-bdb8-4604-ab16-5721a67d773a">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+H:/Desktop/RENATO/CY Tech/4eme année/Semestre 1/Java JEE/E-Commerce/src/main/resources/hibernate.cfg.xml</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:file:./src/main/java/ecommerce/ecommerce/model/data_base</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
