@@ -28,6 +28,33 @@ public class Client {
     @ManyToOne
     @JoinColumn(name = "id_commande", referencedColumnName = "id_commande")
     private Commande commandeByIdCommande;
+    private int points;
+    private Commande commande;
+    private Utilisateur utilisateur;
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public Commande getCommande() {
+        return commande;
+    }
+
+    public void setCommande(Commande commande) {
+        this.commande = commande;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
 
     public int getIdClient() {
         return idClient;

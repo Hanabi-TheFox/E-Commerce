@@ -24,6 +24,24 @@ public class CommandeProduit {
     @ManyToOne
     @JoinColumn(name = "id_produit", referencedColumnName = "id_produit")
     private Produit produitByIdProduit;
+    private Commande commande;
+    private Produit produit;
+
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
+
+    public Commande getCommande() {
+        return commande;
+    }
+
+    public void setCommande(Commande commande) {
+        this.commande = commande;
+    }
 
     public int getIdCommandeProd() {
         return idCommandeProd;

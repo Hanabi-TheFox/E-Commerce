@@ -22,6 +22,15 @@ public class Produit {
     private Integer stock;
     @OneToMany(mappedBy = "produitByIdProduit")
     private Collection<CommandeProduit> commandeProduitsByIdProduit;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public int getIdProduit() {
         return idProduit;
