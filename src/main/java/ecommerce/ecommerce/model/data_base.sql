@@ -67,13 +67,13 @@ INSERT IGNORE INTO Utilisateur (nom, prenom, mail, motDePasse, typeDeCompte) VAL
 	('NASCIMENTO ARDILES', 'Renato', 'RDNATOS@gmail.com', '1234', 'Client');
 
 INSERT IGNORE INTO Produit (nom, prix, description, stock) VALUES
-	('Table', 79.99, '', 230),
-	('Chaise', 24.99, '', 400),
-	('ventilateur', 81.63, '', 40),
-	('tasse', 9.99, '', 53),
-	('ordinateur', 1199.99, '', 10),
-	('ballon de foot', 14.99, '', 60),
-	('Lampe de bureau', 30, '', 75);
+	('Table', 79.99, 'test', 230),
+	('Chaise', 24.99, 'test', 400),
+	('ventilateur', 81.63, 'test', 40),
+	('tasse', 9.99, 'test', 53),
+	('ordinateur', 1199.99, 'test', 10),
+	('ballon de foot', 14.99, 'test', 60),
+	('Lampe de bureau', 30, 'test', 75);
 
 INSERT IGNORE INTO Client (id_client, compteBancaireNum, compteBancaireSolde, droits, points)
 	SELECT id_utilisateur, '1234 5678 9123 4567', 0, '00000', 0
