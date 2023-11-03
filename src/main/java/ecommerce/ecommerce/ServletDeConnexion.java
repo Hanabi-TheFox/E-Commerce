@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,14 +23,16 @@ public class ServletDeConnexion extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérer les attributs "mail" et "motDePasse" passés en paramètres
         String email = request.getParameter("email");
-        System.out.print("ADRESSE MAIL RECU EN REQUEST : " + email);
         String motDePasse = request.getParameter("motDePasse");
 
         // Vérifier si l'utilisateur existe dans la base de données (vous devez implémenter cette partie)
         boolean utilisateurExiste = verifierUtilisateurEnBaseDeDonnees(email, motDePasse);
         if (utilisateurExiste) {
             // L'utilisateur existe, rediriger vers la page de profil
-            System.out.println("Utilisateur existe? " + utilisateurExiste);
+            HttpSession session = request.getSession(); // Créer ou récupérer une session
+            //Sauvegarde utilisateur dans une session
+            session.setAttribute("utilisateur", UtilisateurDAO.getUtilisateurByEmail("email")); // Stocker l'objet Utilisateur dans la session
+            System.out.println("UTILISATEUR DANS LA SESSION : " + UtilisateurDAO.getUtilisateurByEmail("email"));
             response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur

@@ -59,6 +59,20 @@ public class UtilisateurDAO
         }
     }
 
+    public static Utilisateur getUtilisateurByEmail(String email) {
+        List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
+        for (Utilisateur utilisateur : listeUtilisateurs) {
+            if (utilisateur.getMail() != null && utilisateur.getMail().equals(email)) {
+                // L'utilisateur existe et le mot de passe est correct
+                return utilisateur;
+            }
+        }
+            return null; //l'utilisateur n'a pas été trouvée par son mail
+
+    }
+
+
+
 
     /*public static List<VUtilisateurs> getListViewUtilisateurs()
     {
