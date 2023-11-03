@@ -1,30 +1,14 @@
 package entity;
 
-import jakarta.persistence.*;
+import java.util.Objects;
 
-@Entity
 public class Utilisateur {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_utilisateur", nullable = false)
     private int idUtilisateur;
-    @Basic
-    @Column(name = "nom", nullable = false, length = 20)
     private String nom;
-    @Basic
-    @Column(name = "prenom", nullable = false, length = 20)
     private String prenom;
-    @Basic
-    @Column(name = "mail", nullable = false, length = 30)
     private String mail;
-    @Basic
-    @Column(name = "motDePasse", nullable = false, length = 20)
     private String motDePasse;
-    @Basic
-    @Column(name = "TypeDeCompte", nullable = false)
     private Object typeDeCompte;
-    @OneToOne(mappedBy = "utilisateurByIdClient")
-    private Client clientByIdUtilisateur;
 
     public int getIdUtilisateur() {
         return idUtilisateur;
@@ -74,11 +58,29 @@ public class Utilisateur {
         this.typeDeCompte = typeDeCompte;
     }
 
-    public Client getClientByIdUtilisateur() {
-        return clientByIdUtilisateur;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Utilisateur that = (Utilisateur) o;
+
+        if (idUtilisateur != that.idUtilisateur) return false;
+        if (!Objects.equals(nom, that.nom)) return false;
+        if (!Objects.equals(prenom, that.prenom)) return false;
+        if (!Objects.equals(mail, that.mail)) return false;
+        if (!Objects.equals(motDePasse, that.motDePasse)) return false;
+        return Objects.equals(typeDeCompte, that.typeDeCompte);
     }
 
-    public void setClientByIdUtilisateur(Client clientByIdUtilisateur) {
-        this.clientByIdUtilisateur = clientByIdUtilisateur;
+    @Override
+    public int hashCode() {
+        int result = idUtilisateur;
+        result = 31 * result + (nom != null ? nom.hashCode() : 0);
+        result = 31 * result + (prenom != null ? prenom.hashCode() : 0);
+        result = 31 * result + (mail != null ? mail.hashCode() : 0);
+        result = 31 * result + (motDePasse != null ? motDePasse.hashCode() : 0);
+        result = 31 * result + (typeDeCompte != null ? typeDeCompte.hashCode() : 0);
+        return result;
     }
 }

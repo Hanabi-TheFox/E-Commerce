@@ -1,37 +1,27 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE hibernate-mapping PUBLIC
-        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="entity.Client" table="Client" schema="E_commerce">
-        <id name="idClient" type="int">
-            <column name="id_client"/>
-            <generator class="identity"/>
+    <class name="entity.Client" table="client" schema="e_commerce">
+        <id name="idClient">
+            <column name="id_client" sql-type="int"/>
         </id>
-
-        <property name="compteBancaireNum" type="string">
-            <column name="compteBancaireNum" length="19" not-null="true"/>
+        <property name="idCommande">
+            <column name="id_commande" sql-type="int" not-null="true"/>
         </property>
-
-        <property name="compteBancaireSolde" type="big_decimal">
-            <column name="compteBancaireSolde" precision="10" scale="2"/>
+        <property name="compteBancaireNum">
+            <column name="compteBancaireNum" sql-type="varchar(19)" length="19"/>
         </property>
-
-        <property name="droits" type="string">
-            <column name="droits" length="5" not-null="true"/>
+        <property name="compteBancaireSolde">
+            <column name="compteBancaireSolde" sql-type="decimal(10,2)" precision="10" scale="2" not-null="true"/>
         </property>
-
-        <property name="points" type="int">
-            <column name="points"/>
+        <property name="droits">
+            <column name="droits" sql-type="varchar(5)" length="5"/>
         </property>
-
-        <many-to-one name="commande" class="entity.Commande">
-            <column name="id_commande"/>
-        </many-to-one>
-
-        <one-to-one name="utilisateur" class="entity.Utilisateur">
-            <column name="id_client"/>
-        </one-to-one>
+        <property name="points">
+            <column name="points" sql-type="int" not-null="true"/>
+        </property>
     </class>
 </hibernate-mapping>

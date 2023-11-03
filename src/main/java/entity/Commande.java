@@ -1,26 +1,12 @@
 package entity;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.Objects;
 
-@Entity
 public class Commande {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_commande", nullable = false)
     private int idCommande;
-    @Basic
-    @Column(name = "prix", nullable = false, precision = 2)
     private BigDecimal prix;
-    @Basic
-    @Column(name = "status", nullable = false, length = 50)
     private String status;
-    @OneToMany(mappedBy = "commandeByIdCommande")
-    private Collection<Client> clientsByIdCommande;
-    @OneToMany(mappedBy = "commandeByIdCommande")
-    private Collection<CommandeProduit> commandeProduitsByIdCommande;
 
     public int getIdCommande() {
         return idCommande;
@@ -46,19 +32,23 @@ public class Commande {
         this.status = status;
     }
 
-    public Collection<Client> getClientsByIdCommande() {
-        return clientsByIdCommande;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Commande that = (Commande) o;
+
+        if (idCommande != that.idCommande) return false;
+        if (!Objects.equals(prix, that.prix)) return false;
+        return Objects.equals(status, that.status);
     }
 
-    public void setClientsByIdCommande(Collection<Client> clientsByIdCommande) {
-        this.clientsByIdCommande = clientsByIdCommande;
-    }
-
-    public Collection<CommandeProduit> getCommandeProduitsByIdCommande() {
-        return commandeProduitsByIdCommande;
-    }
-
-    public void setCommandeProduitsByIdCommande(Collection<CommandeProduit> commandeProduitsByIdCommande) {
-        this.commandeProduitsByIdCommande = commandeProduitsByIdCommande;
+    @Override
+    public int hashCode() {
+        int result = idCommande;
+        result = 31 * result + (prix != null ? prix.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
     }
 }

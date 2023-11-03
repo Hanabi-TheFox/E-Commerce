@@ -1,60 +1,15 @@
 package entity;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@Entity
 public class Client {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_client", nullable = false)
     private int idClient;
-    @Basic
-    @Column(name = "id_commande", nullable = true)
     private Integer idCommande;
-    @Basic
-    @Column(name = "compteBancaireNum", nullable = false, length = 19)
     private String compteBancaireNum;
-    @Basic
-    @Column(name = "compteBancaireSolde", nullable = true, precision = 2)
     private BigDecimal compteBancaireSolde;
-    @Basic
-    @Column(name = "droits", nullable = false, length = 5)
     private String droits;
-    @OneToOne
-    @JoinColumn(name = "id_client", referencedColumnName = "id_utilisateur", nullable = false)
-    private Utilisateur utilisateurByIdClient;
-    @ManyToOne
-    @JoinColumn(name = "id_commande", referencedColumnName = "id_commande")
-    private Commande commandeByIdCommande;
-    private int points;
-    private Commande commande;
-    private Utilisateur utilisateur;
-
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
-    }
-
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
-
-    public Commande getCommande() {
-        return commande;
-    }
-
-    public void setCommande(Commande commande) {
-        this.commande = commande;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
+    private Integer points;
 
     public int getIdClient() {
         return idClient;
@@ -96,19 +51,37 @@ public class Client {
         this.droits = droits;
     }
 
-    public Utilisateur getUtilisateurByIdClient() {
-        return utilisateurByIdClient;
+    public Integer getPoints() {
+        return points;
     }
 
-    public void setUtilisateurByIdClient(Utilisateur utilisateurByIdClient) {
-        this.utilisateurByIdClient = utilisateurByIdClient;
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
-    public Commande getCommandeByIdCommande() {
-        return commandeByIdCommande;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Client that = (Client) o;
+
+        if (idClient != that.idClient) return false;
+        if (!Objects.equals(idCommande, that.idCommande)) return false;
+        if (!Objects.equals(compteBancaireNum, that.compteBancaireNum)) return false;
+        if (!Objects.equals(compteBancaireSolde, that.compteBancaireSolde)) return false;
+        if (!Objects.equals(droits, that.droits)) return false;
+        return Objects.equals(points, that.points);
     }
 
-    public void setCommandeByIdCommande(Commande commandeByIdCommande) {
-        this.commandeByIdCommande = commandeByIdCommande;
+    @Override
+    public int hashCode() {
+        int result = idClient;
+        result = 31 * result + (idCommande != null ? idCommande.hashCode() : 0);
+        result = 31 * result + (compteBancaireNum != null ? compteBancaireNum.hashCode() : 0);
+        result = 31 * result + (compteBancaireSolde != null ? compteBancaireSolde.hashCode() : 0);
+        result = 31 * result + (droits != null ? droits.hashCode() : 0);
+        result = 31 * result + (points != null ? points.hashCode() : 0);
+        return result;
     }
 }

@@ -1,47 +1,12 @@
 package entity;
 
-import jakarta.persistence.*;
+import java.util.Objects;
 
-@Entity
-@Table(name = "commande_produit", schema = "e_commerce", catalog = "")
 public class CommandeProduit {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_commandeProd", nullable = false)
     private int idCommandeProd;
-    @Basic
-    @Column(name = "id_commande", nullable = true)
     private Integer idCommande;
-    @Basic
-    @Column(name = "id_produit", nullable = true)
     private Integer idProduit;
-    @Basic
-    @Column(name = "quantite", nullable = true)
     private Integer quantite;
-    @ManyToOne
-    @JoinColumn(name = "id_commande", referencedColumnName = "id_commande")
-    private Commande commandeByIdCommande;
-    @ManyToOne
-    @JoinColumn(name = "id_produit", referencedColumnName = "id_produit")
-    private Produit produitByIdProduit;
-    private Commande commande;
-    private Produit produit;
-
-    public Produit getProduit() {
-        return produit;
-    }
-
-    public void setProduit(Produit produit) {
-        this.produit = produit;
-    }
-
-    public Commande getCommande() {
-        return commande;
-    }
-
-    public void setCommande(Commande commande) {
-        this.commande = commande;
-    }
 
     public int getIdCommandeProd() {
         return idCommandeProd;
@@ -75,19 +40,25 @@ public class CommandeProduit {
         this.quantite = quantite;
     }
 
-    public Commande getCommandeByIdCommande() {
-        return commandeByIdCommande;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CommandeProduit that = (CommandeProduit) o;
+
+        if (idCommandeProd != that.idCommandeProd) return false;
+        if (!Objects.equals(idCommande, that.idCommande)) return false;
+        if (!Objects.equals(idProduit, that.idProduit)) return false;
+        return Objects.equals(quantite, that.quantite);
     }
 
-    public void setCommandeByIdCommande(Commande commandeByIdCommande) {
-        this.commandeByIdCommande = commandeByIdCommande;
-    }
-
-    public Produit getProduitByIdProduit() {
-        return produitByIdProduit;
-    }
-
-    public void setProduitByIdProduit(Produit produitByIdProduit) {
-        this.produitByIdProduit = produitByIdProduit;
+    @Override
+    public int hashCode() {
+        int result = idCommandeProd;
+        result = 31 * result + (idCommande != null ? idCommande.hashCode() : 0);
+        result = 31 * result + (idProduit != null ? idProduit.hashCode() : 0);
+        result = 31 * result + (quantite != null ? quantite.hashCode() : 0);
+        return result;
     }
 }

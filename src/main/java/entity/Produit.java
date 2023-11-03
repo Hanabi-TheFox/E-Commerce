@@ -1,36 +1,14 @@
 package entity;
 
-import jakarta.persistence.*;
-
 import java.math.BigDecimal;
-import java.util.Collection;
+import java.util.Objects;
 
-@Entity
 public class Produit {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id_produit", nullable = false)
     private int idProduit;
-    @Basic
-    @Column(name = "nom", nullable = false, length = 50)
     private String nom;
-    @Basic
-    @Column(name = "prix", nullable = false, precision = 2)
     private BigDecimal prix;
-    @Basic
-    @Column(name = "stock", nullable = true)
-    private Integer stock;
-    @OneToMany(mappedBy = "produitByIdProduit")
-    private Collection<CommandeProduit> commandeProduitsByIdProduit;
     private String description;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private Integer stock;
 
     public int getIdProduit() {
         return idProduit;
@@ -56,6 +34,14 @@ public class Produit {
         this.prix = prix;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Integer getStock() {
         return stock;
     }
@@ -64,11 +50,27 @@ public class Produit {
         this.stock = stock;
     }
 
-    public Collection<CommandeProduit> getCommandeProduitsByIdProduit() {
-        return commandeProduitsByIdProduit;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Produit that = (Produit) o;
+
+        if (idProduit != that.idProduit) return false;
+        if (!Objects.equals(nom, that.nom)) return false;
+        if (!Objects.equals(prix, that.prix)) return false;
+        if (!Objects.equals(description, that.description)) return false;
+        return Objects.equals(stock, that.stock);
     }
 
-    public void setCommandeProduitsByIdProduit(Collection<CommandeProduit> commandeProduitsByIdProduit) {
-        this.commandeProduitsByIdProduit = commandeProduitsByIdProduit;
+    @Override
+    public int hashCode() {
+        int result = idProduit;
+        result = 31 * result + (nom != null ? nom.hashCode() : 0);
+        result = 31 * result + (prix != null ? prix.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (stock != null ? stock.hashCode() : 0);
+        return result;
     }
 }

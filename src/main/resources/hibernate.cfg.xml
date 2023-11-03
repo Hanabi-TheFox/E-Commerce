@@ -4,21 +4,20 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.connection.url">jdbc:h2:file:./src/main/java/ecommerce/ecommerce/model/data_base</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/e_commerce</property>
     <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
     <property name="connection.username">root</property>
     <property name="connection.password">cytech0001</property>
     <mapping class="entity.Client"/>
     <mapping resource="Client.hbm.xml"/>
-    <mapping resource="Commande.hbm.xml"/>
     <mapping class="entity.Commande"/>
-    <mapping resource="CommandeProduit.hbm.xml"/>
+    <mapping resource="Commande.hbm.xml"/>
     <mapping class="entity.CommandeProduit"/>
+    <mapping resource="CommandeProduit.hbm.xml"/>
     <mapping class="entity.Produit"/>
     <mapping resource="Produit.hbm.xml"/>
-    <mapping resource="Utilisateur.hbm.xml"/>
     <mapping class="entity.Utilisateur"/>
-    <!-- <property name="connection.username"/> -->
+    <mapping resource="Utilisateur.hbm.xml"/>
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->
