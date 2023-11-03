@@ -68,8 +68,8 @@
 <h1>Connexion</h1>
 <div class="container">
     <form action="ServletDeConnexion" method="post">
-        <label for="identifiant">Identifiant :</label>
-        <input type="text" id="identifiant" name="identifiant" required>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" required>
         <label for="motDePasse">Mot de passe :</label>
         <input type="password" id="motDePasse" name="motDePasse" required>
         <input type="submit" value="Se connecter">

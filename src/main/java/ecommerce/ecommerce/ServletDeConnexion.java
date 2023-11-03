@@ -1,18 +1,16 @@
 package ecommerce.ecommerce;
 
+import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
 
 import java.io.IOException;
+import java.util.List;
+
 @WebServlet(name = "ServletDeConnexion", value = "/ServletDeConnexion")
 public class ServletDeConnexion extends HttpServlet {
 
@@ -23,15 +21,16 @@ public class ServletDeConnexion extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérer les attributs "mail" et "motDePasse" passés en paramètres
-        String email = request.getParameter("mail");
+        String email = request.getParameter("email");
+        System.out.print("ADRESSE MAIL RECU EN REQUEST : " + email);
         String motDePasse = request.getParameter("motDePasse");
 
         // Vérifier si l'utilisateur existe dans la base de données (vous devez implémenter cette partie)
         boolean utilisateurExiste = verifierUtilisateurEnBaseDeDonnees(email, motDePasse);
-
         if (utilisateurExiste) {
             // L'utilisateur existe, rediriger vers la page de profil
-            request.getRequestDispatcher("/WEB-INF/pageProfil.jsp").forward(request, response);
+            System.out.println("Utilisateur existe? " + utilisateurExiste);
+            response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur
             String errorMessage = "Utilisateur non trouvé, vérifiez l'identifiant et/ou le mot de passe";
@@ -41,25 +40,24 @@ public class ServletDeConnexion extends HttpServlet {
     }
 
     private boolean verifierUtilisateurEnBaseDeDonnees(String email, String motDePasse) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-
-            // Requête Hibernate pour récupérer l'utilisateur par email
-            Query<Utilisateur> query = session.createQuery("FROM Utilisateur WHERE mail = :email", Utilisateur.class);
-            query.setParameter("email", email);
-            Utilisateur utilisateur = query.uniqueResult();
-
-            if (utilisateur != null && utilisateur.getMotDePasse().equals(motDePasse)) {
-                // L'utilisateur existe et le mot de passe correspond
-                transaction.commit();
-                return true;
+        try {
+            List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
+            System.out.println("VERIFICATION UTILISATEUR DE L'UTILISATEUR" + email);
+            for (Utilisateur utilisateur : listeUtilisateurs) {
+                if (utilisateur.getMail() != null && utilisateur.getMail().equals(email) && utilisateur.getMotDePasse() != null && utilisateur.getMotDePasse().equals(motDePasse)) {
+                    // L'utilisateur existe et le mot de passe est correct
+                    System.out.println("L'UTILISATEUR EXISTE : " + utilisateur.getMail() );
+                    return true;
+                }
             }
 
-            transaction.rollback();
             return false;
         } catch (Exception e) {
+            System.out.println("L'UTILISATEUR " + email+ " N'A PAS ETE TROUVEE OU N'EXISTE PAS");
+            e.printStackTrace();
             return false;
         }
     }
+
+
 }
