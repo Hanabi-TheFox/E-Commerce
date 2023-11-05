@@ -1,5 +1,6 @@
 package ecommerce.ecommerce;
 
+import ecommerce.ecommerce.controller.Controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,6 +14,8 @@ public class ServletDeDeconnexion extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO : Traitement pour la méthode GET
+        Controller.getInstanceController().requestViderUtilisateur();
+        response.sendRedirect("ServletDeConnexion");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

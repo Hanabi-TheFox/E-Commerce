@@ -22,5 +22,9 @@ public class Controller {
         return this.model.getUtilisateur();
     }
 
+    public void requestViderUtilisateur(){
+        this.model.viderUtilisateur();
+    }
+
 
 }

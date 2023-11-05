@@ -17,4 +17,8 @@ public class Model {
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }
+
+    public void viderUtilisateur(){
+        this.utilisateur = null;
+    }
 }

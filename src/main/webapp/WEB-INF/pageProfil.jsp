@@ -11,7 +11,7 @@
 %>
 
 <h1>Profil de l'Utilisateur</h1>
-<p>Bienvenue,  !</p>
+<p>Bienvenue, ${prenom} !</p>
 
 <h2>Informations de Profil :</h2>
 <ul>
