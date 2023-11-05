@@ -1,5 +1,6 @@
 package ecommerce.ecommerce;
 
+import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Utilisateur;
 import jakarta.servlet.ServletException;
@@ -26,13 +27,12 @@ public class ServletDeConnexion extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
 
         // Vérifier si l'utilisateur existe dans la base de données (vous devez implémenter cette partie)
-        boolean utilisateurExiste = verifierUtilisateurEnBaseDeDonnees(email, motDePasse);
-        if (utilisateurExiste) {
+        Utilisateur utilisateur= verifierUtilisateurEnBaseDeDonnees(email, motDePasse);
+        if (utilisateur!= null) {
             // L'utilisateur existe, rediriger vers la page de profil
-            HttpSession session = request.getSession(); // Créer ou récupérer une session
-            //Sauvegarde utilisateur dans une session
-            session.setAttribute("utilisateur", UtilisateurDAO.getUtilisateurByEmail("email")); // Stocker l'objet Utilisateur dans la session
+            //Il est utilisée le MVC pour sauvagarder les données de l'utilisateur en question
             System.out.println("UTILISATEUR DANS LA SESSION : " + UtilisateurDAO.getUtilisateurByEmail("email"));
+            Controller.getInstanceController().requestSetUtilisateur(utilisateur);
             response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur
@@ -42,23 +42,22 @@ public class ServletDeConnexion extends HttpServlet {
         }
     }
 
-    private boolean verifierUtilisateurEnBaseDeDonnees(String email, String motDePasse) {
+    //Retourne l'utilisateur s'il existe et null sinon
+    private Utilisateur verifierUtilisateurEnBaseDeDonnees(String email, String motDePasse) {
         try {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
-            System.out.println("VERIFICATION UTILISATEUR DE L'UTILISATEUR" + email);
             for (Utilisateur utilisateur : listeUtilisateurs) {
                 if (utilisateur.getMail() != null && utilisateur.getMail().equals(email) && utilisateur.getMotDePasse() != null && utilisateur.getMotDePasse().equals(motDePasse)) {
                     // L'utilisateur existe et le mot de passe est correct
-                    System.out.println("L'UTILISATEUR EXISTE : " + utilisateur.getMail() );
-                    return true;
+                    return utilisateur;
                 }
             }
 
-            return false;
+            return null;
         } catch (Exception e) {
             System.out.println("L'UTILISATEUR " + email+ " N'A PAS ETE TROUVEE OU N'EXISTE PAS");
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
