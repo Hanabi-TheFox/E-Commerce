@@ -1,6 +1,9 @@
 package ecommerce.ecommerce.controller;
 import ecommerce.ecommerce.model.Model;
+import entity.Produit;
 import entity.Utilisateur;
+import java.util.List;
+
 import java.util.List;
 
 public class Controller {
@@ -28,5 +31,10 @@ public class Controller {
     }
 
     public List<Utilisateur> requestGetListUtilisateurs(){return this.model.getListUtilisateurs();}
+
+    public List<Produit> requestGetProduits() {
+        return this.model.getListeProduits();
+    }
+
 
 }

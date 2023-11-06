@@ -1,6 +1,8 @@
 package ecommerce.ecommerce.model;
 import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
+import ecommerce.ecommerce.model.DAO.ProduitDAO;
+import entity.Produit;
 import entity.Utilisateur;
 
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 public class Model {
     private Controller controller;
     private Utilisateur utilisateur;
+    private Produit produit;
 
 
     public Model(Controller controller) {
@@ -16,6 +19,10 @@ public class Model {
 
     public void setUtilisateur(Utilisateur utilisateur) {
         this.utilisateur = utilisateur;
+    }
+
+    public List<Produit> getListeProduits(){
+        return ProduitDAO.getListProduits();
     }
 
     public Utilisateur getUtilisateur() {
