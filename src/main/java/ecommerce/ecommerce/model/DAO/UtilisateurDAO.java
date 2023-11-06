@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import entity.Utilisateur;
+import entity.Client;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -12,6 +14,7 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 public class UtilisateurDAO
 {
@@ -69,6 +72,21 @@ public class UtilisateurDAO
         }
             return null; //l'utilisateur n'a pas été trouvée par son mail
 
+    }
+    public static Client findClientByUtilisateur(Utilisateur utilisateur) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        String hql = "FROM Client WHERE idClient = :userId";
+        Query<Client> query = session.createQuery(hql, Client.class);
+        query.setParameter("userId", utilisateur.getIdUtilisateur());
+
+        Client client = query.uniqueResult();
+
+        session.getTransaction().commit();
+        session.close();
+
+        return client;
     }
 
 
