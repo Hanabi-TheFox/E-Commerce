@@ -70,7 +70,19 @@
             validerChamp(champ, /[^A-Za-z\- ]/g);
         }
 
-        function validerIdentifiantMotDePasse(champ) {
+        function validerMail(champ) {
+            var value = champ.value;
+            // Utiliser une expression régulière pour vérifier le format de l'adresse e-mail
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            
+            if (!emailPattern.test(value)) {
+                alert("Le champ " + champ.name + " ne contient pas une adresse e-mail valide.");
+                // Réinitialiser la valeur du champ à une chaîne vide
+                champ.value = '';
+            }
+        }
+
+        function validerMotDePasse(champ) {
             validerChamp(champ, /[^A-Za-z0-9?!*_/\\-]/g);
         }
     </script>
@@ -84,11 +96,11 @@
     <label for="prenom">Prénom :</label>
     <input type="text" id="prenom" name="prenom" required onblur="validerNomPrenom(this)">
     <br>
-    <label for="identifiant">Identifiant :</label>
-    <input type="text" id="identifiant" name="identifiant" required onblur="validerIdentifiantMotDePasse(this)">
+    <label for="email">Mail :</label>
+    <input type="text" id="email" name="email" required onblur="validerMail(this)">
     <br>
     <label for="motDePasse">Mot de passe :</label>
-    <input type="password" id="motDePasse" name="motDePasse" required onblur="validerIdentifiantMotDePasse(this)">
+    <input type="password" id="motDePasse" name="motDePasse" required onblur="validerMotDePasse(this)">
     <br>
     <input type="submit" value="S'inscrire">
 </form>
