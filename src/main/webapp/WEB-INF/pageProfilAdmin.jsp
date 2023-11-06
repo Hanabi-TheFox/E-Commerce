@@ -1,5 +1,4 @@
-<%@ page import="entity.Utilisateur" %>
-<%@ page import="jdk.jshell.execution.Util" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +9,7 @@
 
 %>
 
-<h1>Profil Client</h1>
+<h1>Profil Admin</h1>
 <p>Bienvenue, ${prenom} !</p>
 
 <h2>Informations de Profil :</h2>
@@ -18,8 +17,6 @@
     <li><strong>Nom :</strong> ${nom}</li>
     <li><strong>Prenom :</strong> ${prenom}</li>
     <li><strong>Email :</strong> ${email}</li>
-    <li><strong>Solde :</strong> ${solde}</li>
-    <li><strong>Points de fidelite :</strong> ${points}</li>
     <!-- Ajoutez d'autres informations de profil ici -->
 </ul>
 

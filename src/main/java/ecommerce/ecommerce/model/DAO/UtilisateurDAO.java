@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import entity.Utilisateur;
+import entity.Client;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -71,7 +73,18 @@ public class UtilisateurDAO
 
     }
 
+    public static Client findClientByUtilisateur(Utilisateur utilisateur) {
+        EntityManager entityManager = HibernateUtil.getEntityManagerFactory().createEntityManager();
 
+        String jpql = "SELECT c FROM Client c WHERE c.id = :id";
+        Client client = entityManager.createQuery(jpql, Client.class)
+                .setParameter("id", utilisateur.getIdUtilisateur())
+                .getSingleResult();
+
+        entityManager.close();
+
+        return client;
+    }
 
 
     /*public static List<VUtilisateurs> getListViewUtilisateurs()

@@ -1,5 +1,7 @@
 package ecommerce.ecommerce;
 
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
@@ -26,5 +28,20 @@ public class HibernateUtil {
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+
+    private static final EntityManagerFactory entityManagerFactory;
+
+    static {
+        try {
+            entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        } catch (Throwable ex) {
+            System.err.println("Initial EntityManagerFactory creation failed: " + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
+
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
     }
 }
