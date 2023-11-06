@@ -8,6 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import services.Courier;
+import services.SendService;
+import models.SendEnhancedRequestBody;
+import models.SendEnhancedResponseBody;
+import models.SendRequestMessage;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.HashMap;
 
 import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
@@ -40,6 +48,40 @@ public class ServletDInscription extends HttpServlet {
             utilisateur.setTypeDeCompte("Client");
             UtilisateurDAO.addUtilisateur(utilisateur);
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
+
+            // L'utilisateur à été créer, on envoie un mail de confirmation
+            Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
+
+            SendEnhancedRequestBody request2 = new SendEnhancedRequestBody();
+            SendRequestMessage message = new SendRequestMessage();
+
+            HashMap<String, String> to = new HashMap<String, String>();
+            to.put("email", email);
+            message.setTo(to);
+            message.setTemplate("ZHASTSX98ZM89ZGHHKTNQ8RN4P3V");
+            // HashMap<String, Object> content = new HashMap<String, Object>();
+            // content.put("title", "Bienvenue sur E-commerce!");
+            // content.put("body", "Bonjour, "+prenom+" "+nom+"!\n\n\t Nous vous confirmons votre inscription sur E-commerce!");
+            // message.setContent(content);
+
+            HashMap<String, Object> data = new HashMap<String, Object>();
+            data.put("user", prenom+" "+nom);
+            message.setData(data);
+
+            // HashMap<String, Object> routing = new HashMap<String, Object>();
+            // routing.put("method", "single");
+            // routing.put("channels", ["email"]);
+            // message.setRouting(routing);
+
+            request2.setMessage(message);
+            try {
+                SendEnhancedResponseBody response2 = new SendService().sendEnhancedMessage(request2);
+                System.out.println(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Rediriger vers la page de profil
             response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur existe, afficher un message d'erreur
