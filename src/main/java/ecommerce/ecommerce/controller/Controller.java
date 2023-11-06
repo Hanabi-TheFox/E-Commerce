@@ -1,6 +1,7 @@
 package ecommerce.ecommerce.controller;
 import ecommerce.ecommerce.model.Model;
 import entity.Utilisateur;
+import java.util.List;
 
 public class Controller {
     private Model model;
@@ -26,5 +27,6 @@ public class Controller {
         this.model.viderUtilisateur();
     }
 
+    public List<Utilisateur> requestGetListUtilisateurs(){return this.model.getListUtilisateurs();}
 
 }
