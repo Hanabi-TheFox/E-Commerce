@@ -16,11 +16,11 @@
 <h2>Informations de Profil :</h2>
 <ul>
     <li><strong>Nom :</strong> ${nom}</li>
-    <li><strong>Prénom :</strong> ${prenom}</li>
+    <li><strong>Prenom :</strong> ${prenom}</li>
     <li><strong>Email :</strong> ${email}</li>
     <!-- Ajoutez d'autres informations de profil ici -->
 </ul>
 
-<p><a href="ServletDeDeconnexion">Déconnexion</a></p> <!-- Lien pour se déconnecter -->
+<p><a href="ServletDeDeconnexion">Deconnexion</a></p> <!-- Lien pour se déconnecter -->
 </body>
 </html>
