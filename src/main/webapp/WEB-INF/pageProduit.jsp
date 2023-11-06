@@ -1,26 +1,32 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: CYTech Student
-  Date: 03/11/2023
-  Time: 09:36
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="entity.Produit" %>
+
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Informations sur le produit</title>
+    <title>Liste des Produits</title>
 </head>
 <body>
-<h1>Informations sur le produit</h1>
-<%  String nom = request.getParameter("produitNom");
-    double prix = Double.parseDouble(request.getParameter("produitPrix"));
-    int stock = Integer.parseInt(request.getParameter("produitStock"));
-    String description = request.getParameter("produitDescription");
-
-        // Afficher les informations du produit
-        out.println("<p>Nom : " + nom + "</p>");
-        out.println("<p>Prix : " + prix + "</p>");
-        out.println("<p>Stock : " + stock + "</p>");
-        out.println("<p>Description : " + description + "</p>");
-%>
+<h1>Liste des Produits</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Prix</th>
+        <th>Description</th>
+        <th>Stock</th>
+        <th>Image</th>
+    </tr>
+    <c:forEach items="${listeProduits}" var="produit">
+        <tr>
+            <td>${produit.getIdProduit()}</td>
+            <td>${produit.getNom()}</td>
+            <td>${produit.getPrix()}</td>
+            <td>${produit.getDescription()}</td>
+            <td>${produit.getStock()}</td>
+            <td><img src="ecommerce/ecommerce/model/imagesProduct/${produit.getIdProduit()}.jpeg" alt="${produit.nom}" width="100"></td>
+        </tr>
+    </c:forEach>
+</table>
 </body>
 </html>
