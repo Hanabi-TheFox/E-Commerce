@@ -17,9 +17,6 @@
         <property name="compteBancaireSolde">
             <column name="compteBancaireSolde" sql-type="decimal(10,2)" precision="10" scale="2" not-null="true"/>
         </property>
-        <property name="droits">
-            <column name="droits" sql-type="varchar(5)" length="5"/>
-        </property>
         <property name="points">
             <column name="points" sql-type="int" not-null="true"/>
         </property>

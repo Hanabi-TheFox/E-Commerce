@@ -54,6 +54,14 @@
 <body>
 <div class="moderators">
     <h1>Liste des Modérateurs</h1>
+<%--    <% String message = (String) request.getAttribute("Ajouter");
+        if (message != null){
+    %>
+            <h4> ${message} </h4>
+    <%
+            request.setAttribute("Ajouter", "");
+        }
+    %>--%>
     <table>
         <tr>
             <th>Nom</th>

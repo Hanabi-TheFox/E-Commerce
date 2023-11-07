@@ -82,7 +82,10 @@ public class ServletDInscription extends HttpServlet {
             }
 
             // Rediriger vers la page de profil
-            response.sendRedirect("ServletProfil");
+// --------------------------------------------------------------------------------------------------
+            // Pour aller sur profil il faut recuperer l'utilisateur que l'on a ajouté != de la variable local au dessus
+            //response.sendRedirect("ServletProfil");
+            response.sendRedirect("ServletDeConnexion");
         } else {
             // L'utilisateur existe, afficher un message d'erreur
             String errorMessage = "Utilisateur déjà existant, veuillez vous connecter";

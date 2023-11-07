@@ -1,5 +1,6 @@
 package ecommerce.ecommerce.model.DAO;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,14 @@ public class UtilisateurDAO
                 moderateur.setDroits("000");
                 session.save(moderateur);
                 session.getTransaction().commit();
-
+            }else { // typeDeCompte.equals("Client")
+                Client client = new Client();
+                client.setIdClient(utilisateur.getIdUtilisateur());
+                client.setCompteBancaireNum("0000 0000 0000 0000");
+                client.setCompteBancaireSolde(BigDecimal.valueOf(0));
+                client.setPoints(0);
+                session.save(client);
+                session.getTransaction().commit();
             }
         }
         session.close();

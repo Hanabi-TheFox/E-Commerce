@@ -31,6 +31,8 @@ public class ServletListeModerateur extends HttpServlet {
             }
         }
         request.setAttribute("listModerateur", listModerateur);
+        /*String message = request.getParameter("message");
+        request.setAttribute("Ajouter", message);*/
         request.getRequestDispatcher("/WEB-INF/pageListeModerateur.jsp").forward(request, response);
     }
 

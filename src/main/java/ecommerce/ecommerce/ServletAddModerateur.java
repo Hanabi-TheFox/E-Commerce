@@ -38,8 +38,10 @@ public class ServletAddModerateur extends HttpServlet {
             utilisateur.setMotDePasse(motDePasse);
             utilisateur.setTypeDeCompte("Moderateur");
             UtilisateurDAO.addUtilisateur(utilisateur);
-
+            // je veux mettre un message dans le jsp pour dire que ça a fonctionné
+            // response.sendRedirect("ServletListeModerateur?message=Le+moderateur+a+bien+ete+ajoute+!");
             response.sendRedirect("ServletListeModerateur");
+
         } else {
             // L'utilisateur existe, afficher un message d'erreur
             String errorMessage = "Utilisateur déjà existant, veuillez vous connecter";
