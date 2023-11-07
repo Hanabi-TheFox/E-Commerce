@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="entity.Produit" %>
 <%@ page import="java.util.List" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,59 +22,55 @@
             padding: 10px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px;
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
         }
 
-        th, td {
+        .produit {
             border: 1px solid #ddd;
+            margin: 10px;
             padding: 10px;
-            text-align: left;
+            width: 250px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        th {
-            background-color: #333;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        img {
-            max-width: 100px;
+        .produit img {
+            max-width: 100%;
             height: auto;
+        }
+
+        .produit h2 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .produit p {
+            font-size: 16px;
+            color: #777;
         }
     </style>
 </head>
 <body>
 <h1>Liste des Produits</h1>
-<table>
-    <tr>
-        <th>ID Produit</th>
-        <th>Nom</th>
-        <th>Prix</th>
-        <th>Description</th>
-        <th>Image</th>
-    </tr>
+<div class="container">
     <%
         List<Produit> listeProduits = (List<Produit>) request.getAttribute("listeProduits");
         for (Produit produit : listeProduits) {
     %>
-    <tr>
-        <td><%= produit.getIdProduit() %></td>
-        <td><%= produit.getNom() %></td>
-        <td><%= produit.getPrix() %></td>
-        <td>
-            <img src="imagesProduct/1.jpeg" alt="<%= produit.getNom() %>" width="100">
-        </td>
-    </tr>
+    <div class="produit">
+        <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="<%= produit.getNom() %>">
+        <h2><%= produit.getNom() %></h2>
+        <p>Prix : <%= produit.getPrix() %> €</p>
+        <p><%= produit.getDescription() %></p>
+    </div>
     <%
         }
     %>
-</table>
+</div>
 <a href="ServletProfil">Profil</a>
 </body>
 </html>
