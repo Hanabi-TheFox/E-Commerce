@@ -33,7 +33,8 @@ public class ServletDeConnexion extends HttpServlet {
             //Il est utilisée le MVC pour sauvagarder les données de l'utilisateur en question
             System.out.println("UTILISATEUR DANS LA SESSION : " + UtilisateurDAO.getUtilisateurByEmail("email"));
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
-            response.sendRedirect("ServletProfil");
+            //response.sendRedirect("ServletProfil");
+            response.sendRedirect("ServletProduits");
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur
             String errorMessage = "Utilisateur non trouvé, vérifiez l'identifiant et/ou le mot de passe";

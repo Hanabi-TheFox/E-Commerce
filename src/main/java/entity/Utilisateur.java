@@ -8,7 +8,7 @@ public class Utilisateur {
     private String prenom;
     private String mail;
     private String motDePasse;
-    private Object typeDeCompte;
+    private String typeDeCompte;
 
     public int getIdUtilisateur() {
         return idUtilisateur;
@@ -50,11 +50,11 @@ public class Utilisateur {
         this.motDePasse = motDePasse;
     }
 
-    public Object getTypeDeCompte() {
+    public String getTypeDeCompte() {
         return typeDeCompte;
     }
 
-    public void setTypeDeCompte(Object typeDeCompte) {
+    public void setTypeDeCompte(String typeDeCompte) {
         this.typeDeCompte = typeDeCompte;
     }
 

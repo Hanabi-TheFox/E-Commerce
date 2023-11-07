@@ -10,6 +10,17 @@ public class Produit {
     private String description;
     private Integer stock;
 
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    //TODO: L'image du produit se recupere dans le jsp pageProduits
     public int getIdProduit() {
         return idProduit;
     }

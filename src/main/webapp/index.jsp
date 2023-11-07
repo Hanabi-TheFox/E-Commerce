@@ -12,5 +12,6 @@
 <h2><%="Renato"%></h2>
 <br/>
 <a href="ServletDeConnexion">Aller sur le site</a>
+<a href="ServletListeModerateur">Liste Moderateur</a>
 </body>
 </html>
