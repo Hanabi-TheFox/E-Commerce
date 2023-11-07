@@ -74,9 +74,7 @@
         %>
     </table>
     <div class="button-container">
-        <form action="ajouterModerateur.jsp" method="post">
-            <button type="submit">Ajouter Modérateur</button>
-        </form>
+        <a href="ServletAddModerateur"> Ajouter moderateur </a>
         <form action="supprimerModerateur.jsp" method="post">
             <button type="submit">Supprimer Modérateur</button>
         </form>

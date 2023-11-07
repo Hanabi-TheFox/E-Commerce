@@ -25,12 +25,13 @@ CREATE TABLE IF NOT EXISTS Commande (
 CREATE TABLE IF NOT EXISTS `Client` (
 	id_client int UNIQUE PRIMARY KEY,
 	id_commande int,
+    id_utilisateur int,
 	compteBancaireNum varchar(19) NOT NULL,
 	compteBancaireSolde decimal(10,2),
 	droits varchar(5) NOT NULL,
     points int,
     FOREIGN KEY (id_commande) REFERENCES Commande(id_commande),
-    FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
+    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
 );
 
 CREATE TABLE IF NOT EXISTS `Moderateur` (

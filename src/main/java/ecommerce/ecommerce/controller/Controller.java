@@ -1,5 +1,6 @@
 package ecommerce.ecommerce.controller;
 import ecommerce.ecommerce.model.Model;
+import entity.Moderateur;
 import entity.Produit;
 import entity.Utilisateur;
 import java.util.List;
@@ -36,5 +37,10 @@ public class Controller {
         return this.model.getListeProduits();
     }
 
+    public void requestSetModerateur(Moderateur moderateur) { this.model.setModerateur(moderateur);
+    }
+
+    public Moderateur requestGetModerateur() { return this.model.getModerateur();
+    }
 
 }

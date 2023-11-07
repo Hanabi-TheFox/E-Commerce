@@ -76,5 +76,6 @@
         }
     %>
 </table>
+<a href="ServletProfil">Profil</a>
 </body>
 </html>

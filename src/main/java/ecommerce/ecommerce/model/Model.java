@@ -2,6 +2,7 @@ package ecommerce.ecommerce.model;
 import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
+import entity.Moderateur;
 import entity.Produit;
 import entity.Utilisateur;
 
@@ -12,6 +13,7 @@ public class Model {
     private Utilisateur utilisateur;
     private Produit produit;
 
+    private Moderateur moderateur;
 
     public Model(Controller controller) {
         this.controller = controller;
@@ -35,5 +37,13 @@ public class Model {
 
     public List<Utilisateur> getListUtilisateurs(){
         return UtilisateurDAO.getListUtilisateurs();
+    }
+
+    public void setModerateur(Moderateur moderateur) {
+        this.moderateur = moderateur;
+    }
+
+    public Moderateur getModerateur() {
+        return moderateur;
     }
 }

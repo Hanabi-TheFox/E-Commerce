@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import entity.Moderateur;
 import entity.Utilisateur;
 import entity.Client;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -24,8 +24,28 @@ public class UtilisateurDAO
         session.beginTransaction();
         session.save(e);
         session.getTransaction().commit();
+
+        String typeDeCompte = e.getTypeDeCompte();
+
+        if(!typeDeCompte.equals("Admin")){
+            session.beginTransaction();
+            String hql = "FROM Utilisateur WHERE mail = :email";
+            Query<Utilisateur> query = session.createQuery(hql, Utilisateur.class);
+            query.setParameter("email", e.getMail());
+            Utilisateur utilisateur = query.uniqueResult();
+
+            if(typeDeCompte.equals("Moderateur")){
+                Moderateur moderateur = new Moderateur();
+                moderateur.setIdModerateur(utilisateur.getIdUtilisateur());
+                moderateur.setDroits("000");
+                session.save(moderateur);
+                session.getTransaction().commit();
+
+            }
+        }
         session.close();
     }
+
 
     public static void removeUtilisateur(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -89,12 +109,18 @@ public class UtilisateurDAO
         return client;
     }
 
+    public static Moderateur findModByUtilisateur(Utilisateur utilisateur) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "FROM Moderateur WHERE idModerateur = :userId";
+        Query<Moderateur> query = session.createQuery(hql, Moderateur.class);
+        query.setParameter("userId", utilisateur.getIdUtilisateur());
 
+        Moderateur moderateur = query.uniqueResult();
+        System.out.println(moderateur.getDroits());
+        session.getTransaction().commit();
+        session.close();
 
-
-    /*public static List<VUtilisateurs> getListViewUtilisateurs()
-    {
-        //Code à compléter
-        return null;
-    }*/
+        return moderateur;
+    }
 }

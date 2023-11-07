@@ -24,6 +24,7 @@ public class ServletProfil extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
         Utilisateur utilisateur = Controller.getInstanceController().requestGetUtilisateur();
+        System.out.println("testaaa"+utilisateur.getMail());
         Object typeDeCompte = utilisateur.getTypeDeCompte();
         if (typeDeCompte.equals("Client")){
             request.setAttribute("nom", utilisateur.getNom());
