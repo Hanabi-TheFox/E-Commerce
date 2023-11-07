@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import entity.Moderateur;
 import entity.Utilisateur;
 import entity.Client;
 import jakarta.persistence.EntityManager;
@@ -89,12 +90,19 @@ public class UtilisateurDAO
         return client;
     }
 
+    /*public static Moderateur findModByUtilisateur(Utilisateur utilisateur) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
 
+        String hql = "FROM Moderateur WHERE idModerateur = :userId";
+        Query<Moderateur> query = session.createQuery(hql, Moderateur.class);
+        query.setParameter("userId", utilisateur.getIdUtilisateur());
 
+        Moderateur moderateur = query.uniqueResult();
 
-    /*public static List<VUtilisateurs> getListViewUtilisateurs()
-    {
-        //Code à compléter
-        return null;
+        session.getTransaction().commit();
+        session.close();
+
+        return moderateur;
     }*/
 }

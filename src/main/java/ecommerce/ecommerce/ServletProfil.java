@@ -2,6 +2,7 @@ package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
+import entity.Moderateur;
 import entity.Utilisateur;
 import entity.Client;
 import jakarta.servlet.ServletException;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.xml.ws.Service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -43,6 +45,7 @@ public class ServletProfil extends HttpServlet {
             request.setAttribute("nom", utilisateur.getNom());
             request.setAttribute("prenom", utilisateur.getPrenom());
             request.setAttribute("email", utilisateur.getMail());
+            //Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(utilisateur);
             request.getRequestDispatcher("/WEB-INF/pageProfil.jsp").forward(request, response);
         }
 
