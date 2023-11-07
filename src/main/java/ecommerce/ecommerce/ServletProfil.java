@@ -34,7 +34,6 @@ public class ServletProfil extends HttpServlet {
             Client client = UtilisateurDAO.findClientByUtilisateur(utilisateur);
             request.setAttribute("solde", client.getCompteBancaireSolde());
             request.setAttribute("points", client.getPoints());
-
             request.getRequestDispatcher("/WEB-INF/pageProfil.jsp").forward(request, response);
         }else if (typeDeCompte.equals("Admin")){
             request.setAttribute("nom", utilisateur.getNom());
@@ -45,8 +44,9 @@ public class ServletProfil extends HttpServlet {
             request.setAttribute("nom", utilisateur.getNom());
             request.setAttribute("prenom", utilisateur.getPrenom());
             request.setAttribute("email", utilisateur.getMail());
-            //Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(utilisateur);
-            request.getRequestDispatcher("/WEB-INF/pageProfil.jsp").forward(request, response);
+            Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(utilisateur);
+            request.setAttribute("droits", moderateur.getDroits());
+            request.getRequestDispatcher("/WEB-INF/pageProfilModerateur.jsp").forward(request, response);
         }
 
     }

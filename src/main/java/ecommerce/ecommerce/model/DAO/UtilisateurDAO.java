@@ -7,7 +7,6 @@ import java.util.List;
 import entity.Moderateur;
 import entity.Utilisateur;
 import entity.Client;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -90,7 +89,7 @@ public class UtilisateurDAO
         return client;
     }
 
-    /*public static Moderateur findModByUtilisateur(Utilisateur utilisateur) {
+    public static Moderateur findModByUtilisateur(Utilisateur utilisateur) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
@@ -104,5 +103,5 @@ public class UtilisateurDAO
         session.close();
 
         return moderateur;
-    }*/
+    }
 }

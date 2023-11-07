@@ -18,6 +18,8 @@
     <mapping resource="Produit.hbm.xml"/>
     <mapping class="entity.Utilisateur"/>
     <mapping resource="Utilisateur.hbm.xml"/>
+    <mapping class="entity.Moderateur"/>
+    <mapping resource="Moderateur.hbm.xml"/>
     <!-- <property name="connection.password"/> -->
 
     <!-- DB schema will be updated if needed -->
