@@ -47,6 +47,7 @@ public class ServletDInscription extends HttpServlet {
             utilisateur.setMotDePasse(motDePasse);
             utilisateur.setTypeDeCompte("Client");
             UtilisateurDAO.addUtilisateur(utilisateur);
+            utilisateur = ExisteUtilisateur(email);
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
 
             // L'utilisateur à été créer, on envoie un mail de confirmation
@@ -84,8 +85,7 @@ public class ServletDInscription extends HttpServlet {
             // Rediriger vers la page de profil
 // --------------------------------------------------------------------------------------------------
             // Pour aller sur profil il faut recuperer l'utilisateur que l'on a ajouté != de la variable local au dessus
-            //response.sendRedirect("ServletProfil");
-            response.sendRedirect("ServletDeConnexion");
+            response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur existe, afficher un message d'erreur
             String errorMessage = "Utilisateur déjà existant, veuillez vous connecter";

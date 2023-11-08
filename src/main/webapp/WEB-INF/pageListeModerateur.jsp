@@ -1,11 +1,8 @@
 <%@ page import="entity.Utilisateur" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: CYTech Student
-  Date: 06/11/2023
-  Time: 17:56
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
+<%@ page import="ecommerce.ecommerce.controller.Controller" %>
+<%@ page import="entity.Moderateur" %>
+<%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -69,6 +66,7 @@
             <th>Mail</th>
         </tr>
         <%
+            Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
             List<Utilisateur> utilisateurs = (List<Utilisateur>) request.getAttribute("listModerateur");
             for (Utilisateur utilisateur : utilisateurs) {
         %>
@@ -82,12 +80,38 @@
         %>
     </table>
     <div class="button-container">
+        <%
+            if (u.getTypeDeCompte().equals("Admin")) {
+        %>
         <a href="ServletAddModerateur"> Ajouter moderateur </a>
+        <%
+            }
+            if (u.getTypeDeCompte().equals("Moderateur")) {
+                Moderateur m = UtilisateurDAO.findModByUtilisateur(u);
+                if (m.getDroits().charAt(2) == '1'){
+        %>
+        <a href="ServletAddModerateur"> Ajouter moderateur </a>
+        <%
+                }
+            }
+        %>
         <form action="supprimerModerateur.jsp" method="post">
+            <%
+                if (u.getTypeDeCompte().equals("Admin")) {
+            %>
             <button type="submit">Supprimer Modérateur</button>
+            <%
+                }
+            %>
         </form>
         <form action="modifierDroits.jsp" method="post">
-            <button type="submit">Modifier Droits</button>
+            <%
+                if (u.getTypeDeCompte().equals("Admin")) {
+            %>
+                <button type="submit">Modifier Droits</button>
+            <%
+                }
+            %>
         </form>
     </div>
 </div>
