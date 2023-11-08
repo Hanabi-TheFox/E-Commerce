@@ -12,7 +12,6 @@
 <h2><%="Renato"%></h2>
 <br/>
 <h3><a href="ServletDeConnexion">Aller sur le site</a><br>
-<a href="ServletListeModerateur">Liste Moderateur</a><br>
 </h3>
 </body>
 </html>

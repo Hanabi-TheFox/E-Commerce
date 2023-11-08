@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="entity.Produit" %>
 <%@ page import="java.util.List" %>
+<%@ page import="entity.Utilisateur" %>
+<%@ page import="ecommerce.ecommerce.controller.Controller" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,5 +74,13 @@
     %>
 </div>
 <a href="ServletProfil">Profil</a>
+<%
+    Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
+    if (u.getTypeDeCompte().equals("Admin") || u.getTypeDeCompte().equals("Moderateur")) {
+%>
+<a href="ServletListeModerateur">Liste Moderateur</a><br>
+<%
+    }
+%>
 </body>
 </html>
