@@ -8,23 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
-import services.Courier;
-import services.SendService;
-import models.SendEnhancedRequestBody;
-import models.SendEnhancedResponseBody;
-import models.SendRequestMessage;
-import com.google.gson.Gson;
-import java.io.IOException;
-import java.util.HashMap;
 
-import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Utilisateur;
-@WebServlet(name = "ServletDInscription", value = "/ServletDInscription")
-public class ServletDInscription extends HttpServlet {
+@WebServlet(name = "ServletAddModerateur", value = "/ServletAddModerateur")
+public class ServletAddModerateur extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO : Traitement pour la méthode GET
-        request.getRequestDispatcher("/WEB-INF/pageInscription.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/ajouterModerateur.jsp").forward(request, response);
 
     }
 
@@ -34,7 +25,7 @@ public class ServletDInscription extends HttpServlet {
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
         String motDePasse = request.getParameter("motDePasse");
-
+        String droits = request.getParameter("droits");
         // Vérifier si l'utilisateur existe dans la base de données
         Utilisateur utilisateur = ExisteUtilisateur(email);
 
@@ -45,36 +36,12 @@ public class ServletDInscription extends HttpServlet {
             utilisateur.setPrenom(prenom);
             utilisateur.setMail(email);
             utilisateur.setMotDePasse(motDePasse);
-            utilisateur.setTypeDeCompte("Client");
+            utilisateur.setTypeDeCompte("Moderateur");
             UtilisateurDAO.addUtilisateur(utilisateur);
-            utilisateur = ExisteUtilisateur(email);
-            Controller.getInstanceController().requestSetUtilisateur(utilisateur);
+            // je veux mettre un message dans le jsp pour dire que ça a fonctionné
+            // response.sendRedirect("ServletListeModerateur?message=Le+moderateur+a+bien+ete+ajoute+!");
+            response.sendRedirect("ServletListeModerateur");
 
-            // L'utilisateur à été créer, on envoie un mail de confirmation
-            Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
-
-            SendEnhancedRequestBody request2 = new SendEnhancedRequestBody();
-            SendRequestMessage message = new SendRequestMessage();
-
-            HashMap<String, String> to = new HashMap<String, String>();
-            to.put("email", email);
-            message.setTo(to);
-            message.setTemplate("ZHASTSX98ZM89ZGHHKTNQ8RN4P3V");
-            HashMap<String, Object> data = new HashMap<String, Object>();
-            data.put("user", prenom+" "+nom);
-            message.setData(data);
-            request2.setMessage(message);
-            try {
-                SendEnhancedResponseBody response2 = new SendService().sendEnhancedMessage(request2);
-                System.out.println(response);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            // Rediriger vers la page de profil
-// --------------------------------------------------------------------------------------------------
-            // Pour aller sur profil il faut recuperer l'utilisateur que l'on a ajouté != de la variable local au dessus
-            response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur existe, afficher un message d'erreur
             String errorMessage = "Utilisateur déjà existant, veuillez vous connecter";
@@ -83,7 +50,6 @@ public class ServletDInscription extends HttpServlet {
         }
 
     }
-
     //Retourne l'utilisateur s'il existe et null sinon
     private Utilisateur ExisteUtilisateur(String email){
         try {

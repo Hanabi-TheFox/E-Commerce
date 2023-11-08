@@ -25,12 +25,12 @@ CREATE TABLE IF NOT EXISTS Commande (
 CREATE TABLE IF NOT EXISTS `Client` (
 	id_client int UNIQUE PRIMARY KEY,
 	id_commande int,
+    id_utilisateur int,
 	compteBancaireNum varchar(19) NOT NULL,
 	compteBancaireSolde decimal(10,2),
-	droits varchar(5) NOT NULL,
     points int,
     FOREIGN KEY (id_commande) REFERENCES Commande(id_commande),
-    FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
+    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
 );
 
 CREATE TABLE IF NOT EXISTS `Moderateur` (
@@ -75,8 +75,8 @@ INSERT IGNORE INTO Produit (nom, prix, description, stock) VALUES
 	('ballon de foot', 14.99, 'test', 60),
 	('Lampe de bureau', 30, 'test', 75);
 
-INSERT IGNORE INTO Client (id_client, compteBancaireNum, compteBancaireSolde, droits, points)
-	SELECT id_utilisateur, '1234 5678 9123 4567', 0, '00000', 0
+INSERT IGNORE INTO Client (id_client, compteBancaireNum, compteBancaireSolde, points)
+	SELECT id_utilisateur, '0000 0000 0000 0000', 0, 0
 	FROM Utilisateur
 	WHERE TypeDeCompte = 'Client';
     
@@ -84,4 +84,3 @@ INSERT IGNORE INTO Moderateur (id_moderateur, droits)
 	SELECT id_utilisateur, '101'
 	FROM Utilisateur
 	WHERE TypeDeCompte = 'Moderateur';
-

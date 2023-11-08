@@ -1,6 +1,11 @@
 package ecommerce.ecommerce.controller;
 import ecommerce.ecommerce.model.Model;
+import entity.Moderateur;
+import entity.Produit;
 import entity.Utilisateur;
+import java.util.List;
+
+import java.util.List;
 
 public class Controller {
     private Model model;
@@ -26,5 +31,20 @@ public class Controller {
         this.model.viderUtilisateur();
     }
 
+    public List<Utilisateur> requestGetListUtilisateurs(){return this.model.getListUtilisateurs();}
+
+    public List<Produit> requestGetProduits() {
+        return this.model.getListeProduits();
+    }
+
+    public Produit requestGetProduit(int id) {
+        return this.model.getProduit(id);
+    }
+
+    public void requestSetModerateur(Moderateur moderateur) { this.model.setModerateur(moderateur);
+    }
+
+    public Moderateur requestGetModerateur() { return this.model.getModerateur();
+    }
 
 }

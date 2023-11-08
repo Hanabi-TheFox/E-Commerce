@@ -62,6 +62,12 @@
             color: #333;
             text-decoration: none;
         }
+        .footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -77,5 +83,8 @@
     <p class="error"><%= errorMessage %></p>
 </div>
 <p style="text-align: center;">Pas encore de compte ? <a href="ServletDInscription">Inscrivez-vous ici</a></p>
+<div class="footer">
+    <p>&copy; 2023 LE NIL+. Tous droits réservés.</p>
+</div>
 </body>
 </html>

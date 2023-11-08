@@ -8,7 +8,6 @@ public class Client {
     private Integer idCommande;
     private String compteBancaireNum;
     private BigDecimal compteBancaireSolde;
-    private String droits;
     private Integer points;
 
     public int getIdClient() {
@@ -43,13 +42,7 @@ public class Client {
         this.compteBancaireSolde = compteBancaireSolde;
     }
 
-    public String getDroits() {
-        return droits;
-    }
 
-    public void setDroits(String droits) {
-        this.droits = droits;
-    }
 
     public Integer getPoints() {
         return points;
@@ -70,7 +63,6 @@ public class Client {
         if (!Objects.equals(idCommande, that.idCommande)) return false;
         if (!Objects.equals(compteBancaireNum, that.compteBancaireNum)) return false;
         if (!Objects.equals(compteBancaireSolde, that.compteBancaireSolde)) return false;
-        if (!Objects.equals(droits, that.droits)) return false;
         return Objects.equals(points, that.points);
     }
 
@@ -80,7 +72,6 @@ public class Client {
         result = 31 * result + (idCommande != null ? idCommande.hashCode() : 0);
         result = 31 * result + (compteBancaireNum != null ? compteBancaireNum.hashCode() : 0);
         result = 31 * result + (compteBancaireSolde != null ? compteBancaireSolde.hashCode() : 0);
-        result = 31 * result + (droits != null ? droits.hashCode() : 0);
         result = 31 * result + (points != null ? points.hashCode() : 0);
         return result;
     }
