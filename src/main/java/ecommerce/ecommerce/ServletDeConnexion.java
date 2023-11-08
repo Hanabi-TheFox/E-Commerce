@@ -31,7 +31,6 @@ public class ServletDeConnexion extends HttpServlet {
         if (utilisateur!= null) {
             // L'utilisateur existe, rediriger vers la page de profil
             //Il est utilisée le MVC pour sauvagarder les données de l'utilisateur en question
-            System.out.println("UTILISATEUR DANS LA SESSION : " + UtilisateurDAO.getUtilisateurByEmail("email"));
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
             //response.sendRedirect("ServletProfil");
             response.sendRedirect("ServletProduits") ;

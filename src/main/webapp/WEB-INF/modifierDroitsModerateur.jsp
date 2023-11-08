@@ -68,6 +68,9 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <h1>Modification des droits</h1>
 <form action="ServletModifyRights" method="post">
     <label for="email">Adresse email :</label>

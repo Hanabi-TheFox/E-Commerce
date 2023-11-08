@@ -71,6 +71,9 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <h1>Connexion</h1>
 <div class="container">
     <form action="ServletDeConnexion" method="post">

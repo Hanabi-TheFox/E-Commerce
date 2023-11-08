@@ -19,8 +19,6 @@
 
         h1 {
             text-align: center;
-            background-color: #333;
-            color: #fff;
             padding: 10px;
         }
 
@@ -66,13 +64,7 @@
 </head>
 <body>
 <div class="header">
-    <%
-        if (Controller.getInstanceController().requestGetUtilisateur() == null) {
-    %>
-    <a href="ServletDeConnexion">Se Connecter</a>
-    <%
-        }
-    %>
+    <%@ include file="header.jsp" %>
 </div>
 <h1>Liste des Produits</h1>
 <div class="container">
@@ -92,23 +84,6 @@
         }
     %>
 </div>
-
-<%
-    if (Controller.getInstanceController().requestGetUtilisateur() != null) {
-%>
-<a href="ServletProfil">Profil</a>
-<%
-    if (Controller.getInstanceController().requestGetUtilisateur().getTypeDeCompte().equals("Admin") || Controller.getInstanceController().requestGetUtilisateur().getTypeDeCompte().equals("Moderateur")) {
-%>
-<a href="ServletListeModerateur">Liste Moderateur</a><br>
-<%
-    }
-%>
-
-
-<%
-    }
-%>
 <div class="footer">
     <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
 </div>

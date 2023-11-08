@@ -88,6 +88,9 @@
     </script>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <h1>Ajout d'un modérateur</h1>
 <form action="ServletAddModerateur" method="post">
     <label for="nom">Nom :</label>
