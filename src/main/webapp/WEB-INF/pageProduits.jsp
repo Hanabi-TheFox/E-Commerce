@@ -70,7 +70,6 @@
         </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
-        <p><%= produit.getDescription() %></p>
     </div>
 
     <%
