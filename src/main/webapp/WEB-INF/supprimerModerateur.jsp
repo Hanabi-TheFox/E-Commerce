@@ -16,9 +16,9 @@
 
         form {
             background-color: #fff;
-            max-width: 400px;
             margin: 0 auto;
             padding: 20px;
+            width: 60%;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -26,8 +26,8 @@
 
         label {
             display: block;
-            text-align: left;
-            margin: 10px 0;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
         input[type="text"],
@@ -57,19 +57,6 @@
         }
     </style>
     <script>
-        function validerChamp(champ, pattern) {
-            var value = champ.value;
-            var newValue = value.replace(pattern, '');
-            if (newValue !== value) {
-                alert("Le champ " + champ.name + " contient des caractères non valides. Ils ont été supprimés.");
-                champ.value = newValue;
-            }
-        }
-
-        function validerNomPrenom(champ) {
-            validerChamp(champ, /[^A-Za-z\- ]/g);
-        }
-
         function validerMail(champ) {
             var value = champ.value;
             // Utiliser une expression régulière pour vérifier le format de l'adresse e-mail
@@ -81,34 +68,26 @@
                 champ.value = '';
             }
         }
-
-        function validerMotDePasse(champ) {
-            validerChamp(champ, /[^A-Za-z0-9?!*_/\\-]/g);
-        }
     </script>
 </head>
 <body>
 <div class="header">
     <%@ include file="header.jsp" %>
 </div>
-<h1>Modification des droits</h1>
-<form action="ServletDeleteModerateur.jsp" method="post">
-    <label for="email">Adresse email :</label>
+<h1>Suppression moderateurs</h1>
+<form action="ServletDeleteModerateur" method="post" class="supp">
+    <label for="email">Veuillez renseignez l'Adresse email du moderateur que vous voulez supprimer :</label>
     <input type="email" id="email" name="email" required><br><br>
 
-    <label for="droits">Droits :</label>
-    <select id="droits" name="droits" multiple>
-        <option value="000">000</option>
-        <option value="001">001</option>
-        <option value="010">010</option>
-        <option value="100">100</option>
-        <option value="110">110</option>
-        <option value="101">101</option>
-        <option value="011">011</option>
-        <option value="111">111</option>
-    </select><br><br>
-
-    <input type="submit" value="Modifier">
+    <input type="submit" value="Supprimer">
 </form>
+<%
+    Boolean suppression = (Boolean) request.getAttribute("suppression");
+    if (suppression != null && suppression) {
+%>
+<p class="success">Le moderateur a ete supprimer</p>
+<%
+    }
+%>
 </body>
 </html>

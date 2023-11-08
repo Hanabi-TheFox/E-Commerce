@@ -52,24 +52,68 @@ public class UtilisateurDAO
     }
 
 
-    public static void removeUtilisateur(String email) {
+/*    public static void deleteUtilisateur2(Utilisateur utilisateur) {
+        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+            session.beginTransaction();
+
+            if (utilisateur != null) {
+                session.delete(utilisateur);
+                session.getTransaction().commit();
+                session.beginTransaction();
+
+                if (utilisateur.getTypeDeCompte().equals("Moderateur")) {
+                    Moderateur moderateur = findModByUtilisateur(utilisateur);
+                    session.delete(moderateur);
+                } else if (utilisateur.getTypeDeCompte().equals("Client")) {
+                    Client client = findClientByUtilisateur(utilisateur);
+                    session.delete(client);
+                }
+                session.getTransaction().commit();
+            }
+        }catch (Exception e) {
+            System.out.println("Erreur lors de la suppression du modérateur.");
+            e.printStackTrace();
+        }
+    }*/
+    public static void deleteUtilisateur(Utilisateur utilisateur) {
+        int utilisateurId = utilisateur.getIdUtilisateur();
+        String typeDeCompte = utilisateur.getTypeDeCompte();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaDelete<Utilisateur> deleteCriteria = criteriaBuilder.createCriteriaDelete(Utilisateur.class);
+            Root<Utilisateur> root = deleteCriteria.from(Utilisateur.class);
+
+            deleteCriteria.where(criteriaBuilder.equal(root.get("idUtilisateur"), utilisateurId));
+
             Transaction transaction = session.beginTransaction();
 
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaDelete<Utilisateur> criteriaDelete = criteriaBuilder.createCriteriaDelete(Utilisateur.class);
-            Root<Utilisateur> root = criteriaDelete.from(Utilisateur.class);
-            criteriaDelete.where(criteriaBuilder.equal(root.get("mail"), email));
+            int deletedCount = session.createQuery(deleteCriteria).executeUpdate();
 
-            int deletedCount = session.createQuery(criteriaDelete).executeUpdate();
-
-            transaction.commit();
+            if (deletedCount > 0) {
+                if (typeDeCompte.equals("Client")){
+                    CriteriaDelete<Client> deleteClientCriteria = criteriaBuilder.createCriteriaDelete(Client.class);
+                    Root<Client> clientRoot = deleteClientCriteria.from(Client.class);
+                    deleteClientCriteria.where(criteriaBuilder.equal(clientRoot.get("idClient"), utilisateurId));
+                    session.createQuery(deleteClientCriteria).executeUpdate();
+                }else if (typeDeCompte.equals("Moderateur")){
+                    CriteriaDelete<Moderateur> deleteModerateurCriteria = criteriaBuilder.createCriteriaDelete(Moderateur.class);
+                    Root<Moderateur> moderateurRoot = deleteModerateurCriteria.from(Moderateur.class);
+                    deleteModerateurCriteria.where(criteriaBuilder.equal(moderateurRoot.get("idModerateur"), utilisateurId));
+                    session.createQuery(deleteModerateurCriteria).executeUpdate();
+                }
+                transaction.commit();
+                System.out.println("Utilisateur supprimé avec succès.");
+            } else {
+                transaction.rollback();
+                System.out.println("Utilisateur introuvable avec l'ID : " + utilisateurId);
+            }
         } catch (Exception e) {
-            System.out.println("ERREUR DE SUPPRESION UTILISATEUR : " + email);
+            System.out.println("Erreur lors de la suppression de l'utilisateur.");
             e.printStackTrace();
-
         }
     }
+
+
 
 
     public static List<Utilisateur> getListUtilisateurs() {
@@ -85,6 +129,7 @@ public class UtilisateurDAO
             e.printStackTrace();
             return new ArrayList<>(); //une liste vide est retournée si erreur
         }
+
     }
 
     public static Utilisateur getUtilisateurByEmail(String email) {
