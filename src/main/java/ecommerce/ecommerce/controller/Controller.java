@@ -37,6 +37,10 @@ public class Controller {
         return this.model.getListeProduits();
     }
 
+    public Produit requestGetProduit(int id) {
+        return this.model.getProduit(id);
+    }
+
     public void requestSetModerateur(Moderateur moderateur) { this.model.setModerateur(moderateur);
     }
 

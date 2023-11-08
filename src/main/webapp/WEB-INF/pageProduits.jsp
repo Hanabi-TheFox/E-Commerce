@@ -43,6 +43,7 @@
         .produit img {
             max-width: 100%;
             height: auto;
+            cursor: pointer; /* Curseur en forme de main pour indiquer que l'image est cliquable */
         }
 
         .produit h2 {
@@ -64,11 +65,14 @@
         for (Produit produit : listeProduits) {
     %>
     <div class="produit">
-        <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="<%= produit.getNom() %>">
+        <a href="ServletProduit?id=<%= produit.getIdProduit() %>"> <!-- Ajoutez le lien vers la servlet -->
+            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="200">
+        </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
         <p><%= produit.getDescription() %></p>
     </div>
+
     <%
         }
     %>
@@ -84,3 +88,4 @@
 %>
 </body>
 </html>
+

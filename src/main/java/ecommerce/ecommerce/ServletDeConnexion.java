@@ -34,7 +34,7 @@ public class ServletDeConnexion extends HttpServlet {
             System.out.println("UTILISATEUR DANS LA SESSION : " + UtilisateurDAO.getUtilisateurByEmail("email"));
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
             //response.sendRedirect("ServletProfil");
-            response.sendRedirect("ServletProduits");
+            response.sendRedirect("ServletProduits") ;
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur
             String errorMessage = "Utilisateur non trouvé, vérifiez l'identifiant et/ou le mot de passe";
