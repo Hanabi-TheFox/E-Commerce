@@ -59,20 +59,9 @@ public class ServletDInscription extends HttpServlet {
             to.put("email", email);
             message.setTo(to);
             message.setTemplate("ZHASTSX98ZM89ZGHHKTNQ8RN4P3V");
-            // HashMap<String, Object> content = new HashMap<String, Object>();
-            // content.put("title", "Bienvenue sur E-commerce!");
-            // content.put("body", "Bonjour, "+prenom+" "+nom+"!\n\n\t Nous vous confirmons votre inscription sur E-commerce!");
-            // message.setContent(content);
-
             HashMap<String, Object> data = new HashMap<String, Object>();
             data.put("user", prenom+" "+nom);
             message.setData(data);
-
-            // HashMap<String, Object> routing = new HashMap<String, Object>();
-            // routing.put("method", "single");
-            // routing.put("channels", ["email"]);
-            // message.setRouting(routing);
-
             request2.setMessage(message);
             try {
                 SendEnhancedResponseBody response2 = new SendService().sendEnhancedMessage(request2);
