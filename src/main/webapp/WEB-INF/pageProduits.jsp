@@ -55,6 +55,13 @@
             font-size: 16px;
             color: #777;
         }
+
+        .footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -85,6 +92,8 @@
 <%
     }
 %>
+<div class="footer">
+    <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
+</div>
 </body>
 </html>
-
