@@ -64,16 +64,19 @@
             <th>Nom</th>
             <th>Prenom</th>
             <th>Mail</th>
+            <th>Droits</th>
         </tr>
         <%
             Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
             List<Utilisateur> utilisateurs = (List<Utilisateur>) request.getAttribute("listModerateur");
             for (Utilisateur utilisateur : utilisateurs) {
+                Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(utilisateur);
         %>
         <tr>
             <td><%= utilisateur.getPrenom() %></td>
             <td><%= utilisateur.getNom() %></td>
             <td><%= utilisateur.getMail() %></td>
+            <td><%= moderateur.getDroits() %></td>
         </tr>
         <%
             }
@@ -83,36 +86,34 @@
         <%
             if (u.getTypeDeCompte().equals("Admin")) {
         %>
-        <a href="ServletAddModerateur"> Ajouter moderateur </a>
+                <form action="ServletAddModerateur" method ="get">
+                    <button type="submit">Ajouter Modérateur</button>
+                </form>
         <%
             }
             if (u.getTypeDeCompte().equals("Moderateur")) {
                 Moderateur m = UtilisateurDAO.findModByUtilisateur(u);
                 if (m.getDroits().charAt(2) == '1'){
         %>
-        <a href="ServletAddModerateur"> Ajouter moderateur </a>
+                    <form action="ServletAddModerateur" method ="get">
+                        <button type="submit">Ajouter Modérateur</button>
+                    </form>
         <%
                 }
             }
         %>
-        <form action="supprimerModerateur.jsp" method="post">
             <%
                 if (u.getTypeDeCompte().equals("Admin")) {
             %>
-            <button type="submit">Supprimer Modérateur</button>
+                    <form action="ServletDeleteModerateur" method ="get">
+                        <button type="submit">Supprimer Modérateur</button>
+                    </form>
+                    <form action="ServletModifyRights" method ="get">
+                        <button type="submit">Modifier les droits</button>
+                    </form>
             <%
                 }
             %>
-        </form>
-        <form action="modifierDroits.jsp" method="post">
-            <%
-                if (u.getTypeDeCompte().equals("Admin")) {
-            %>
-                <button type="submit">Modifier Droits</button>
-            <%
-                }
-            %>
-        </form>
     </div>
 </div>
 </body>
