@@ -27,6 +27,10 @@ public class Model {
         return ProduitDAO.getListProduits();
     }
 
+    public Produit getProduit(int id) {
+        return ProduitDAO.getProduitById(id);
+    }
+
     public Utilisateur getUtilisateur() {
         return utilisateur;
     }

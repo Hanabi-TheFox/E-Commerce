@@ -43,6 +43,7 @@
         .produit img {
             max-width: 100%;
             height: auto;
+            cursor: pointer; /* Curseur en forme de main pour indiquer que l'image est cliquable */
         }
 
         .produit h2 {
@@ -54,6 +55,13 @@
             font-size: 16px;
             color: #777;
         }
+
+        .footer {
+            text-align: center;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -64,11 +72,13 @@
         for (Produit produit : listeProduits) {
     %>
     <div class="produit">
-        <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="<%= produit.getNom() %>">
+        <a href="ServletProduit?id=<%= produit.getIdProduit() %>"> <!-- Ajoutez le lien vers la servlet -->
+            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="200">
+        </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
-        <p><%= produit.getDescription() %></p>
     </div>
+
     <%
         }
     %>
@@ -82,5 +92,8 @@
 <%
     }
 %>
+<div class="footer">
+    <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
+</div>
 </body>
 </html>
