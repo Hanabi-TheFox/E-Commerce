@@ -1,6 +1,10 @@
-<%@ page import="entity.Utilisateur" %>
+        <%@ page import="entity.Utilisateur" %>
 <%@ page import="jdk.jshell.execution.Util" %>
-<!DOCTYPE html>
+<%@ page import="ecommerce.ecommerce.controller.Controller" %>
+<%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>
+<%@ page import="entity.Client" %>
+        <%@ page import="entity.Moderateur" %>
+        <!DOCTYPE html>
 <html>
 <head>
     <title>Profil de l'Utilisateur</title>
@@ -50,19 +54,51 @@
 </head>
 <body>
 <div class="container">
-    <h1>Profil Client</h1>
-    <p style="color: #0077cc;">Bienvenue, ${prenom} !</p>
+    <%
+        Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
+        if (u.getTypeDeCompte().equals("Client")) {
+            Client c = UtilisateurDAO.findClientByUtilisateur(u);
+    %>
+        <h1>Profil Client</h1>
+        <p style="color: #0077cc;">Bienvenue, <%=u.getPrenom()%> !</p>
 
-    <h2>Informations de Profil :</h2>
-    <ul>
-        <li><strong>Nom :</strong> ${nom}</li>
-        <li><strong>Prenom :</strong> ${prenom}</li>
-        <li><strong>Email :</strong> ${email}</li>
-        <li><strong>Solde :</strong> ${solde}</li>
-        <li><strong>Points de fidelite :</strong> ${points}</li>
-        <!-- Ajoutez d'autres informations de profil ici -->
-    </ul>
+        <h2>Informations de Profil :</h2>
+        <ul>
+            <li><strong>Nom :</strong> <%=u.getNom()%> </li>
+            <li><strong>Prenom :</strong> <%=u.getPrenom()%> </li>
+            <li><strong>Email :</strong> <%=u.getMail()%> </li>
+            <li><strong>Solde :</strong> <%=c.getCompteBancaireSolde()%> </li>
+            <li><strong>Points de fidelite :</strong> <%=c.getPoints()%> </li>
+        </ul>
+    <%
+        }else if (u.getTypeDeCompte().equals("Moderateur")){
+            Moderateur m = UtilisateurDAO.findModByUtilisateur(u);
+    %>
+        <h1>Profil Moderateur</h1>
+        <p style="color: #0077cc;">Bienvenue, <%=u.getPrenom()%> !</p>
 
+        <h2>Informations de Profil :</h2>
+        <ul>
+            <li><strong>Nom :</strong> <%=u.getNom()%> </li>
+            <li><strong>Prenom :</strong> <%=u.getPrenom()%> </li>
+            <li><strong>Email :</strong> <%=u.getMail()%> </li>
+            <li><strong>Droits :</strong> <%=m.getDroits()%></li>
+        </ul>
+    <%
+        }else { // u.getTypeDeCompte.equals("Admin")
+    %>
+        <h1>Profil Admin</h1>
+        <p style="color: #0077cc;">Bienvenue, <%=u.getPrenom()%> !</p>
+
+        <h2>Informations de Profil :</h2>
+        <ul>
+            <li><strong>Nom :</strong> <%=u.getNom()%> </li>
+            <li><strong>Prenom :</strong> <%=u.getPrenom()%> </li>
+            <li><strong>Email :</strong> <%=u.getMail()%> </li>
+        </ul>
+    <%
+        }
+    %>
     <p><a href="ServletDeDeconnexion">Deconnexion</a></p> <!-- Lien pour se déconnecter -->
 </div>
 </body>
