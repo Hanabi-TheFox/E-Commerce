@@ -65,6 +65,15 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%
+        if (Controller.getInstanceController().requestGetUtilisateur() == null) {
+    %>
+    <a href="ServletDeConnexion">Se Connecter</a>
+    <%
+        }
+    %>
+</div>
 <h1>Liste des Produits</h1>
 <div class="container">
     <%
@@ -83,12 +92,20 @@
         }
     %>
 </div>
+
+<%
+    if (Controller.getInstanceController().requestGetUtilisateur() != null) {
+%>
 <a href="ServletProfil">Profil</a>
 <%
-    Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
-    if (u.getTypeDeCompte().equals("Admin") || u.getTypeDeCompte().equals("Moderateur")) {
+    if (Controller.getInstanceController().requestGetUtilisateur().getTypeDeCompte().equals("Admin") || Controller.getInstanceController().requestGetUtilisateur().getTypeDeCompte().equals("Moderateur")) {
 %>
 <a href="ServletListeModerateur">Liste Moderateur</a><br>
+<%
+    }
+%>
+
+
 <%
     }
 %>
