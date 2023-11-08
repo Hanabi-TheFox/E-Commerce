@@ -131,4 +131,14 @@ public class UtilisateurDAO
 
         return moderateur;
     }
+
+    public static void modifyModerator(Moderateur moderateur, String droits){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        moderateur.setDroits(droits);
+        System.out.println(moderateur.getDroits());
+        session.save(moderateur);
+        session.getTransaction().commit();
+        session.close();
+    }
 }
