@@ -73,7 +73,7 @@
     %>
     <div class="produit">
         <a href="ServletProduit?id=<%= produit.getIdProduit() %>"> <!-- Ajoutez le lien vers la servlet -->
-            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="200">
+            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="100">
         </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>

@@ -8,10 +8,7 @@ import java.util.List;
 import entity.Moderateur;
 import entity.Utilisateur;
 import entity.Client;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaDelete;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.hibernate.Session;
 import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
@@ -132,7 +129,35 @@ public class UtilisateurDAO
         return moderateur;
     }
 
-    public static void modifyModerator(Moderateur moderateur, String droits){
+    public static void modifyModerateurDroits(int moderatorId, String nouveauxDroits) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaUpdate<Moderateur> updateCriteria = criteriaBuilder.createCriteriaUpdate(Moderateur.class);
+            Root<Moderateur> root = updateCriteria.from(Moderateur.class);
+
+            // il est specifiée quel attribut sera modifiée
+            updateCriteria.set(root.get("droits"), nouveauxDroits);
+
+            // on trouve cet attribut grace à l'id_moderateur correspondant
+            updateCriteria.where(criteriaBuilder.equal(root.get("idModerateur"), moderatorId));
+
+            Transaction transaction = session.beginTransaction();
+            int updatedCount = session.createQuery(updateCriteria).executeUpdate();
+            transaction.commit();
+
+            if (updatedCount > 0) {
+                System.out.println("Droits du modérateur mis à jour avec succès.");
+            } else {
+                System.out.println("Modérateur introuvable avec l'ID : " + moderatorId);
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la mise à jour des droits du modérateur.");
+            e.printStackTrace();
+        }
+    }
+
+
+    /*public static void modifyModerator(Moderateur moderateur, String droits){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         moderateur.setDroits(droits);
@@ -140,5 +165,5 @@ public class UtilisateurDAO
         session.save(moderateur);
         session.getTransaction().commit();
         session.close();
-    }
+    }*/
 }

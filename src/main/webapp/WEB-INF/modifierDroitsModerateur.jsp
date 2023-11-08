@@ -1,6 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
+    <%
+        Boolean modification = (Boolean) request.getAttribute("modification");
+    %>
     <meta charset="UTF-8">
     <title>Inscription</title>
     <style>
@@ -30,8 +36,8 @@
             margin: 10px 0;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        input[type="email"],
+        select {
             width: 100%;
             padding: 10px;
             margin: 5px 0;
@@ -55,37 +61,11 @@
         p {
             margin-top: 15px;
         }
+
+        .success {
+            color: green;
+        }
     </style>
-    <script>
-        function validerChamp(champ, pattern) {
-            var value = champ.value;
-            var newValue = value.replace(pattern, '');
-            if (newValue !== value) {
-                alert("Le champ " + champ.name + " contient des caractères non valides. Ils ont été supprimés.");
-                champ.value = newValue;
-            }
-        }
-
-        function validerNomPrenom(champ) {
-            validerChamp(champ, /[^A-Za-z\- ]/g);
-        }
-
-        function validerMail(champ) {
-            var value = champ.value;
-            // Utiliser une expression régulière pour vérifier le format de l'adresse e-mail
-            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-            if (!emailPattern.test(value)) {
-                alert("Le champ " + champ.name + " ne contient pas une adresse e-mail valide.");
-                // Réinitialiser la valeur du champ à une chaîne vide
-                champ.value = '';
-            }
-        }
-
-        function validerMotDePasse(champ) {
-            validerChamp(champ, /[^A-Za-z0-9?!*_/\\-]/g);
-        }
-    </script>
 </head>
 <body>
 <h1>Modification des droits</h1>
@@ -105,6 +85,14 @@
     </select><br><br>
 
     <input type="submit" value="Modifier">
+
+    <%
+        if (modification != null && modification) {
+    %>
+    <p class="success">Le modérateur a été mis à jour</p>
+    <%
+        }
+    %>
 </form>
 </body>
 </html>
