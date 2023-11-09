@@ -55,6 +55,9 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <h1>Détails du Produit</h1>
 <div class="container">
     <div class="product-details">

@@ -53,6 +53,9 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <div class="container">
     <%
         Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
@@ -100,7 +103,7 @@
         }
     %>
     <p><a href="ServletDeDeconnexion">Deconnexion</a></p> <!-- Lien pour se déconnecter -->
-    <p><a href="ServletDeDesinscription">Supprimer mon compte</a></p>
+
 </div>
 </body>
 </html>

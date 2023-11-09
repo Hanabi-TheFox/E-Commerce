@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public class Commande {
     private int idCommande;
+    private Integer idClient;
     private BigDecimal prix;
     private String status;
 
@@ -14,6 +15,14 @@ public class Commande {
 
     public void setIdCommande(int idCommande) {
         this.idCommande = idCommande;
+    }
+
+    public int getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(int idClient) {
+        this.idClient = idClient;
     }
 
     public BigDecimal getPrix() {
@@ -40,6 +49,7 @@ public class Commande {
         Commande that = (Commande) o;
 
         if (idCommande != that.idCommande) return false;
+        if (!Objects.equals(idClient, that.idClient)) return false;
         if (!Objects.equals(prix, that.prix)) return false;
         return Objects.equals(status, that.status);
     }
@@ -47,6 +57,7 @@ public class Commande {
     @Override
     public int hashCode() {
         int result = idCommande;
+        result = 31 * result + (idClient != null ? idClient.hashCode() : 0);
         result = 31 * result + (prix != null ? prix.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;

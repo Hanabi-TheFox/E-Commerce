@@ -18,7 +18,6 @@ public class ServletProduits extends HttpServlet {
         // TODO : Traitement pour la méthode GET
         List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
         request.setAttribute("listeProduits", listeProduits);
-        System.out.println("test zjaebknjzabea" + listeProduits);
         request.getRequestDispatcher("/WEB-INF/pageProduits.jsp").forward(request, response);
     }
 

@@ -88,6 +88,9 @@
     </script>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <h1>Inscription</h1>
 <form action="ServletDInscription" method="post">
     <label for="nom">Nom :</label>

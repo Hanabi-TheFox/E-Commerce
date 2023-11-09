@@ -49,6 +49,9 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <div class="moderators">
     <h1>Liste des Modérateurs</h1>
 <%--    <% String message = (String) request.getAttribute("Ajouter");

@@ -8,10 +8,7 @@ import java.util.List;
 import entity.Moderateur;
 import entity.Utilisateur;
 import entity.Client;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaDelete;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.hibernate.Session;
 import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
@@ -54,26 +51,44 @@ public class UtilisateurDAO
         session.close();
     }
 
-
-    public static void removeUtilisateur(String email) {
+    public static void deleteUtilisateur(Utilisateur utilisateur) {
+        // IL FAUT DELETE LE CLIENT OU LE MODO ASSOSCIER AVANT DE DELETE L'UTILISATEUR
+        int utilisateurId = utilisateur.getIdUtilisateur();
+        String typeDeCompte = utilisateur.getTypeDeCompte();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaDelete<Utilisateur> criteriaDelete = criteriaBuilder.createCriteriaDelete(Utilisateur.class);
-            Root<Utilisateur> root = criteriaDelete.from(Utilisateur.class);
-            criteriaDelete.where(criteriaBuilder.equal(root.get("mail"), email));
+            Transaction transaction = session.beginTransaction();
+            if (typeDeCompte.equals("Client")){
+                CriteriaDelete<Client> deleteClientCriteria = criteriaBuilder.createCriteriaDelete(Client.class);
+                Root<Client> clientRoot = deleteClientCriteria.from(Client.class);
+                deleteClientCriteria.where(criteriaBuilder.equal(clientRoot.get("idClient"), utilisateurId));
+                session.createQuery(deleteClientCriteria).executeUpdate();
+                System.out.println("Client supprimé");
+            }else if (typeDeCompte.equals("Moderateur")){
+                CriteriaDelete<Moderateur> deleteModerateurCriteria = criteriaBuilder.createCriteriaDelete(Moderateur.class);
+                Root<Moderateur> moderateurRoot = deleteModerateurCriteria.from(Moderateur.class);
+                deleteModerateurCriteria.where(criteriaBuilder.equal(moderateurRoot.get("idModerateur"), utilisateurId));
+                session.createQuery(deleteModerateurCriteria).executeUpdate();
+                System.out.println("Moderateur supprimé");
+            }
+            CriteriaDelete<Utilisateur> deleteCriteria = criteriaBuilder.createCriteriaDelete(Utilisateur.class);
+            Root<Utilisateur> root = deleteCriteria.from(Utilisateur.class);
+            deleteCriteria.where(criteriaBuilder.equal(root.get("idUtilisateur"), utilisateurId));
 
-            int deletedCount = session.createQuery(criteriaDelete).executeUpdate();
+            int deletedCount = session.createQuery(deleteCriteria).executeUpdate();
 
-            transaction.commit();
+            if (deletedCount > 0) {
+                transaction.commit();
+                System.out.println("Utilisateur supprimé avec succès.");
+            } else {
+                transaction.rollback();
+                System.out.println("Utilisateur introuvable avec l'ID : " + utilisateurId);
+            }
         } catch (Exception e) {
-            System.out.println("ERREUR DE SUPPRESION UTILISATEUR : " + email);
+            System.out.println("Erreur lors de la suppression de l'utilisateur.");
             e.printStackTrace();
-
         }
     }
-
 
     public static List<Utilisateur> getListUtilisateurs() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -88,6 +103,7 @@ public class UtilisateurDAO
             e.printStackTrace();
             return new ArrayList<>(); //une liste vide est retournée si erreur
         }
+
     }
 
     public static Utilisateur getUtilisateurByEmail(String email) {
@@ -131,4 +147,42 @@ public class UtilisateurDAO
 
         return moderateur;
     }
+
+    public static void modifyModerateurDroits(int moderatorId, String nouveauxDroits) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaUpdate<Moderateur> updateCriteria = criteriaBuilder.createCriteriaUpdate(Moderateur.class);
+            Root<Moderateur> root = updateCriteria.from(Moderateur.class);
+
+            // il est specifiée quel attribut sera modifiée
+            updateCriteria.set(root.get("droits"), nouveauxDroits);
+
+            // on trouve cet attribut grace à l'id_moderateur correspondant
+            updateCriteria.where(criteriaBuilder.equal(root.get("idModerateur"), moderatorId));
+
+            Transaction transaction = session.beginTransaction();
+            int updatedCount = session.createQuery(updateCriteria).executeUpdate();
+            transaction.commit();
+
+            if (updatedCount > 0) {
+                System.out.println("Droits du modérateur mis à jour avec succès.");
+            } else {
+                System.out.println("Modérateur introuvable avec l'ID : " + moderatorId);
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la mise à jour des droits du modérateur.");
+            e.printStackTrace();
+        }
+    }
+
+
+    /*public static void modifyModerator(Moderateur moderateur, String droits){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        moderateur.setDroits(droits);
+        System.out.println(moderateur.getDroits());
+        session.save(moderateur);
+        session.getTransaction().commit();
+        session.close();
+    }*/
 }

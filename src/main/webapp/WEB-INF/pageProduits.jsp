@@ -19,8 +19,6 @@
 
         h1 {
             text-align: center;
-            background-color: #333;
-            color: #fff;
             padding: 10px;
         }
 
@@ -65,6 +63,9 @@
     </style>
 </head>
 <body>
+<div class="header">
+    <%@ include file="header.jsp" %>
+</div>
 <h1>Liste des Produits</h1>
 <div class="container">
     <%
@@ -73,25 +74,25 @@
     %>
     <div class="produit">
         <a href="ServletProduit?id=<%= produit.getIdProduit() %>"> <!-- Ajoutez le lien vers la servlet -->
-            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="200">
+            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="100">
         </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
+        <!-- Formulaire pour ajouter au panier -->
+        <form action="ServletPanier" method="post">
+            <input type="hidden" name="action" value="ajouter">
+            <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
+            <input type="hidden" name="produitNom" value="<%= produit.getNom() %>">
+            <input type="hidden" name="produitPrix" value="<%= produit.getPrix() %>">
+            <input type="hidden" name="produitQuantite" value="1">
+            <input type="submit" value="Ajouter au panier">
+        </form>
     </div>
 
     <%
         }
     %>
 </div>
-<a href="ServletProfil">Profil</a>
-<%
-    Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
-    if (u.getTypeDeCompte().equals("Admin") || u.getTypeDeCompte().equals("Moderateur")) {
-%>
-<a href="ServletListeModerateur">Liste Moderateur</a><br>
-<%
-    }
-%>
 <div class="footer">
     <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
 </div>
