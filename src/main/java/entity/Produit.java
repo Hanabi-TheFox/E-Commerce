@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Produit {
     private int idProduit;
     private String nom;
-    private BigDecimal prix;
+    private Float prix;
     private String description;
     private Integer stock;
 
@@ -37,11 +37,11 @@ public class Produit {
         this.nom = nom;
     }
 
-    public BigDecimal getPrix() {
+    public Float getPrix() {
         return prix;
     }
 
-    public void setPrix(BigDecimal prix) {
+    public void setPrix(Float prix) {
         this.prix = prix;
     }
 

@@ -16,7 +16,7 @@ import org.hibernate.Transaction;
 
 public class ProduitDAO
 {
-    public static void addProduit(Utilisateur p)
+    public static void addProduit(Produit p)
     {
         Session session= HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
