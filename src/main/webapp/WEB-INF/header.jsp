@@ -45,7 +45,7 @@
         }
         .style:hover {
             font-size: 12px;
-            border: 2px solid #a7976a;
+            border: 2px solid #3498db;
             border-radius: 5px;
             padding: 3px 4px;
         }
@@ -57,7 +57,7 @@
             border-radius: 5px;
         }
         .lien:hover {
-            background-color: #a7976a;
+            background-color: #3498db;
             font-size: 20px;
         }
         .test svg {
