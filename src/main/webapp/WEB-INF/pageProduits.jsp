@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="entity.Produit" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entity.Utilisateur" %>
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
+<%@ page import="entity.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +42,7 @@
         .produit img {
             max-width: 100%;
             height: auto;
-            cursor: pointer; /* Curseur en forme de main pour indiquer que l'image est cliquable */
+            cursor: pointer;
         }
 
         .produit h2 {
@@ -72,22 +71,27 @@
 <div class="container">
     <%
         List<Produit> listeProduits = (List<Produit>) request.getAttribute("listeProduits");
+        Utilisateur utilisateur = (Utilisateur) request.getAttribute("utilisateur");
+        Client client = (Client) request.getAttribute("client");
+
         for (Produit produit : listeProduits) {
     %>
     <div class="produit">
-        <a href="ServletProduit?id=<%= produit.getIdProduit() %>"> <!-- Ajoutez le lien vers la servlet -->
+        <a href="ServletProduit?id=<%= produit.getIdProduit() %>">
             <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="100">
         </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
         <!-- Formulaire pour ajouter au panier -->
-        <form action="ServletPanier" method="post">
+        <form action="ServletPanier" method="get">
             <input type="hidden" name="action" value="ajouter">
             <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
             <input type="hidden" name="produitNom" value="<%= produit.getNom() %>">
             <input type="hidden" name="produitPrix" value="<%= produit.getPrix() %>">
             <input type="hidden" name="produitQuantite" value="1">
+            <% if (client != null) { %>
             <input type="submit" value="Ajouter au panier">
+            <% } %>
         </form>
     </div>
 
