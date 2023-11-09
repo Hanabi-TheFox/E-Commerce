@@ -1,5 +1,7 @@
 <%@ page import="entity.Utilisateur" %>
+<%@ page import="entity.Moderateur" %>
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
+<%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -105,6 +107,7 @@
             color: #555;
         }
     </style>
+    <title> header </title>
 </head>
 <body>
 <header>
@@ -114,25 +117,35 @@
             <li class='style'><a href='ServletProduits' class='lien'>Accueil</a></li>
             <%
                 Utilisateur header = Controller.getInstanceController().requestGetUtilisateur();
-                if(header != null){
+                if (header == null) {
             %>
-            <li class='style'><a href='ServletProfil' class='lien'>Profil</a></li>
+                <li class='style'><a href="ServletDeConnexion" class='lien'>Se Connecter</a></li>
             <%
-                    if(header.getTypeDeCompte().equals("Client")){
+                } else {
+                    Moderateur headerMod = null;
+                    if (header.getTypeDeCompte().equals("Moderateur")){
+                        headerMod = UtilisateurDAO.findModByUtilisateur(header);
+                    }
+            %>
+                    <li class='style'><a href='ServletProfil' class='lien'>Profil</a></li>
+            <%
+                    if (header.getTypeDeCompte().equals("Client")) {
             %>
                     <li class='style'><a href='ServletPanier' class='lien'>Panier</a></li>
             <%
-                    }else {
+                    } else {
             %>
                     <li class='style'><a href='ServletListeModerateur' class='lien'>Gerer Moderateur</a></li>
             <%
+                        if (header.getTypeDeCompte().equals("Admin") || (headerMod != null && headerMod.getDroits().charAt(0) == '1')){
+            %>
+                    <li class='style'><a href='ServletAjouterProduit' class='lien'>Ajouter Produit</a></li>
+            <%
+                        }
                     }
             %>
-                <li class='style'><a href='ServletDeDeconnexion' class='lien'>Se Deconnecter</a></li>
-            <%
-                }else {
-            %>
-                <li class='style'><a href="ServletDeConnexion" class='lien'>Se Connecter</a></li>
+                    <li class='style'><a href='ServletDeDeconnexion' class='lien'>Se Deconnecter</a></li>
+
             <%
                 }
             %>

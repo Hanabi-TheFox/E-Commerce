@@ -51,30 +51,6 @@ public class UtilisateurDAO
         session.close();
     }
 
-
-/*    public static void deleteUtilisateur2(Utilisateur utilisateur) {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
-            session.beginTransaction();
-
-            if (utilisateur != null) {
-                session.delete(utilisateur);
-                session.getTransaction().commit();
-                session.beginTransaction();
-
-                if (utilisateur.getTypeDeCompte().equals("Moderateur")) {
-                    Moderateur moderateur = findModByUtilisateur(utilisateur);
-                    session.delete(moderateur);
-                } else if (utilisateur.getTypeDeCompte().equals("Client")) {
-                    Client client = findClientByUtilisateur(utilisateur);
-                    session.delete(client);
-                }
-                session.getTransaction().commit();
-            }
-        }catch (Exception e) {
-            System.out.println("Erreur lors de la suppression du modérateur.");
-            e.printStackTrace();
-        }
-    }*/
     public static void deleteUtilisateur(Utilisateur utilisateur) {
         // IL FAUT DELETE LE CLIENT OU LE MODO ASSOSCIER AVANT DE DELETE L'UTILISATEUR
         int utilisateurId = utilisateur.getIdUtilisateur();
