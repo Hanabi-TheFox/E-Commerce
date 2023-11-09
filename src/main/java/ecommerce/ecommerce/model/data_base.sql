@@ -16,20 +16,20 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 	TypeDeCompte enum('Admin', 'Moderateur', 'Client') NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS `Client` (
+    id_client int UNIQUE PRIMARY KEY,
+    compteBancaireNum varchar(19) NOT NULL,
+    compteBancaireSolde decimal(10,2),
+    points int,
+    FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
+);
+
 CREATE TABLE IF NOT EXISTS Commande (
 	id_commande int AUTO_INCREMENT UNIQUE PRIMARY KEY,
 	prix decimal(10,2) NOT NULL,
 	status varchar(50) NOT NULL,
     id_client int,
     FOREIGN KEY (id_client) REFERENCES Client(id_client)
-);
-
-CREATE TABLE IF NOT EXISTS `Client` (
-	id_client int UNIQUE PRIMARY KEY,
-	compteBancaireNum varchar(19) NOT NULL,
-	compteBancaireSolde decimal(10,2),
-    points int,
-    FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
 );
 
 CREATE TABLE IF NOT EXISTS `Moderateur` (
