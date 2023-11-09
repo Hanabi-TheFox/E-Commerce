@@ -10,6 +10,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
+            margin:0;
         }
 
         h1 {
@@ -34,7 +35,7 @@
 
         input[type="text"],
         input[type="password"] {
-            width: 100%;
+            width: 80%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ccc;
