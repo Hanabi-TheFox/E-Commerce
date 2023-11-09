@@ -76,31 +76,32 @@ public class UtilisateurDAO
         }
     }*/
     public static void deleteUtilisateur(Utilisateur utilisateur) {
+        // IL FAUT DELETE LE CLIENT OU LE MODO ASSOSCIER AVANT DE DELETE L'UTILISATEUR
         int utilisateurId = utilisateur.getIdUtilisateur();
         String typeDeCompte = utilisateur.getTypeDeCompte();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            Transaction transaction = session.beginTransaction();
+            if (typeDeCompte.equals("Client")){
+                CriteriaDelete<Client> deleteClientCriteria = criteriaBuilder.createCriteriaDelete(Client.class);
+                Root<Client> clientRoot = deleteClientCriteria.from(Client.class);
+                deleteClientCriteria.where(criteriaBuilder.equal(clientRoot.get("idClient"), utilisateurId));
+                session.createQuery(deleteClientCriteria).executeUpdate();
+                System.out.println("Client supprimé");
+            }else if (typeDeCompte.equals("Moderateur")){
+                CriteriaDelete<Moderateur> deleteModerateurCriteria = criteriaBuilder.createCriteriaDelete(Moderateur.class);
+                Root<Moderateur> moderateurRoot = deleteModerateurCriteria.from(Moderateur.class);
+                deleteModerateurCriteria.where(criteriaBuilder.equal(moderateurRoot.get("idModerateur"), utilisateurId));
+                session.createQuery(deleteModerateurCriteria).executeUpdate();
+                System.out.println("Moderateur supprimé");
+            }
             CriteriaDelete<Utilisateur> deleteCriteria = criteriaBuilder.createCriteriaDelete(Utilisateur.class);
             Root<Utilisateur> root = deleteCriteria.from(Utilisateur.class);
-
             deleteCriteria.where(criteriaBuilder.equal(root.get("idUtilisateur"), utilisateurId));
-
-            Transaction transaction = session.beginTransaction();
 
             int deletedCount = session.createQuery(deleteCriteria).executeUpdate();
 
             if (deletedCount > 0) {
-                if (typeDeCompte.equals("Client")){
-                    CriteriaDelete<Client> deleteClientCriteria = criteriaBuilder.createCriteriaDelete(Client.class);
-                    Root<Client> clientRoot = deleteClientCriteria.from(Client.class);
-                    deleteClientCriteria.where(criteriaBuilder.equal(clientRoot.get("idClient"), utilisateurId));
-                    session.createQuery(deleteClientCriteria).executeUpdate();
-                }else if (typeDeCompte.equals("Moderateur")){
-                    CriteriaDelete<Moderateur> deleteModerateurCriteria = criteriaBuilder.createCriteriaDelete(Moderateur.class);
-                    Root<Moderateur> moderateurRoot = deleteModerateurCriteria.from(Moderateur.class);
-                    deleteModerateurCriteria.where(criteriaBuilder.equal(moderateurRoot.get("idModerateur"), utilisateurId));
-                    session.createQuery(deleteModerateurCriteria).executeUpdate();
-                }
                 transaction.commit();
                 System.out.println("Utilisateur supprimé avec succès.");
             } else {
@@ -112,9 +113,6 @@ public class UtilisateurDAO
             e.printStackTrace();
         }
     }
-
-
-
 
     public static List<Utilisateur> getListUtilisateurs() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
