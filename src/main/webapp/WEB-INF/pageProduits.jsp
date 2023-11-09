@@ -78,6 +78,15 @@
         </a>
         <h2><%= produit.getNom() %></h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
+        <!-- Formulaire pour ajouter au panier -->
+        <form action="ServletPanier" method="post">
+            <input type="hidden" name="action" value="ajouter">
+            <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
+            <input type="hidden" name="produitNom" value="<%= produit.getNom() %>">
+            <input type="hidden" name="produitPrix" value="<%= produit.getPrix() %>">
+            <input type="hidden" name="produitQuantite" value="1">
+            <input type="submit" value="Ajouter au panier">
+        </form>
     </div>
 
     <%
