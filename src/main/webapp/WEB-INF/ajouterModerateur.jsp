@@ -105,20 +105,6 @@
     <label for="motDePasse">Mot de passe :</label>
     <input type="password" id="motDePasse" name="motDePasse" required onblur="validerMotDePasse(this)">
     <br>
-    <label for="droits">Droits</label>
-    <select id="droits" name="droits">
-        <option value="000">000</option>
-        <option value="001">001</option>
-        <option value="010">010</option>
-        <option value="100">100</option>
-        <option value="110">110</option>
-        <option value="011">011</option>
-        <option value="101">101</option>
-        <option value="111">111</option>
-    </select>
-    <p> Le premier chiffre correspond au droit de 1</p>
-    <p> Le deuxiemechiffre correspond au droit de 2</p>
-    <p> Le troisieme chiffre correspond au droit de 3</p>
     <input type="submit" value="Inscrire le modérateur">
 </form>
 </body>
