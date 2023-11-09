@@ -1,6 +1,8 @@
 package entity;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Commande {
@@ -8,6 +10,21 @@ public class Commande {
     private Integer idClient;
     private BigDecimal prix;
     private String status;
+
+    private List<Produit> panier = new ArrayList<>();
+
+    ///Methode pour ajouter des produits dans le panier
+    public void ajouterProduitDansPanier(Produit p){
+        panier.add(p);
+    }
+
+    public void supprimerProduitDansPanier(Produit p){
+        panier.remove(p);
+    }
+
+    public List<Produit> getPanier() {
+        return this.panier;
+    }
 
     public int getIdCommande() {
         return idCommande;

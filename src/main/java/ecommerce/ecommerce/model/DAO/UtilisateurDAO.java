@@ -119,18 +119,32 @@ public class UtilisateurDAO
     }
     public static Client findClientByUtilisateur(Utilisateur utilisateur) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
 
-        String hql = "FROM Client WHERE idClient = :userId";
-        Query<Client> query = session.createQuery(hql, Client.class);
-        query.setParameter("userId", utilisateur.getIdUtilisateur());
+        try {
+            session.beginTransaction();
 
-        Client client = query.uniqueResult();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Client> criteriaQuery = builder.createQuery(Client.class);
+            Root<Client> root = criteriaQuery.from(Client.class);
 
-        session.getTransaction().commit();
-        session.close();
+            // Assuming 'utilisateur' is a property in the Client entity
+            criteriaQuery.select(root).where(builder.equal(root.get("idClient"), utilisateur.getIdUtilisateur()));
 
-        return client;
+            List<Client> clients = session.createQuery(criteriaQuery).getResultList();
+            Client client = (clients != null && !clients.isEmpty()) ? clients.get(0) : null;
+
+            session.getTransaction().commit();
+            return client;
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return null;
     }
 
     public static Moderateur findModByUtilisateur(Utilisateur utilisateur) {

@@ -20,20 +20,25 @@
         <th>Quantité</th>
         <th>Prix total</th>
     </tr>
+
+
     <%
         List<Produit> panier = (List<Produit>) request.getAttribute("panier");
-        for(Produit produit : panier){
+        if (panier != null) {
+            for (Produit produit : panier) {
     %>
-        <tr>
-            <td>${produit.getNom()}</td>
-            <td>${produit.getPrix()}</td>
-            <td>${produit.getStock()}</td>
-            <td>${produit.getPrix()*produit.getStock()}</td>
-        </tr>
+    <tr>
+        <td>${produit.getNom()}</td>
+        <td>${produit.getPrix()}</td>
+        <td>${produit.getStock()}</td>
+        <td>${produit.getPrix() * produit.getStock()}</td>
+    </tr>
     <%
+            }
         }
     %>
 </table>
+
 
 <p>Montant total des produits : ${montantTotal}</p>
 

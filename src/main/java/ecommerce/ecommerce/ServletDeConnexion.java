@@ -32,11 +32,18 @@ public class ServletDeConnexion extends HttpServlet {
             // L'utilisateur existe, rediriger vers la page de profil
             //Il est utilisée le MVC pour sauvagarder les données de l'utilisateur en question
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
-            //response.sendRedirect("ServletProfil");
+
+            //TODO il est geré les differentes types de comptes selon l'utilisateur:
+            //TODO pour le client, une commande vide est crée
+            System.out.println("CLIENT CONNECTT2 : " + UtilisateurDAO.findClientByUtilisateur(utilisateur));
+            Controller.getInstanceController().requestSetClient(UtilisateurDAO.findClientByUtilisateur(utilisateur));
+            Controller.getInstanceController().requestCreateCommande(Controller.getInstanceController().requestGetClient().getIdClient());
             response.sendRedirect("ServletProduits") ;
+
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur
             String errorMessage = "Utilisateur non trouvé, vérifiez l'identifiant et/ou le mot de passe";
+            request.setAttribute("client",Controller.getInstanceController().requestGetClient());
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
         }

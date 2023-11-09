@@ -1,8 +1,7 @@
 package ecommerce.ecommerce.controller;
 import ecommerce.ecommerce.model.Model;
-import entity.Moderateur;
-import entity.Produit;
-import entity.Utilisateur;
+import entity.*;
+
 import java.util.List;
 
 import java.util.List;
@@ -47,4 +46,27 @@ public class Controller {
     public Moderateur requestGetModerateur() { return this.model.getModerateur();
     }
 
+    public List<Produit> requestGetPanier() {
+        return this.model.getPanier();
+    }
+
+    public void requestCreateCommande(int idClient){
+        this.model.createCommande(idClient);
+    }
+
+    public void requestViderPanier(){
+        this.model.viderPanier();
+    }
+
+    public Commande requestGetCommande(){
+        return this.model.getCommande();
+    }
+
+    public Client requestGetClient(){
+        return this.model.getClient();
+    }
+
+    public void requestSetClient(Client c){
+        this.model.setClient(c);
+    }
 }
