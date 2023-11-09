@@ -19,18 +19,17 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 CREATE TABLE IF NOT EXISTS Commande (
 	id_commande int AUTO_INCREMENT UNIQUE PRIMARY KEY,
 	prix decimal(10,2) NOT NULL,
-	status varchar(50) NOT NULL
+	status varchar(50) NOT NULL,
+    id_client int,
+    FOREIGN KEY (id_client) REFERENCES Client(id_client)
 );
 
 CREATE TABLE IF NOT EXISTS `Client` (
 	id_client int UNIQUE PRIMARY KEY,
-	id_commande int,
-    id_utilisateur int,
 	compteBancaireNum varchar(19) NOT NULL,
 	compteBancaireSolde decimal(10,2),
     points int,
-    FOREIGN KEY (id_commande) REFERENCES Commande(id_commande),
-    FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur)
+    FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
 );
 
 CREATE TABLE IF NOT EXISTS `Moderateur` (
