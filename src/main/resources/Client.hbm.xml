@@ -8,9 +8,6 @@
         <id name="idClient">
             <column name="id_client" sql-type="int"/>
         </id>
-        <property name="idCommande">
-            <column name="id_commande" sql-type="int" not-null="true"/>
-        </property>
         <property name="compteBancaireNum">
             <column name="compteBancaireNum" sql-type="varchar(19)" length="19"/>
         </property>

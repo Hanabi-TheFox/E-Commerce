@@ -8,6 +8,9 @@
         <id name="idCommande">
             <column name="id_commande" sql-type="int"/>
         </id>
+        <property name="idClient">
+            <column name="id_client" sql-type="int" not-null="true"/>
+        </property>
         <property name="prix">
             <column name="prix" sql-type="decimal(10,2)" precision="10" scale="2"/>
         </property>

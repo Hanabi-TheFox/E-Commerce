@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class Client {
     private int idClient;
-    private Integer idCommande;
     private String compteBancaireNum;
     private BigDecimal compteBancaireSolde;
     private Integer points;
@@ -16,14 +15,6 @@ public class Client {
 
     public void setIdClient(int idClient) {
         this.idClient = idClient;
-    }
-
-    public Integer getIdCommande() {
-        return idCommande;
-    }
-
-    public void setIdCommande(Integer idCommande) {
-        this.idCommande = idCommande;
     }
 
     public String getCompteBancaireNum() {
@@ -60,7 +51,6 @@ public class Client {
         Client that = (Client) o;
 
         if (idClient != that.idClient) return false;
-        if (!Objects.equals(idCommande, that.idCommande)) return false;
         if (!Objects.equals(compteBancaireNum, that.compteBancaireNum)) return false;
         if (!Objects.equals(compteBancaireSolde, that.compteBancaireSolde)) return false;
         return Objects.equals(points, that.points);
@@ -69,7 +59,6 @@ public class Client {
     @Override
     public int hashCode() {
         int result = idClient;
-        result = 31 * result + (idCommande != null ? idCommande.hashCode() : 0);
         result = 31 * result + (compteBancaireNum != null ? compteBancaireNum.hashCode() : 0);
         result = 31 * result + (compteBancaireSolde != null ? compteBancaireSolde.hashCode() : 0);
         result = 31 * result + (points != null ? points.hashCode() : 0);
