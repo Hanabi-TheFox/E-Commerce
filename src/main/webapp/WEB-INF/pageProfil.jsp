@@ -8,6 +8,8 @@
 <html>
 <head>
     <title>Profil de l'Utilisateur</title>
+    <link rel="icon" href="logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;

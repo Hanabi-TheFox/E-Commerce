@@ -9,6 +9,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Produits</title>
+    <link rel="icon" href="logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;

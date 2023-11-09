@@ -18,7 +18,7 @@ public class ServletDeDesinscription extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utilisateur utilisateur = Controller.getInstanceController().requestGetUtilisateur();
         // On supprime l'utilisateur de la base de données
-        UtilisateurDAO.removeUtilisateur(utilisateur.getMail());
+        // UtilisateurDAO.removeUtilisateur(utilisateur.getMail());
         // On vide l'utilisateur de la session
         Controller.getInstanceController().requestViderUtilisateur();
         // On redirige vers la page d'accueil

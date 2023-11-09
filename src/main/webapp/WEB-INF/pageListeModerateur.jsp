@@ -8,6 +8,8 @@
 <html>
 <head>
     <title>Liste des Modérateurs</title>
+    <link rel="icon" href="logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
         /* Styles CSS pour la mise en page */
         body {

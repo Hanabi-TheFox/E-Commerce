@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Panier</title>
+    <link rel="icon" href="logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
 </head>
 <body>
 <h1>Panier</h1>

@@ -21,10 +21,12 @@
         }
         .header-nav ul{
             list-style: none;
-            display: grid;
-            grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+            display: flex;
+            justify-content: space-between;
             margin: 0;
             padding: 0;
+            padding-left: 10px;
+            padding-right: 10px;
         }
         .header-nav li{
             display: flex;
@@ -106,6 +108,9 @@
         .search-form input[type="text"]::placeholder {
             color: #555;
         }
+        .se-connecter {
+            margin-left: auto;
+        }
     </style>
     <title> header </title>
 </head>
@@ -114,12 +119,14 @@
     <nav class="header-nav">
         <ul>
             <%--<li class="current"><a href="index.php"><img src="../../img/logo.png" alt="logo_du_site" width="175px"></a></li>--%>
-            <li class='style'><a href='ServletProduits' class='lien'>Accueil</a></li>
+            <li class='style'><a href='ServletProduits' class='lien' style='display: flex; align-items: center;'>
+                <img src="logo/logo.png" alt="Logo Azur Shop" width="50px" style='margin-right: 10px;'>
+                <span style='color: #3498db; font-size: 24px; font-weight: bold;'>Azur Shop</span></a></li>
             <%
                 Utilisateur header = Controller.getInstanceController().requestGetUtilisateur();
                 if (header == null) {
             %>
-                <li class='style'><a href="ServletDeConnexion" class='lien'>Se Connecter</a></li>
+                <li class='style se-connecter'><a href="ServletDeConnexion" class='lien'>Se Connecter</a></li>
             <%
                 } else {
                     Moderateur headerMod = null;
