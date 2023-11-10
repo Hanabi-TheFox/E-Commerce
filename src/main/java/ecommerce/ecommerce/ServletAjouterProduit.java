@@ -46,14 +46,10 @@ public class ServletAjouterProduit extends HttpServlet {
         String uploadPath = getServletContext().getRealPath("/") + "imagesProduct/";
         Part imagePart = request.getPart("image");
         String imageFileName = idImage+".jpeg";
-        System.out.println("nomimage :" + imageFileName);
-        String imageDirectory = "/imagesProduct/";
         String imageFilePath = uploadPath + imageFileName;
 
         produit.setImagePath(imageFilePath);
-        System.out.println("nomImagePath :" + produit.getImagePath());
         imagePart.write(imageFilePath);
-        System.out.println("final");
         // Redirigez l'utilisateur vers une page de confirmation ou une autre page appropriée
         response.sendRedirect("ServletProduits");
     }
