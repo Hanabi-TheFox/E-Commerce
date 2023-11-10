@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 
 CREATE TABLE IF NOT EXISTS `Client` (
     id_client int UNIQUE PRIMARY KEY,
-    compteBancaireNum varchar(19) NOT NULL,
+    compteBancaireNum varchar(19),
     compteBancaireSolde decimal(10,2),
     points int,
     FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `Moderateur` (
 
 CREATE TABLE IF NOT EXISTS Produit (
 	id_produit int AUTO_INCREMENT UNIQUE PRIMARY KEY,
-	nom varchar(50) NOT NULL,
+	nom varchar(50) NOT NULL UNIQUE,
 	prix decimal(10,2) NOT NULL,
 	description varchar(500),
 	stock int CHECK (stock >= 0)

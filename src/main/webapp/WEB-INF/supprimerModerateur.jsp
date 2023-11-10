@@ -78,7 +78,7 @@
 </div>
 <h1>Suppression moderateurs</h1>
 <form action="ServletDeleteModerateur" method="post" class="supp">
-    <label for="email">Veuillez renseignez l'Adresse email du moderateur que vous voulez supprimer :</label>
+    <label for="email">Veuillez renseigner l'Adresse email du moderateur que vous voulez supprimer :</label>
     <input type="email" id="email" name="email" required><br><br>
 
     <input type="submit" value="Supprimer">
@@ -87,7 +87,7 @@
     Boolean suppression = (Boolean) request.getAttribute("suppression");
     if (suppression != null && suppression) {
 %>
-<p class="success">Le moderateur a ete supprimer</p>
+<p class="success">Le moderateur a ete supprime</p>
 <%
     }
 %>
