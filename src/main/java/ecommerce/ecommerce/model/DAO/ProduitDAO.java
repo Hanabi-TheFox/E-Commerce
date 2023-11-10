@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import entity.Moderateur;
 import entity.Produit;
 import entity.Utilisateur;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -13,6 +14,7 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 public class ProduitDAO
 {
@@ -69,7 +71,20 @@ public class ProduitDAO
         }
     }
 
+    public static int findIdProductdByProduct(Produit produit) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "FROM Produit WHERE nom = :nomProduit";
+        Query<Produit> query = session.createQuery(hql, Produit.class);
+        query.setParameter("nomProduit", produit.getNom());
 
+        Produit produit2 = query.uniqueResult();
+
+        session.getTransaction().commit();
+        session.close();
+
+        return produit2.getIdProduit();
+    }
 
 
 
