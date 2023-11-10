@@ -155,7 +155,6 @@ public class UtilisateurDAO
         query.setParameter("userId", utilisateur.getIdUtilisateur());
 
         Moderateur moderateur = query.uniqueResult();
-        System.out.println(moderateur.getDroits());
         session.getTransaction().commit();
         session.close();
 

@@ -41,19 +41,16 @@ public class ServletAjouterProduit extends HttpServlet {
         // Exemple (à adapter à votre DAO ou modèle de données) :
         ProduitDAO.addProduit(produit);
 
+        int idImage = ProduitDAO.findIdProductdByProduct(produit);
 
-
-        System.out.println("id produit :" + produit.getIdProduit());
-        int idImage = produit.getIdProduit();
-
+        String uploadPath = getServletContext().getRealPath("/") + "imagesProduct/";
         Part imagePart = request.getPart("image");
-        System.out.println("imagePart:" + imagePart);
         String imageFileName = idImage+".jpeg";
         System.out.println("nomimage :" + imageFileName);
-        String imageDirectory = "../webapp/imagesProduct/";
-        String imageFilePath = imageDirectory + imageFileName;
+        String imageDirectory = "/imagesProduct/";
+        String imageFilePath = uploadPath + imageFileName;
 
-        produit.setImagePath(imageFileName);
+        produit.setImagePath(imageFilePath);
         System.out.println("nomImagePath :" + produit.getImagePath());
         imagePart.write(imageFilePath);
         System.out.println("final");
