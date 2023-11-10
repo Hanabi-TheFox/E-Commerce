@@ -33,7 +33,7 @@
     <h1>Profil <%= typeCompte %></h1>
     <p style="color: #0077cc;">Bienvenue, <%= u.getPrenom() %> !</p>
 
-    <h2>Informations de Profil <%= u.getTypeDeCompte() %> :</h2>
+    <h2> Informations de Profil </h2>
     <ul>
         <li><strong>Nom :</strong> <%= u.getNom() %> </li>
         <li><strong>Prenom :</strong> <%= u.getPrenom() %> </li>
