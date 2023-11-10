@@ -28,20 +28,15 @@ public class ProduitDAO
         session.close();
     }
     public static void removeProduit(int idProduit) {
-        System.out.println("idproduitt :" + idProduit);
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             Transaction transaction = session.beginTransaction();
-            System.out.println("a");
             CriteriaDelete<Produit> deleteProduitCriteria = criteriaBuilder.createCriteriaDelete(Produit.class);
             Root<Produit> produitRoot = deleteProduitCriteria.from(Produit.class);
-            System.out.println("b");
             deleteProduitCriteria.where(criteriaBuilder.equal(produitRoot.get("idProduit"), idProduit));
-            System.out.println("c");
             int rowsAffected = session.createQuery(deleteProduitCriteria).executeUpdate();
             transaction.commit();
-            System.out.println("d");
 
             if (rowsAffected == 0) {
                 System.out.println("Aucun produit supprimé. L'ID du produit peut ne pas exister dans la base de données.");
@@ -49,7 +44,6 @@ public class ProduitDAO
         } catch (HibernateException e) {
             System.out.println("Erreur Hibernate lors de la suppression du produit.");
             e.printStackTrace();
-            System.out.println("e");
         } catch (Exception e) {
             System.out.println("ERREUR DE SUPPRESSION PRODUIT : " + idProduit);
             e.printStackTrace();
