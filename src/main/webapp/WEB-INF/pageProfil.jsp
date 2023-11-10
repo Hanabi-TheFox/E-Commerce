@@ -42,6 +42,12 @@
             Client c = UtilisateurDAO.findClientByUtilisateur(u);
         %>
         <li><strong>Solde :</strong> <%= c.getCompteBancaireSolde() %> </li>
+        <form action="ServletAjouterSolde" method="get">
+            <!-- Autres champs du formulaire si nécessaire -->
+
+            <!-- Bouton de redirection -->
+            <button type="submit">Ajouter Solde</button>
+        </form>
         <li><strong>Points de fidélité :</strong> <%= c.getPoints() %> </li>
         <%
         } else if (typeCompte.equals("Moderateur")) {
