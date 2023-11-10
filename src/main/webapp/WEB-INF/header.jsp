@@ -120,7 +120,7 @@
     <nav class="header-nav">
         <ul>
             <%--<li class="current"><a href="index.php"><img src="../../img/logo.png" alt="logo_du_site" width="175px"></a></li>--%>
-            <li class='style'><a href='ServletProduits' class='lien' style='display: flex; align-items: center;'>
+            <li><a href='ServletProduits' style='display: flex; align-items: center; text-decoration: none;'>
                 <img src="logo/logo.png" alt="Logo Azur Shop" width="50px" style='margin-right: 10px;'>
                 <span style='color: #3498db; font-size: 24px; font-weight: bold;'>Azur Shop</span></a></li>
             <%
