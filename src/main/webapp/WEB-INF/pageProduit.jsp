@@ -100,5 +100,13 @@
         </ul>
     </div>
 </div>
+<%
+    Boolean suppression = (Boolean) request.getAttribute("suppression");
+    if (suppression != null && suppression) {
+%>
+<p class="success">Le moderateur a ete supprime</p>
+<%
+    }
+%>
 </body>
 </html>

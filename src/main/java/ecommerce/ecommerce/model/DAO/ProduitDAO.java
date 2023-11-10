@@ -82,6 +82,16 @@ public class ProduitDAO
         }
     }
 
+    public static Produit getProduitByName(String nomProduit) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.get(Produit.class, nomProduit);
+        } catch (Exception e) {
+            System.out.println("ERREUR LORS DE LA RECHERCHE DU PRODUIT PAR SON NOM : " + nomProduit);
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static int findIdProductdByProduct(Produit produit) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();

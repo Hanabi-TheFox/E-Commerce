@@ -17,8 +17,10 @@ public class ServletDeleteProduct extends HttpServlet {
         // TODO : Traitement pour la méthode GET
         int idProduit = Integer.parseInt(request.getParameter("idProduit"));
         ProduitDAO.removeProduit(idProduit);
+        Boolean suppression = true;
+        request.setAttribute("suppression",suppression);
         //Il est recuperée l'id du produit via l'url
-        request.getRequestDispatcher("/WEB-INF/pageProfil.jsp").forward(request, response);
+        response.sendRedirect("ServletProduits");
     }
 
    /* protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
