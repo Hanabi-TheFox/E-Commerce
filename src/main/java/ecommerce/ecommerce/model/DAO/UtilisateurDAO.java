@@ -51,6 +51,36 @@ public class UtilisateurDAO
         session.close();
     }
 
+    public static void updateUtilisateur(Utilisateur e) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        
+        try {
+            session.beginTransaction();
+            
+            // Récupérer l'utilisateur existant de la base de données
+            Utilisateur utilisateurExistant = session.get(Utilisateur.class, e.getIdUtilisateur());
+            
+            // Mettre à jour les propriétés de l'utilisateur existant avec les nouvelles valeurs
+            utilisateurExistant.setNom(e.getNom());
+            utilisateurExistant.setPrenom(e.getPrenom());
+            utilisateurExistant.setMail(e.getMail());
+            utilisateurExistant.setMotDePasse(e.getMotDePasse());
+            
+            // Mettre à jour l'utilisateur dans la base de données
+            session.update(utilisateurExistant);
+            
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            // Gérer les exceptions ici (enregistrement des journaux, etc.)
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     public static void deleteUtilisateur(Utilisateur utilisateur) {
         // IL FAUT DELETE LE CLIENT OU LE MODO ASSOSCIER AVANT DE DELETE L'UTILISATEUR
         int utilisateurId = utilisateur.getIdUtilisateur();
