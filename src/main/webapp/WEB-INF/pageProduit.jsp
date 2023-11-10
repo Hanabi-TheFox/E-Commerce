@@ -72,17 +72,30 @@
             <%
                 if(Controller.getInstanceController().requestGetUtilisateur()!=null){
                     Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
+                    if(user.getTypeDeCompte().equals("Admin")){
+                        %>
+                        <form action="ServletDeleteProduct" method="get">
+                            <!-- Autres champs du formulaire si nécessaire -->
+                            <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                            <input type="submit" value="Supprimer le produit">
+                        </form>
+                    <%}
                     if(user.getTypeDeCompte().equals("Moderateur")){
                         Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(user);
                         if(moderateur.getDroits().charAt(1) == '1' ){
                             %>
-                            <form action="ServletDeleteProduct" method="post">
+                            <form action="ServletDeleteProduct" method="get">
                                 <!-- Autres champs du formulaire si nécessaire -->
+                                <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                                <%
+                                    System.out.println(produit);
+                                    System.out.println(produit.getIdProduit());
+                                %>
                                 <input type="submit" value="Supprimer le produit">
                             </form>
-            <%}
+            <%          }
+                    }
                 }
-            }
             %>
         </ul>
     </div>

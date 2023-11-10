@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
@@ -26,19 +27,29 @@ public class ProduitDAO
         session.getTransaction().commit();
         session.close();
     }
-
     public static void removeProduit(int idProduit) {
+        System.out.println("idproduitt :" + idProduit);
+
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaDelete<Produit> criteriaDelete = criteriaBuilder.createCriteriaDelete(Produit.class);
-            Root<Produit> root = criteriaDelete.from(Produit.class);
-            criteriaDelete.where(criteriaBuilder.equal(root.get("id_produit"), idProduit));
-
-            int deletedCount = session.createQuery(criteriaDelete).executeUpdate();
-
+            Transaction transaction = session.beginTransaction();
+            System.out.println("a");
+            CriteriaDelete<Produit> deleteProduitCriteria = criteriaBuilder.createCriteriaDelete(Produit.class);
+            Root<Produit> produitRoot = deleteProduitCriteria.from(Produit.class);
+            System.out.println("b");
+            deleteProduitCriteria.where(criteriaBuilder.equal(produitRoot.get("idProduit"), idProduit));
+            System.out.println("c");
+            int rowsAffected = session.createQuery(deleteProduitCriteria).executeUpdate();
             transaction.commit();
+            System.out.println("d");
+
+            if (rowsAffected == 0) {
+                System.out.println("Aucun produit supprimé. L'ID du produit peut ne pas exister dans la base de données.");
+            }
+        } catch (HibernateException e) {
+            System.out.println("Erreur Hibernate lors de la suppression du produit.");
+            e.printStackTrace();
+            System.out.println("e");
         } catch (Exception e) {
             System.out.println("ERREUR DE SUPPRESSION PRODUIT : " + idProduit);
             e.printStackTrace();
