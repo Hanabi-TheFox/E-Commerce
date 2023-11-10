@@ -69,6 +69,21 @@
             <li><strong>Description:</strong> <%= produit.getDescription() %></li>
             <li><strong>Prix:</strong> <%= produit.getPrix() %> €</li>
             <li><strong>Stock Disponible:</strong> <%= produit.getStock() %> unités</li>
+            <%
+                if(Controller.getInstanceController().requestGetUtilisateur()!=null){
+                    Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
+                    if(user.getTypeDeCompte().equals("Moderateur")){
+                        Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(user);
+                        if(moderateur.getDroits().charAt(1) == '1' ){
+                            %>
+                            <form action="ServletDeleteProduct" method="post">
+                                <!-- Autres champs du formulaire si nécessaire -->
+                                <input type="submit" value="Supprimer le produit">
+                            </form>
+            <%}
+                }
+            }
+            %>
         </ul>
     </div>
 </div>
