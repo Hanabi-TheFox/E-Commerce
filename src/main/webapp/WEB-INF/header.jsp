@@ -2,6 +2,7 @@
 <%@ page import="entity.Moderateur" %>
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
 <%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>
+<%@ page import="entity.Commande" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -124,6 +125,7 @@
                 <span style='color: #3498db; font-size: 24px; font-weight: bold;'>Azur Shop</span></a></li>
             <%
                 Utilisateur header = Controller.getInstanceController().requestGetUtilisateur();
+                Commande headerCommande = Controller.getInstanceController().requestGetCommande();
                 if (header == null) {
             %>
                 <li class='style se-connecter'><a href="ServletDeConnexion" class='lien'>Se Connecter</a></li>
@@ -137,8 +139,9 @@
                     <li class='style'><a href='ServletProfil' class='lien'>Profil</a></li>
             <%
                     if (header.getTypeDeCompte().equals("Client")) {
+
             %>
-                    <li class='style'><a href='ServletPanier' class='lien'>Panier</a></li>
+                    <li class='style'><a href='ServletPanier' class='lien'>Panier : <%= headerCommande.getPrix() %> euros</a></li>
             <%
                     } else {
             %>
