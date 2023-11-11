@@ -20,7 +20,6 @@ public class ServletProduits extends HttpServlet {
         request.setAttribute("listeProduits", listeProduits);
         request.setAttribute("client",Controller.getInstanceController().requestGetClient());
         request.getRequestDispatcher("/WEB-INF/pageProduits.jsp").forward(request, response);
-        System.out.println("pagePRODUITS chargée");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

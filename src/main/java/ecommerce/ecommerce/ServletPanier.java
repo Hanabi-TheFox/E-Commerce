@@ -29,9 +29,17 @@ public class ServletPanier extends HttpServlet {
         if (action == null) { // action is null if we click on header button 'Panier'
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         } else if (action.equals("ajouter")) {
+            List<Produit> panier = Controller.getInstanceController().requestGetPanier();
             //  les informations du produit à ajouter depuis le formulaire sont recuperées
             int produitId = Integer.parseInt(request.getParameter("produitId"));
             int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
+            for (Produit p : panier){
+                if (p.getIdProduit() == produitId){ // le produit existe deja dans le panier
+                    p.setStock(p.getStock() + produitQuantite);
+                    Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                    request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                }
+            }
             Produit produit = ProduitDAO.getProduitById(produitId);
             if (produit != null) {
                 produit.setStock(produitQuantite);

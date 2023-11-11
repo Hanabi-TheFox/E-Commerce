@@ -25,6 +25,9 @@ public class Commande {
     public List<Produit> getPanier() {
         return this.panier;
     }
+    public void setPanier(List<Produit> panier) {
+        this.panier = panier;
+    }
 
     public int getIdCommande() {
         return idCommande;
