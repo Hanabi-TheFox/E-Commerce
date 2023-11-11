@@ -18,6 +18,9 @@ import java.util.List;
 
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Utilisateur;
+
+import javax.sound.midi.ControllerEventListener;
+
 @WebServlet(name = "ServletPanier", value = "/ServletPanier")
 public class ServletPanier extends HttpServlet {
 
@@ -29,36 +32,36 @@ public class ServletPanier extends HttpServlet {
         String action = request.getParameter("action");
         if (action == null) { // action is null if we click on header button 'Panier'
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
-        } else if (action.equals("ajouter")) {
-            List<Produit> panier = Controller.getInstanceController().requestGetPanier();
-            //  les informations du produit à ajouter depuis le formulaire sont recuperées
+        } else {
             int produitId = Integer.parseInt(request.getParameter("produitId"));
-            int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
-            for (Produit p : panier){
-                if (p.getIdProduit() == produitId){ // le produit existe deja dans le panier
-                    p.setStock(p.getStock() + produitQuantite);
-                    ajouterPrix(p);
-                    Controller.getInstanceController().requestGetCommande().setPanier(panier);
-                    request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+            List<Produit> panier = Controller.getInstanceController().requestGetPanier();
+            if (action.equals("ajouter")) {
+                int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
+                for (Produit p : panier){
+                    if (p.getIdProduit() == produitId){ // le produit existe deja dans le panier
+                        p.setStock(p.getStock() + produitQuantite);
+                        ajouterPrix(p);
+                        Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                        request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                    }
+                }
+                Produit produit = ProduitDAO.getProduitById(produitId);
+                if (produit != null) {
+                    produit.setStock(produitQuantite);
+                    ajouterPrix(produit);
+                }
+                Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
+                request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+            }else if (action.equals("supprimer")){
+                for (Produit p : panier) {
+                    if (p.getIdProduit() == produitId) {
+                        panier.remove(p);
+                        Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                        supprimerPrix(p);
+                        request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                    }
                 }
             }
-            Produit produit = ProduitDAO.getProduitById(produitId);
-            if (produit != null) {
-                produit.setStock(produitQuantite);
-                ajouterPrix(produit);
-            }
-            Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
-            // Configurez l'attribut "montantTotal" dans la demande
-            // Le reste de la logique pour calculer le montant total et afficher le panier
-            // Redirigez ensuite vers la page JSP "panier.jsp" pour afficher le panier
-        /*System.out.println("AFFICHAGE DE TOUS LES PRODUITS DANS PANIER");
-        for (int i = 0;i< Controller.getInstanceController().requestGetPanier().size();i++) {
-            System.out.println("PRODUIT : " + Controller.getInstanceController().requestGetPanier().get(i).getNom());
-        }
-        System.out.println(Controller.getInstanceController().requestGetPanier()); */
-
-            /*request.setAttribute("panier", Controller.getInstanceController().requestGetPanier());*/
-            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         }
 
 
@@ -78,5 +81,9 @@ public class ServletPanier extends HttpServlet {
     private void ajouterPrix(Produit p){
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix + (p.getPrix() * p.getStock()));
+    }
+    private void supprimerPrix(Produit p){
+        float prix = Controller.getInstanceController().requestGetCommande().getPrix();
+        Controller.getInstanceController().requestGetCommande().setPrix(prix - (p.getPrix() * p.getStock()));
     }
 }

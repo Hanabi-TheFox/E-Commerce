@@ -21,13 +21,14 @@
     <%@ include file="header.jsp" %>
 </div>
 <h1>Panier</h1>
-
 <table border="1">
+
     <tr>
         <th>Produit</th>
         <th>Prix unitaire</th>
         <th>Quantité</th>
         <th>Prix total</th>
+        <th>Action </th>
     </tr>
 
 
@@ -43,6 +44,13 @@
         <td><%=produit.getPrix()%></td>
         <td><%=produit.getStock()%></td>
         <td><%=produit.getPrix() * produit.getStock()%></td>
+        <td>
+            <form action="ServletPanier" method="get">
+                <input type="hidden" name="action" value="supprimer">
+                <input type="hidden" name="produitId" value="<%=produit.getIdProduit()%>">
+                <button type="submit">supprimer</button>
+            </form>
+        </td>
     </tr>
     <%
             }
