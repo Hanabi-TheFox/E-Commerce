@@ -68,7 +68,7 @@ public class Model {
         //TODO la commande sera ajoutée à la bdd seulement si l'utilisateur paye et finit son achat
         this.commande = new Commande();
         this.commande.setIdClient(idClient);
-        this.commande.setPrix(BigDecimal.valueOf(0));
+        this.commande.setPrix(0);
         this.commande.setStatus("non payé");
     }
 

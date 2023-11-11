@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Commande {
     private int idCommande;
     private Integer idClient;
-    private BigDecimal prix;
+    private Float prix;
     private String status;
 
     private List<Produit> panier = new ArrayList<>();
@@ -45,11 +45,11 @@ public class Commande {
         this.idClient = idClient;
     }
 
-    public BigDecimal getPrix() {
+    public float getPrix() {
         return prix;
     }
 
-    public void setPrix(BigDecimal prix) {
+    public void setPrix(float prix) {
         this.prix = prix;
     }
 

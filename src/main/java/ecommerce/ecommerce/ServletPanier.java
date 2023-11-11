@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class ServletPanier extends HttpServlet {
             for (Produit p : panier){
                 if (p.getIdProduit() == produitId){ // le produit existe deja dans le panier
                     p.setStock(p.getStock() + produitQuantite);
+                    ajouterPrix(p);
                     Controller.getInstanceController().requestGetCommande().setPanier(panier);
                     request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
                 }
@@ -43,6 +45,7 @@ public class ServletPanier extends HttpServlet {
             Produit produit = ProduitDAO.getProduitById(produitId);
             if (produit != null) {
                 produit.setStock(produitQuantite);
+                ajouterPrix(produit);
             }
             Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
             // Configurez l'attribut "montantTotal" dans la demande
@@ -65,10 +68,15 @@ public class ServletPanier extends HttpServlet {
 
         //Il est recuperée si effacer apuyé:
 
-        if( request.getParameter("action") != null) {
+        if( request.getParameter("action").equals("vider")) {
             Controller.getInstanceController().requestViderPanier();
+            Controller.getInstanceController().requestGetCommande().setPrix(0);
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         }
+    }
 
+    private void ajouterPrix(Produit p){
+        float prix = Controller.getInstanceController().requestGetCommande().getPrix();
+        Controller.getInstanceController().requestGetCommande().setPrix(prix + (p.getPrix() * p.getStock()));
     }
 }

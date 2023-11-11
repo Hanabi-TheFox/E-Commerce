@@ -33,10 +33,9 @@
 
     <%
         List<Produit> panier = Controller.getInstanceController().requestGetPanier();
-        float montantTotal = 0;
+        float montantTotal = Controller.getInstanceController().requestGetCommande().getPrix();
         if (panier != null) {
             for (Produit produit : panier) {
-                montantTotal += (produit.getPrix() * produit.getStock());
     %>
     <tr>
         <td><%=produit.getNom()%> <br> <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="
@@ -47,7 +46,6 @@
     </tr>
     <%
             }
-            Controller.getInstanceController().requestGetCommande().setPrix(new BigDecimal(montantTotal));
         }
     %>
 </table>
@@ -56,7 +54,7 @@
 <p>Montant total des produits : <%=montantTotal%></p>
 
 <form action="ServletPanier" method="post">
-    <input type="hidden" name="action" value="effacer">
+    <input type="hidden" name="action" value="vider">
     <input type="submit" value="Tout effacer">
 </form>
 </body>
