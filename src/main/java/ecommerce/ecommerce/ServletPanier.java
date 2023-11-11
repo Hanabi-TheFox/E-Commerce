@@ -35,31 +35,48 @@ public class ServletPanier extends HttpServlet {
         } else {
             int produitId = Integer.parseInt(request.getParameter("produitId"));
             List<Produit> panier = Controller.getInstanceController().requestGetPanier();
-            if (action.equals("ajouter")) {
-                int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
-                for (Produit p : panier){
-                    if (p.getIdProduit() == produitId){ // le produit existe deja dans le panier
-                        p.setStock(p.getStock() + produitQuantite);
-                        ajouterPrix(p);
-                        Controller.getInstanceController().requestGetCommande().setPanier(panier);
-                        request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+            switch (action) {
+                case "ajouter": {
+                    int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
+                    for (Produit p : panier) {
+                        if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
+                            p.setStock(p.getStock() + produitQuantite);
+                            ajouterPrix(p);
+                            Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                        }
                     }
-                }
-                Produit produit = ProduitDAO.getProduitById(produitId);
-                if (produit != null) {
-                    produit.setStock(produitQuantite);
-                    ajouterPrix(produit);
-                }
-                Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
-                request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
-            }else if (action.equals("supprimer")){
-                for (Produit p : panier) {
-                    if (p.getIdProduit() == produitId) {
-                        panier.remove(p);
-                        Controller.getInstanceController().requestGetCommande().setPanier(panier);
-                        supprimerPrix(p);
-                        request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                    Produit produit = ProduitDAO.getProduitById(produitId);
+                    if (produit != null) {
+                        produit.setStock(produitQuantite);
+                        ajouterPrix(produit);
                     }
+                    Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
+                    request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                    break;
+                }
+                case "supprimer":
+                    for (Produit p : panier) {
+                        if (p.getIdProduit() == produitId) {
+                            panier.remove(p);
+                            Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            supprimerPrix(p);
+                            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                        }
+                    }
+                    break;
+                case "modifier": {
+                    int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
+                    for (Produit p : panier) {
+                        if (p.getIdProduit() == produitId) {
+                            p.setStock(produitQuantite);
+                            supprimerPrix(p);
+                            ajouterPrix(p);
+                            Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                        }
+                    }
+                    break;
                 }
             }
         }

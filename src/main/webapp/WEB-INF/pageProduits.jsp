@@ -87,7 +87,7 @@
             <% if (client != null) { %>
             <input type="hidden" name="action" value="ajouter">
             <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
-            <input type="number" name="produitQuantite" min="0" value="0">
+            <input type="number" name="produitQuantite" min="1" value="1">
             <input type="submit" value="Ajouter au panier">
             <% } %>
         </form>

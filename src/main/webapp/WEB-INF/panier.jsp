@@ -21,42 +21,46 @@
     <%@ include file="header.jsp" %>
 </div>
 <h1>Panier</h1>
-<table border="1">
+<form action="ServletPanier" method="get">
+    <table border="1">
 
-    <tr>
-        <th>Produit</th>
-        <th>Prix unitaire</th>
-        <th>Quantité</th>
-        <th>Prix total</th>
-        <th>Action </th>
-    </tr>
+        <tr>
+            <th>Produit</th>
+            <th>Prix unitaire</th>
+            <th>Quantité</th>
+            <th>Prix total</th>
+            <th>Action </th>
+        </tr>
 
+        <%
+            List<Produit> panier = Controller.getInstanceController().requestGetPanier();
+            float montantTotal = Controller.getInstanceController().requestGetCommande().getPrix();
+            if (panier != null) {
+                for (Produit produit : panier) {
+        %>
 
-    <%
-        List<Produit> panier = Controller.getInstanceController().requestGetPanier();
-        float montantTotal = Controller.getInstanceController().requestGetCommande().getPrix();
-        if (panier != null) {
-            for (Produit produit : panier) {
-    %>
-    <tr>
-        <td><%=produit.getNom()%> <br> <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="
-                        <%=produit.getNom()%>" width="100"></td>
-        <td><%=produit.getPrix()%></td>
-        <td><%=produit.getStock()%></td>
-        <td><%=produit.getPrix() * produit.getStock()%></td>
-        <td>
-            <form action="ServletPanier" method="get">
-                <input type="hidden" name="action" value="supprimer">
-                <input type="hidden" name="produitId" value="<%=produit.getIdProduit()%>">
-                <button type="submit">supprimer</button>
-            </form>
-        </td>
-    </tr>
-    <%
+        <tr>
+            <td><%=produit.getNom()%> <br> <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="
+                            <%=produit.getNom()%>" width="100"></td>
+            <td><%=produit.getPrix()%></td>
+            <td><input type="number" name="produitQuantite" min="1" value="<%=produit.getStock()%>"></td>
+            <td><%=produit.getStock()%></td>
+            <td><%=produit.getPrix() * produit.getStock()%></td>
+            <td>
+
+                    <input type="hidden" name="produitId" value="<%=produit.getIdProduit()%>">
+                    <button type="submit" name="action" value="supprimer">Supprimer</button>
+                    <button type="submit" name="action" value="modifier">Modifier</button>
+
+            </td>
+        </tr>
+
+        <%
+                }
             }
-        }
-    %>
-</table>
+        %>
+    </table>
+</form>
 
 
 <p>Montant total des produits : <%=montantTotal%></p>
