@@ -9,7 +9,6 @@ public class Produit {
     private Float prix;
     private String description;
     private Integer stock;
-
     private String imagePath;
 
     public String getImagePath() {

@@ -1,6 +1,7 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
+import ecommerce.ecommerce.model.DAO.ProduitDAO;
 import entity.Commande;
 import entity.Produit;
 import jakarta.servlet.ServletException;
@@ -25,35 +26,31 @@ public class ServletPanier extends HttpServlet {
         //Commande panier = new Commande();
 
         String action = request.getParameter("action");
-
-        if (action.equals("ajouter")) {
-            System.out.println("AJOUTER");
+        if (action == null) { // action is null if we click on header button 'Panier'
+            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+        } else if (action.equals("ajouter")) {
             //  les informations du produit à ajouter depuis le formulaire sont recuperées
             int produitId = Integer.parseInt(request.getParameter("produitId"));
-            String produitNom = request.getParameter("produitNom");
-            float produitPrix = Float.parseFloat(request.getParameter("produitPrix"));
             int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
-            // Ajoutez le produit au panier
-            Produit produit = new Produit();
-            produit.setIdProduit(produitId);
-            produit.setNom(produitNom);
-            produit.setStock(produitQuantite);
-
+            Produit produit = ProduitDAO.getProduitById(produitId);
+            if (produit != null) {
+                produit.setStock(produitQuantite);
+            }
             Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
-
             // Configurez l'attribut "montantTotal" dans la demande
             // Le reste de la logique pour calculer le montant total et afficher le panier
             // Redirigez ensuite vers la page JSP "panier.jsp" pour afficher le panier
-            /*System.out.println("AFFICHAGE DE TOUS LES PRODUITS DANS PANIER");
-            for (int i = 0;i< Controller.getInstanceController().requestGetPanier().size();i++) {
-                System.out.println("PRODUIT : " + Controller.getInstanceController().requestGetPanier().get(i).getNom());
-            }
-            System.out.println(Controller.getInstanceController().requestGetPanier()); */
-
-            request.setAttribute("panier", Controller.getInstanceController().requestGetPanier());
-            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
-            System.out.println("pagePanier chargée");
+        /*System.out.println("AFFICHAGE DE TOUS LES PRODUITS DANS PANIER");
+        for (int i = 0;i< Controller.getInstanceController().requestGetPanier().size();i++) {
+            System.out.println("PRODUIT : " + Controller.getInstanceController().requestGetPanier().get(i).getNom());
         }
+        System.out.println(Controller.getInstanceController().requestGetPanier()); */
+
+            /*request.setAttribute("panier", Controller.getInstanceController().requestGetPanier());*/
+            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+        }
+
+
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        //TODO
