@@ -1,7 +1,6 @@
 package ecommerce.ecommerce.model.DAO;
 
-import entity.Commande;
-import entity.Produit;
+import entity.CommandeProduit;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
@@ -10,44 +9,40 @@ import org.hibernate.Session;
 import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
 
-public class CommandeDAO
+public class CommandeProduitDAO
 {
-    public static int addCommande(Commande c)
+    public static void addCommandeProduit(CommandeProduit c)
     {
         Session session= HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(c);
         session.getTransaction().commit();
-        int generatedID = c.getIdCommande();
         session.close();
-        return generatedID;
     }
 
-
-    public static void removeCommande(int idCommande) {
+    public static void removeCommande(int idCommandeProduit) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Transaction transaction = session.beginTransaction();
 
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-            CriteriaDelete<Commande> criteriaDelete = criteriaBuilder.createCriteriaDelete(Commande.class);
-            Root<Commande> root = criteriaDelete.from(Commande.class);
-            criteriaDelete.where(criteriaBuilder.equal(root.get("id_commande"), idCommande));
+            CriteriaDelete<CommandeProduit> criteriaDelete = criteriaBuilder.createCriteriaDelete(CommandeProduit.class);
+            Root<CommandeProduit> root = criteriaDelete.from(CommandeProduit.class);
+            criteriaDelete.where(criteriaBuilder.equal(root.get("id_commandeProd"), idCommandeProduit));
 
             int deletedCount = session.createQuery(criteriaDelete).executeUpdate();
 
             transaction.commit();
         } catch (Exception e) {
-            System.out.println("ERREUR DE SUPPRESSION COMMANDE : " + idCommande);
+            System.out.println("ERREUR DE SUPPRESSION COMMANDE : " + idCommandeProduit);
             e.printStackTrace();
         }
     }
 
-
-    public static Commande getCommandeById(int idCommande) {
+    public static CommandeProduit getCommandeProduitById(int idCommandeProd) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Commande.class, idCommande);
+            return session.get(CommandeProduit.class, idCommandeProd);
         } catch (Exception e) {
-            System.out.println("ERREUR LORS DE LA RECHERCHE DU PRODUIT PAR SON ID : " + idCommande);
+            System.out.println("ERREUR LORS DE LA RECHERCHE DU PRODUIT PAR SON ID : " + idCommandeProd);
             e.printStackTrace();
             return null;
         }

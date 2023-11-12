@@ -1,8 +1,11 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
+import ecommerce.ecommerce.model.DAO.CommandeDAO;
+import ecommerce.ecommerce.model.DAO.CommandeProduitDAO;
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
 import entity.Commande;
+import entity.CommandeProduit;
 import entity.Produit;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -69,8 +72,8 @@ public class ServletPanier extends HttpServlet {
                     int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
                     for (Produit p : panier) {
                         if (p.getIdProduit() == produitId) {
-                            p.setStock(produitQuantite);
                             supprimerPrix(p);
+                            p.setStock(produitQuantite);
                             ajouterPrix(p);
                             Controller.getInstanceController().requestGetCommande().setPanier(panier);
                             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
@@ -84,14 +87,30 @@ public class ServletPanier extends HttpServlet {
 
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       //TODO
-
-        //Il est recuperée si effacer apuyé:
-
-        if( request.getParameter("action").equals("vider")) {
+        String action = request.getParameter("action");
+        if(action.equals("vider")) {
             Controller.getInstanceController().requestViderPanier();
             Controller.getInstanceController().requestGetCommande().setPrix(0);
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+        }else if(action.equals("payer")){
+            Commande commande = Controller.getInstanceController().requestGetCommande();
+            List<Produit> panier = commande.getPanier();
+            Commande commandeBDD = new Commande();
+            commandeBDD.setIdClient(commande.getIdClient());
+            commandeBDD.setPrix(commande.getPrix());
+            commandeBDD.setStatus("payé");
+            int idCommandeBDD =  CommandeDAO.addCommande(commandeBDD);
+            System.out.println("ID commande ajouté = " + idCommandeBDD);
+            CommandeProduit panierBDD = new CommandeProduit();
+            for (Produit produit : panier){
+                panierBDD.setIdCommande(idCommandeBDD + 1);
+                panierBDD.setIdProduit(produit.getIdProduit());
+                panierBDD.setQuantite(produit.getStock());
+                CommandeProduitDAO.addCommandeProduit(panierBDD);
+            }
+            System.out.println("Commande payé ggwp");
+            Controller.getInstanceController().requestCreateCommande(commande.getIdClient());
+            response.sendRedirect("ServletProduits") ;
         }
     }
 

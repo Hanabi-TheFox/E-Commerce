@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `Client` (
 
 CREATE TABLE IF NOT EXISTS Commande (
 	id_commande int AUTO_INCREMENT UNIQUE PRIMARY KEY,
-    id_client int UNIQUE,
+    id_client int,
 	prix decimal(10,2) NOT NULL,
 	status varchar(50) NOT NULL,
     FOREIGN KEY (id_client) REFERENCES Client(id_client)

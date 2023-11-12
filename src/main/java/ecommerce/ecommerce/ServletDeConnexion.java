@@ -36,7 +36,6 @@ public class ServletDeConnexion extends HttpServlet {
             //TODO il est geré les differentes types de comptes selon l'utilisateur:
             //TODO pour le client, une commande vide est crée
             if(utilisateur.getTypeDeCompte().equals("Client")) {
-                System.out.println("CLIENT CONNECTT2 : " + UtilisateurDAO.findClientByUtilisateur(utilisateur));
                 Controller.getInstanceController().requestSetClient(UtilisateurDAO.findClientByUtilisateur(utilisateur));
                 Controller.getInstanceController().requestCreateCommande(Controller.getInstanceController().requestGetClient().getIdClient());
             }

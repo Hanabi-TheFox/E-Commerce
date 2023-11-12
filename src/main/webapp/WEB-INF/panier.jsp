@@ -21,25 +21,25 @@
     <%@ include file="header.jsp" %>
 </div>
 <h1>Panier</h1>
-<form action="ServletPanier" method="get">
-    <table border="1">
+<table border="1">
 
-        <tr>
-            <th>Produit</th>
-            <th>Prix unitaire</th>
-            <th>Quantité</th>
-            <th>Prix total</th>
-            <th>Action </th>
-        </tr>
+    <tr>
+        <th>Produit</th>
+        <th>Prix unitaire</th>
+        <th>Quantité</th>
+        <th>Prix total</th>
+        <th>Action </th>
+    </tr>
 
-        <%
-            List<Produit> panier = Controller.getInstanceController().requestGetPanier();
-            float montantTotal = Controller.getInstanceController().requestGetCommande().getPrix();
-            if (panier != null) {
-                for (Produit produit : panier) {
-        %>
+    <%
+        List<Produit> panier = Controller.getInstanceController().requestGetPanier();
+        float montantTotal = Controller.getInstanceController().requestGetCommande().getPrix();
+        if (panier != null) {
+            for (Produit produit : panier) {
+    %>
 
-        <tr>
+    <tr>
+        <form action="ServletPanier" method="get">
             <td><%=produit.getNom()%> <br> <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="
                             <%=produit.getNom()%>" width="100"></td>
             <td><%=produit.getPrix()%></td>
@@ -53,21 +53,22 @@
                     <button type="submit" name="action" value="modifier">Modifier</button>
 
             </td>
-        </tr>
+        </form>
 
-        <%
-                }
+    </tr>
+
+    <%
             }
-        %>
-    </table>
-</form>
+        }
+    %>
+</table>
 
 
 <p>Montant total des produits : <%=montantTotal%></p>
 
 <form action="ServletPanier" method="post">
-    <input type="hidden" name="action" value="vider">
-    <input type="submit" value="Tout effacer">
+    <button type="submit" name="action" value="vider">Vider le panier</button>
+    <button type="submit" name="action" value="payer">Payer</button>
 </form>
 </body>
 </html>
