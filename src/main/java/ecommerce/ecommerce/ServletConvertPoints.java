@@ -1,6 +1,7 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
+import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Client;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,13 +33,20 @@ public class ServletConvertPoints extends HttpServlet {
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
             }
-            // Logique de conversion des points en solde (exemple : 2 points = 1 euro)
-            BigDecimal montantSolde = BigDecimal.valueOf(quantite / 2.0);
-            BigDecimal soldeActuel = client.getCompteBancaireSolde();
-            BigDecimal soldeApresModif = soldeActuel.add(montantSolde);
-            client.setCompteBancaireSolde(soldeApresModif);
+            else { // Logique de conversion des points en solde (exemple : 2 points = 1 euro)
+                BigDecimal montantSolde = BigDecimal.valueOf(quantite / 2.0);
+                BigDecimal soldeActuel = client.getCompteBancaireSolde();
+                BigDecimal soldeApresModif = soldeActuel.add(montantSolde);
+                client.setCompteBancaireSolde(soldeApresModif);
 
+                int pointsApresModif = client.getPoints() - quantite;
+                client.setPoints(pointsApresModif);
 
+                Controller.getInstanceController().requestSetClient(client);
+                UtilisateurDAO.updateClient(client);
+                response.sendRedirect("ServletProfil");
+                response.getWriter().println("Conversion réussie. Montant ajouté au solde : " + montantSolde);
+            }
             // Ajoutez votre logique pour mettre à jour le solde de l'utilisateur avec montantSolde
             /*
 
@@ -46,7 +54,7 @@ public class ServletConvertPoints extends HttpServlet {
 
 
              */
-            response.getWriter().println("Conversion réussie. Montant ajouté au solde : " + montantSolde);
+
         } else if ("annuler".equals(action)) {
             // L'utilisateur a choisi de ne pas convertir les points
             response.sendRedirect("ServletProfil"); // Redirection vers la page de profil

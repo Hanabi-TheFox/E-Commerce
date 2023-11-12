@@ -69,16 +69,10 @@
         %>
         <li><strong>Solde :</strong> <%= c.getCompteBancaireSolde() %> </li>
         <form action="ServletAjouterSolde" method="get">
-            <!-- Autres champs du formulaire si nécessaire -->
-
-            <!-- Bouton de redirection -->
             <button type="submit">Ajouter Solde</button>
         </form>
         <li><strong>Points de fidélité :</strong> <%= c.getPoints() %> </li>
         <form action="ServletConvertPoints" method="get">
-            <!-- Autres champs du formulaire si nécessaire -->
-
-            <!-- Bouton de redirection -->
             <button type="submit">Convertir les points</button>
         </form>
         <%

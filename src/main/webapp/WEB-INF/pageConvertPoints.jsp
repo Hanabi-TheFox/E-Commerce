@@ -73,14 +73,14 @@
     Client client = UtilisateurDAO.findClientByUtilisateur(utilisateur);
     assert client != null;%>
 
-<p class="error" style="color : red;text-align : center"><%= errorMessage %></p
+<p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
 <form action="ServletConvertPoints" method="post">
     <p>Votre nombre de points de fidélité est de : <%= client.getPoints()%></p>
     <label for="quantite">Choisissez la quantité à convertir :</label>
-    <input type="number" id="quantite" name="quantite" min="1" required>
+    <input type="number" id="quantite" name="quantite" value ="0" min="0" required>
 
-    <button type="submit" name="action" value="convertir">Oui</button>
-    <button type="submit" name="action" value="annuler">Non</button>
+    <button type="submit" name="action" value="convertir">Convertir</button>
+    <button type="submit" name="action" value="annuler">Retour</button>
 </form>
 </body>
 </html>

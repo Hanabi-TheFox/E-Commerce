@@ -79,7 +79,7 @@
     <p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
     <p>Votre solde actuel est de : <%= client.getCompteBancaireSolde() %></p>
     <label for="numeroCarte">Numéro de Carte Bleue:</label>
-    <input type="text" id="numeroCarte" name="numeroCarte" required><br><br>
+    <input type="text" id="numeroCarte" name="numeroCarte"><br><br>
 
     <label for="montant">Option de Choix:</label>
     <select id="montant" name="montant" required>
