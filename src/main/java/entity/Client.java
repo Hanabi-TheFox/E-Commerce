@@ -33,6 +33,15 @@ public class Client {
         this.compteBancaireSolde = compteBancaireSolde;
     }
 
+    //Cela pose un probleme, laissant le Client = null lors de la connexion, A VOIR
+    /*public void setCompteBancaireSolde(BigDecimal compteBancaireSolde) {
+        // Vérification si le solde est supérieur ou égal à zéro
+        if (compteBancaireSolde.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Le solde du compte bancaire doit être supérieur ou égal à zéro.");
+        }
+
+        this.compteBancaireSolde = compteBancaireSolde;
+    } */
 
 
     public Integer getPoints() {
@@ -40,6 +49,11 @@ public class Client {
     }
 
     public void setPoints(Integer points) {
+        // Vérification si les points sont supérieurs ou égaux à zéro
+        if (points < 0) {
+            throw new IllegalArgumentException("Les points doivent être supérieurs ou égaux à zéro.");
+        }
+
         this.points = points;
     }
 
