@@ -86,6 +86,27 @@ public class ProduitDAO
         }
     }
 
+    public static void updateProduit(Produit produit) {
+        Transaction transaction = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+
+            // le produit est mis à jour dans la bdd
+            session.update(produit);
+
+            // Committez la transaction
+            transaction.commit();
+        } catch (Exception e) {
+            // En cas d'erreur, annulez la transaction
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.out.println("ERREUR lors de la mise à jour du produit avec l'ID : " + produit.getIdProduit());
+            e.printStackTrace();
+        }
+    }
+
     public static int findIdProductdByProduct(Produit produit) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
