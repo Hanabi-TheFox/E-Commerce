@@ -1,4 +1,4 @@
-        <%@ page import="entity.Produit" %>
+<%@ page import="entity.Produit" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
 <%@ page import="java.math.BigDecimal" %>
@@ -11,9 +11,15 @@
     <link rel="icon" href="logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
-        body{
+        body {
             margin: 0;
         }
+        .payment-form {
+            display: none;
+        }
+         .hidden {
+             display: none;
+         }
     </style>
 </head>
 <body>
@@ -47,14 +53,11 @@
             <td><%=produit.getStock()%></td>
             <td><%=produit.getPrix() * produit.getStock()%></td>
             <td>
-
-                    <input type="hidden" name="produitId" value="<%=produit.getIdProduit()%>">
-                    <button type="submit" name="action" value="supprimer">Supprimer</button>
-                    <button type="submit" name="action" value="modifier">Modifier</button>
-
+                <input type="hidden" name="produitId" value="<%=produit.getIdProduit()%>">
+                <button type="submit" name="action" value="supprimer">Supprimer</button>
+                <button type="submit" name="action" value="modifier">Modifier</button>
             </td>
         </form>
-
     </tr>
 
     <%
@@ -62,7 +65,6 @@
         }
     %>
 </table>
-
 
 <p>Montant total des produits : <%=montantTotal%></p>
 

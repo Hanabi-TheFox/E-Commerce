@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import entity.Client;
 import entity.Moderateur;
 import entity.Produit;
 import entity.Utilisateur;
@@ -101,11 +102,31 @@ public class ProduitDAO
         return produit2.getIdProduit();
     }
 
+    public static void updateProduct(Produit p) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
+        try {
+            session.beginTransaction();
 
-    /*public static List<VUtilisateurs> getListViewUtilisateurs()
-    {
-        //Code à compléter
-        return null;
-    }*/
+            // Récupérer le client existant de la base de données
+            Produit produitExistant = session.get(Produit.class, p.getIdProduit());
+
+            // Mettre à jour les propriétés spécifiques du client existant
+            produitExistant.setStock(p.getStock());
+
+            // Mettre à jour le client dans la base de données
+            session.update(produitExistant);
+
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            // Gérer les exceptions ici (enregistrement des journaux, etc.)
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
 }

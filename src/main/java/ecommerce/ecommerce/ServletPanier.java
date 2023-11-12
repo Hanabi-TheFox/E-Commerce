@@ -88,12 +88,12 @@ public class ServletPanier extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("vider")) {
+        if(action.equals("vider")){
             Controller.getInstanceController().requestViderPanier();
             Controller.getInstanceController().requestGetCommande().setPrix(0);
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         }else if(action.equals("payer")){
-            Commande commande = Controller.getInstanceController().requestGetCommande();
+            /*Commande commande = Controller.getInstanceController().requestGetCommande();
             List<Produit> panier = commande.getPanier();
             Commande commandeBDD = new Commande();
             commandeBDD.setIdClient(commande.getIdClient());
@@ -110,8 +110,8 @@ public class ServletPanier extends HttpServlet {
                 panierBDD.setQuantite(produit.getStock());
                 CommandeProduitDAO.addCommandeProduit(panierBDD);
             }
-            Controller.getInstanceController().requestCreateCommande(commande.getIdClient());
-            response.sendRedirect("ServletProduits") ;
+            Controller.getInstanceController().requestCreateCommande(commande.getIdClient());*/
+            request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
         }
     }
 
