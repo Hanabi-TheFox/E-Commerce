@@ -40,7 +40,16 @@
         <li><strong>Email :</strong> <%= u.getMail() %> </li>
         <% if (typeCompte.equals("Client")) {
             Client c = UtilisateurDAO.findClientByUtilisateur(u);
-            assert c != null;%>
+            assert c != null;
+            String carteBancaireNum = c.getCompteBancaireNum();
+            if (!"0000 0000 0000 0000".equals(carteBancaireNum)) {
+                // Affiche uniquement les 4 derniers chiffres
+                String lastFourDigits = carteBancaireNum.substring(carteBancaireNum.length() - 4);
+        %>
+                <li><strong>Carte Bancaire :</strong> **** **** **** <%= lastFourDigits %> </li>
+        <%
+            }
+        %>
         <li><strong>Solde :</strong> <%= c.getCompteBancaireSolde() %> </li>
         <form action="ServletAjouterSolde" method="get">
             <!-- Autres champs du formulaire si nécessaire -->
@@ -58,6 +67,19 @@
             }
         %>
         </ul>
+    <%
+        if (typeCompte.equals("Client")) {
+            Client c = UtilisateurDAO.findClientByUtilisateur(u);
+            String carteBancaireNum = c.getCompteBancaireNum();
+            String buttonText = "Ajouter";
+            if (!"0000 0000 0000 0000".equals(carteBancaireNum)) {
+                buttonText = "Modifier";
+            }
+    %>
+    <p><a href="ServletAjouterMoyenPaiement"><button><%= buttonText %> carte bancaire</button></a></p>
+    <%
+        }
+    %>
     <p><a href="ServletModifierProfil">Modifier le profil</a></p>
     <p><a href="ServletChangerMotDePasse">Changer mot de passe</a></p>
     <p><a href="ServletDeDeconnexion">Deconnexion</a></p> <!-- Lien pour se déconnecter -->

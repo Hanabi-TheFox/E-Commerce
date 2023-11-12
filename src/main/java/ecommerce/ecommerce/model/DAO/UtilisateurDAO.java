@@ -177,6 +177,35 @@ public class UtilisateurDAO
         return null;
     }
 
+    public static void updateClient(Client c) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            session.beginTransaction();
+
+            // Récupérer le client existant de la base de données
+            Client clientExistant = session.get(Client.class, c.getIdClient());
+
+            // Mettre à jour les propriétés spécifiques du client existant
+            clientExistant.setCompteBancaireNum(c.getCompteBancaireNum());
+            clientExistant.setCompteBancaireSolde(c.getCompteBancaireSolde());
+            clientExistant.setPoints(c.getPoints());
+
+            // Mettre à jour le client dans la base de données
+            session.update(clientExistant);
+
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            // Gérer les exceptions ici (enregistrement des journaux, etc.)
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
     public static Moderateur findModByUtilisateur(Utilisateur utilisateur) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
