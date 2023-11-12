@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS Utilisateur (
 CREATE TABLE IF NOT EXISTS `Client` (
     id_client int UNIQUE PRIMARY KEY,
     compteBancaireNum varchar(19),
-    compteBancaireSolde decimal(10,2),
-    points int,
+    compteBancaireSolde decimal(10,2) CHECK (compteBancaireSolde >= 0),
+    points int CHECK (points >= 0),
     FOREIGN KEY (id_client) REFERENCES Utilisateur(id_utilisateur)
 );
 
@@ -84,3 +84,4 @@ INSERT IGNORE INTO Moderateur (id_moderateur, droits)
 	SELECT id_utilisateur, '101'
 	FROM Utilisateur
 	WHERE TypeDeCompte = 'Moderateur';
+
