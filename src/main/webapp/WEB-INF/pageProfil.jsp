@@ -19,6 +19,23 @@
         li {margin: 10px 0;}
         strong {color: #333;}
         a {text-decoration: none; color: #0077cc;}
+        button {
+            width: 18%;
+            padding: 10px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f8f8f8;
+            color: #333;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -49,6 +66,12 @@
             <button type="submit">Ajouter Solde</button>
         </form>
         <li><strong>Points de fidélité :</strong> <%= c.getPoints() %> </li>
+        <form action="ServletConvertPoints" method="get">
+            <!-- Autres champs du formulaire si nécessaire -->
+
+            <!-- Bouton de redirection -->
+            <button type="submit">Convertir les points</button>
+        </form>
         <%
         } else if (typeCompte.equals("Moderateur")) {
             Moderateur m = UtilisateurDAO.findModByUtilisateur(u);

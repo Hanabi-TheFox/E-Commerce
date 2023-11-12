@@ -19,21 +19,23 @@ public class ServletAjouterSolde extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérez les données du formulaire
-        String errorMessage="";
-        request.setAttribute("errorMessage", errorMessage);
         String numCompte = request.getParameter("numeroCarte");
         Client client = Controller.getInstanceController().requestGetClient();
         System.out.println("numero compte" + client.getCompteBancaireNum());
         if(client.getCompteBancaireNum().equals("0000 0000 0000 0000")){
-            errorMessage = "Vous devez d'abord ajouter votre carte bleue avant de pouvoir ajouter de l'argent sur votre compte";
+            String errorMessage = "Vous devez d'abord ajouter votre carte bleue avant de pouvoir ajouter de " +
+                    "l'argent sur votre compte <p><a href=\"ServletAjouterMoyenPaiement\">" +
+                    "<button>Ajouter carte bancaire</button></a></p>";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
         }
         else if(!numCompte.equals(client.getCompteBancaireNum())){
-            errorMessage = "Numéro de carte bleue incorrect";
+            String errorMessage = "Numéro de carte bleue incorrect";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
         }
+        String errorMessage = "";
+        request.setAttribute("errorMessage", errorMessage);
         BigDecimal soldeAjoute = BigDecimal.valueOf(Integer.parseInt(request.getParameter("montant")));
         System.out.println(soldeAjoute);
         /* Il faut maintenant update la bdd avec nouveau solde et ajouter errorMessage dans pageAjouterSolde.jsp
