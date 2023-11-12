@@ -99,16 +99,17 @@ public class ServletPanier extends HttpServlet {
             commandeBDD.setIdClient(commande.getIdClient());
             commandeBDD.setPrix(commande.getPrix());
             commandeBDD.setStatus("payé");
-            int idCommandeBDD =  CommandeDAO.addCommande(commandeBDD);
+            CommandeDAO.addCommande(commandeBDD);
+            // on recupere l'id de la commande qu'on vient d'ajouter
+            int idCommandeBDD = CommandeDAO.getIdFromLastCommande();
             System.out.println("ID commande ajouté = " + idCommandeBDD);
             CommandeProduit panierBDD = new CommandeProduit();
             for (Produit produit : panier){
-                panierBDD.setIdCommande(idCommandeBDD + 1);
+                panierBDD.setIdCommande(idCommandeBDD);
                 panierBDD.setIdProduit(produit.getIdProduit());
                 panierBDD.setQuantite(produit.getStock());
                 CommandeProduitDAO.addCommandeProduit(panierBDD);
             }
-            System.out.println("Commande payé ggwp");
             Controller.getInstanceController().requestCreateCommande(commande.getIdClient());
             response.sendRedirect("ServletProduits") ;
         }
