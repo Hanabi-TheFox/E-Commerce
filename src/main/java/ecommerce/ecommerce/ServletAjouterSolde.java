@@ -1,18 +1,17 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
-import ecommerce.ecommerce.model.DAO.ProduitDAO;
 import entity.Client;
-import entity.Produit;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-
-public class ServletAjouterSolde {
+@WebServlet(name = "ServletAjouterSolde", value = "/ServletAjouterSolde")
+public class ServletAjouterSolde extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
         request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
@@ -20,14 +19,22 @@ public class ServletAjouterSolde {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérez les données du formulaire
+        String errorMessage="";
+        request.setAttribute("errorMessage", errorMessage);
         String numCompte = request.getParameter("numeroCarte");
         Client client = Controller.getInstanceController().requestGetClient();
-        if(!numCompte.equals(client.getCompteBancaireNum())){
-            String errorMessage = "Numéro de carte bleu incorrect";
+        System.out.println("numero compte" + client.getCompteBancaireNum());
+        if(client.getCompteBancaireNum().equals("0000 0000 0000 0000")){
+            errorMessage = "Vous devez d'abord ajouter votre carte bleue avant de pouvoir ajouter de l'argent sur votre compte";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
         }
-        BigDecimal soldeAjoute = BigDecimal.valueOf(Integer.parseInt(request.getParameter("montantSolde")));
+        else if(!numCompte.equals(client.getCompteBancaireNum())){
+            errorMessage = "Numéro de carte bleue incorrect";
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
+        }
+        BigDecimal soldeAjoute = BigDecimal.valueOf(Integer.parseInt(request.getParameter("montant")));
         System.out.println(soldeAjoute);
         /* Il faut maintenant update la bdd avec nouveau solde et ajouter errorMessage dans pageAjouterSolde.jsp
         A faire plus tard
