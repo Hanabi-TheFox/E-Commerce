@@ -40,7 +40,7 @@
         <li><strong>Email :</strong> <%= u.getMail() %> </li>
         <% if (typeCompte.equals("Client")) {
             Client c = UtilisateurDAO.findClientByUtilisateur(u);
-        %>
+            assert c != null;%>
         <li><strong>Solde :</strong> <%= c.getCompteBancaireSolde() %> </li>
         <form action="ServletAjouterSolde" method="get">
             <!-- Autres champs du formulaire si nécessaire -->
