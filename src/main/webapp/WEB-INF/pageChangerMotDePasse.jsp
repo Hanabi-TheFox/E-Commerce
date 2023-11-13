@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="entity.Utilisateur" %>
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
 <%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>

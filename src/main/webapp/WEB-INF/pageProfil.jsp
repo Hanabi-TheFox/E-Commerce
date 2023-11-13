@@ -4,6 +4,7 @@
 <%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>
 <%@ page import="entity.Client" %>
 <%@ page import="entity.Moderateur" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>

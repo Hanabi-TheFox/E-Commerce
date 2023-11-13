@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="entity.Utilisateur" %>
 <%@ page import="entity.Client" %>
 <%@ page import="entity.Moderateur" %>
