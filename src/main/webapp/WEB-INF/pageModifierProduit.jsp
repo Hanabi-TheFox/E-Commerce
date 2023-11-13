@@ -3,7 +3,9 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter un Produit</title>
+    <title>Modifier un Produit</title>
+    <link rel="icon" href="logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;

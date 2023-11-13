@@ -8,7 +8,7 @@
         Boolean modification = (Boolean) request.getAttribute("modification");
     %>
     <meta charset="UTF-8">
-    <title>Inscription</title>
+    <title>Modifier droit modérateur</title>
     <link rel="icon" href="logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
@@ -16,6 +16,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
+            margin : 0;
         }
 
         h1 {

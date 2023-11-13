@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un Solde</title>
+    <link rel="icon" href="logo/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
 </head>
 <style>
     body {

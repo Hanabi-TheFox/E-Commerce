@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Inscription</title>
+    <title>Ajouter un modérateur</title>
     <link rel="icon" href="logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
@@ -11,6 +11,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
+            margin : 0;
         }
 
         h1 {
@@ -35,7 +36,7 @@
 
         input[type="text"],
         input[type="password"] {
-            width: 100%;
+            width: 80%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ccc;

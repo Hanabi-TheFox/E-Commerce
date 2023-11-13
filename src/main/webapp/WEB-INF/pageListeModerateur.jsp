@@ -14,6 +14,7 @@
         /* Styles CSS pour la mise en page */
         body {
             font-family: Arial, sans-serif;
+            margin : 0;
         }
         .moderators {
             width: 80%;
