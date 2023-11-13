@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import entity.Moderateur;
+import entity.Produit;
 import entity.Utilisateur;
 import entity.Client;
 import jakarta.persistence.criteria.*;
@@ -246,15 +247,4 @@ public class UtilisateurDAO
             e.printStackTrace();
         }
     }
-
-
-    /*public static void modifyModerator(Moderateur moderateur, String droits){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        moderateur.setDroits(droits);
-        System.out.println(moderateur.getDroits());
-        session.save(moderateur);
-        session.getTransaction().commit();
-        session.close();
-    }*/
 }

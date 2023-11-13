@@ -4,10 +4,8 @@ import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.CommandeDAO;
 import ecommerce.ecommerce.model.DAO.CommandeProduitDAO;
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
-import entity.Client;
-import entity.Commande;
-import entity.CommandeProduit;
-import entity.Produit;
+import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
+import entity.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 
 @WebServlet(name = "ServletPayerCommande", value = "/ServletPayerCommande")
@@ -97,6 +96,13 @@ public class ServletPayerCommande extends HttpServlet {
             CommandeProduitDAO.addCommandeProduit(panierBDD);
         }
         Controller.getInstanceController().requestCreateCommande(commande.getIdClient());
+        // maj du solde client
+        Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
+        Client client = UtilisateurDAO.findClientByUtilisateur(user);
+        assert client != null;
+        float newSolde = client.getCompteBancaireSolde().floatValue() - commande.getPrix();
+        client.setCompteBancaireSolde(new BigDecimal(newSolde));
+        UtilisateurDAO.updateClient(client);
     }
 
 }
