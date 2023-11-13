@@ -1,9 +1,7 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Produit;
-import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,10 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @WebServlet(name = "ServletAjouterProduit", value = "/ServletAjouterProduit")

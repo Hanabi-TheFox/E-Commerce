@@ -74,6 +74,11 @@
                     Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
                     if(user.getTypeDeCompte().equals("Admin")){
                         %>
+                        <form action="ServletModifierProduit" method="get">
+                            <!-- Autres champs du formulaire pour la modification si nécessaire -->
+                            <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                            <input type="submit" value="Modifier le produit">
+                        </form>
                         <form action="ServletDeleteProduct" method="get">
                             <!-- Autres champs du formulaire si nécessaire -->
                             <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
@@ -84,13 +89,14 @@
                         Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(user);
                         if(moderateur.getDroits().charAt(1) == '1' ){
                             %>
+                                <form action="ServletModifierProduit" method="get">
+                                    <!-- Autres champs du formulaire pour la modification si nécessaire -->
+                                    <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                                    <input type="submit" value="Modifier le produit">
+                                </form>
                             <form action="ServletDeleteProduct" method="get">
                                 <!-- Autres champs du formulaire si nécessaire -->
                                 <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
-                                <%
-                                    System.out.println(produit);
-                                    System.out.println(produit.getIdProduit());
-                                %>
                                 <input type="submit" value="Supprimer le produit">
                             </form>
             <%          }
