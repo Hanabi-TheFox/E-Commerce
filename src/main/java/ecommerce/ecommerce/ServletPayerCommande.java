@@ -111,9 +111,8 @@ public class ServletPayerCommande extends HttpServlet {
         float newSolde = client.getCompteBancaireSolde().floatValue() - commande.getPrix();
         client.setCompteBancaireSolde(new BigDecimal(newSolde));
 
+        // Point de fidélité
         int pointsFidelite = (int) (Math.floor(commande.getPrix()) / 10);
-        System.out.println(commande.getPrix());
-        System.out.println(pointsFidelite);
         client.setPoints(client.getPoints()+pointsFidelite);
 
         UtilisateurDAO.updateClient(client);

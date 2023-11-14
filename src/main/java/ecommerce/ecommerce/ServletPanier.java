@@ -41,20 +41,24 @@ public class ServletPanier extends HttpServlet {
             switch (action) {
                 case "ajouter": {
                     int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
+                    boolean produitExisteDeja = false;
                     for (Produit p : panier) {
                         if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
                             p.setStock(p.getStock() + produitQuantite);
                             ajouterPrix(p);
                             Controller.getInstanceController().requestGetCommande().setPanier(panier);
-                            request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                            produitExisteDeja = true;
+                            break;
                         }
                     }
-                    Produit produit = ProduitDAO.getProduitById(produitId);
-                    if (produit != null) {
-                        produit.setStock(produitQuantite);
-                        ajouterPrix(produit);
+                    if(!produitExisteDeja){
+                        Produit produit = ProduitDAO.getProduitById(produitId);
+                        if (produit != null) {
+                            produit.setStock(produitQuantite);
+                            ajouterPrix(produit);
+                        }
+                        Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
                     }
-                    Controller.getInstanceController().requestGetCommande().ajouterProduitDansPanier(produit);
                     request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
                     break;
                 }
@@ -65,6 +69,7 @@ public class ServletPanier extends HttpServlet {
                             Controller.getInstanceController().requestGetCommande().setPanier(panier);
                             supprimerPrix(p);
                             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                            break;
                         }
                     }
                     break;
@@ -77,6 +82,7 @@ public class ServletPanier extends HttpServlet {
                             ajouterPrix(p);
                             Controller.getInstanceController().requestGetCommande().setPanier(panier);
                             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+                            break;
                         }
                     }
                     break;
@@ -116,6 +122,7 @@ public class ServletPanier extends HttpServlet {
     }
 
     private void ajouterPrix(Produit p){
+        System.out.println("test oh");
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix + (p.getPrix() * p.getStock()));
     }

@@ -74,6 +74,8 @@ public class ServletDInscription extends HttpServlet {
             // Rediriger vers la page de profil
 // --------------------------------------------------------------------------------------------------
             // Pour aller sur profil il faut recuperer l'utilisateur que l'on a ajouté != de la variable local au dessus
+            Controller.getInstanceController().requestSetClient(UtilisateurDAO.findClientByUtilisateur(utilisateur));
+            Controller.getInstanceController().requestCreateCommande(Controller.getInstanceController().requestGetClient().getIdClient());
             response.sendRedirect("ServletProfil");
         } else {
             // L'utilisateur existe, afficher un message d'erreur
