@@ -44,8 +44,8 @@ public class ServletPanier extends HttpServlet {
                     boolean produitExisteDeja = false;
                     for (Produit p : panier) {
                         if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
-                            p.setStock(p.getStock() + produitQuantite);
                             ajouterPrix(p);
+                            p.setStock(p.getStock() + produitQuantite);
                             Controller.getInstanceController().requestGetCommande().setPanier(panier);
                             produitExisteDeja = true;
                             break;
@@ -122,7 +122,6 @@ public class ServletPanier extends HttpServlet {
     }
 
     private void ajouterPrix(Produit p){
-        System.out.println("test oh");
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix + (p.getPrix() * p.getStock()));
     }
