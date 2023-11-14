@@ -78,7 +78,9 @@
 
 
 <form action="ServletAjouterSolde" method="post">
+    <% if(errorMessage != null){ %>
     <p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+    <% } %>
     <p>Votre solde actuel est de : <%= client.getCompteBancaireSolde() %></p>
     <label for="numeroCarte">Numéro de Carte Bleue:</label>
     <input type="text" id="numeroCarte" name="numeroCarte"><br><br>
@@ -89,6 +91,8 @@
         <option value="10">10</option>
         <option value="25">25</option>
         <option value="100">100</option>
+        <option value="100">500</option>
+        <option value="100">1000</option>
     </select>
 
 
