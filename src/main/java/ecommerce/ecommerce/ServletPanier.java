@@ -44,9 +44,12 @@ public class ServletPanier extends HttpServlet {
                     boolean produitExisteDeja = false;
                     for (Produit p : panier) {
                         if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
-                            ajouterPrix(p);
-                            p.setStock(p.getStock() + produitQuantite);
-                            Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            if (!stockIsReach(p, produitQuantite)){
+                                ajouterPrix(p);
+                                p.setStock(p.getStock() + produitQuantite);
+                                Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            }
+                            // Marquer un message pour dire que le stock a été atteint => pas d'ajout dans le panier
                             produitExisteDeja = true;
                             break;
                         }
@@ -110,5 +113,15 @@ public class ServletPanier extends HttpServlet {
     private void supprimerPrix(Produit p){
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix - (p.getPrix() * p.getStock()));
+    }
+
+    private boolean stockIsReach(Produit produit, int stock){
+        List<Produit> prods = ProduitDAO.getListProduits();
+        for(Produit p : prods){
+            if(p.getIdProduit() == produit.getIdProduit()){
+                return produit.getStock() + stock > p.getStock();
+            }
+        }
+        return false;
     }
 }

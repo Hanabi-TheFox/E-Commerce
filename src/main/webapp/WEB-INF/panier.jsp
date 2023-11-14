@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
 <%@ page import="java.math.BigDecimal" %>
+<%@ page import="ecommerce.ecommerce.model.DAO.ProduitDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -96,9 +97,13 @@
 
     <%
         List<Produit> panier = Controller.getInstanceController().requestGetPanier();
+        int stockAvailable = 1;
         float montantTotal = Controller.getInstanceController().requestGetCommande().getPrix();
         if (panier != null) {
             for (Produit produit : panier) {
+                Produit produitInStock = ProduitDAO.getProduitById(produit.getIdProduit());
+                assert produitInStock != null;
+                stockAvailable = produitInStock.getStock();
     %>
 
     <tr>
@@ -106,7 +111,7 @@
             <td><%=produit.getNom()%> <br> <img src="imagesProduct/<%=produit.getIdProduit()%>.jpeg" alt="
                             <%=produit.getNom()%>" width="100"></td>
             <td><%=produit.getPrix()%> €</td>
-            <td><input type="number" name="produitQuantite" min="1" value="<%=produit.getStock()%>"></td>
+            <td><input type="number" name="produitQuantite" min="1" max="<%= stockAvailable %>" value="<%=produit.getStock()%>"></td>
             <td><%=produit.getPrix() * produit.getStock()%> €</td>
             <td>
                 <input type="hidden" name="produitId" value="<%=produit.getIdProduit()%>">
