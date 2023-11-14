@@ -28,15 +28,26 @@ public class ServletConvertPoints extends HttpServlet {
         if ("convertir".equals(action)) {
             // L'utilisateur a choisi de convertir les points en solde
             int quantite = Integer.parseInt(request.getParameter("quantite"));
+            System.out.println("quantite :" + quantite);
+            System.out.println("pts client :" + client.getPoints());
             if(quantite > client.getPoints()){
                 errorMessage = "Vous n'avez pas assez de points pour convertir " + quantite + " points.";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
             }
+            else if(quantite <= 1){
+                errorMessage = "Vous devez convertir 2 points au minimum";
+                request.setAttribute("errorMessage", errorMessage);
+                request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
+            }
             else { // Logique de conversion des points en solde (exemple : 2 points = 1 euro)
+                System.out.println("nombre de pts a convertir :" + quantite);
                 BigDecimal montantSolde = BigDecimal.valueOf(quantite / 2.0);
+                System.out.println("montant solde à ajouter :" + montantSolde);
                 BigDecimal soldeActuel = client.getCompteBancaireSolde();
+                System.out.println("Solde actuel:" + client.getCompteBancaireSolde());
                 BigDecimal soldeApresModif = soldeActuel.add(montantSolde);
+                System.out.println("Solde apres modif:" + soldeApresModif);
                 client.setCompteBancaireSolde(soldeApresModif);
 
                 int pointsApresModif = client.getPoints() - quantite;
@@ -49,10 +60,7 @@ public class ServletConvertPoints extends HttpServlet {
             }
             // Ajoutez votre logique pour mettre à jour le solde de l'utilisateur avec montantSolde
             /*
-
             BDD
-
-
              */
 
         } else if ("annuler".equals(action)) {
