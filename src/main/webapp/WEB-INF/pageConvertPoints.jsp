@@ -74,8 +74,9 @@
     Utilisateur utilisateur = Controller.getInstanceController().requestGetUtilisateur();
     Client client = UtilisateurDAO.findClientByUtilisateur(utilisateur);
     assert client != null;%>
-
+<% if(errorMessage != null){ %>
 <p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+<% } %>
 <form action="ServletConvertPoints" method="post">
     <p>Votre nombre de points de fidélité est de : <%= client.getPoints()%></p>
     <label for="quantite">Choisissez la quantité à convertir :</label>
