@@ -12,7 +12,7 @@ H:/Desktop/RENATO/CY Tech/4eme année/Semestre 1/Java JEE/E-Commerce/src/main/re
       <jdbc-url>jdbc:mysql://localhost:3306/e_commerce</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="e_commerce@localhost" uuid="e69e0769-fff8-42e5-a970-49122408884b">
+    <data-source source="LOCAL" name="e_commerce@localhost" uuid="9b35d37a-6a82-4328-8cdb-a24ec13a8524">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

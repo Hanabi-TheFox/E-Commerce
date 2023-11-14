@@ -1,9 +1,7 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Produit;
-import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,10 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @WebServlet(name = "ServletAjouterProduit", value = "/ServletAjouterProduit")
@@ -50,55 +45,15 @@ public class ServletAjouterProduit extends HttpServlet {
             ProduitDAO.addProduit(produit);
 
             //le produit est ajouté dans la bdd pour qu'un id lui soit attribué
-            int idImage = ProduitDAO.findIdProductdByProduct(produit); //cet id est recuperée
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+            int idImage = ProduitDAO.findIdProductdByProduct(produit);
 
-
-            String relativePath = "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "imagesProduct" + File.separator;
-
-            System.out.println("RELATIVE PATH : " + relativePath);
-            //String absolutePath = getServletContext().getRealPath(relativePath);
-            //System.out.println("CHEMIN IMAGE : " + absolutePath);
+            String uploadPath = getServletContext().getRealPath("/") + "imagesProduct/";
             Part imagePart = request.getPart("image");
-            System.out.println(imagePart);
-
-            //------------EXTENTION DE L'IMAGE
-
-            // Obtenez le type MIME de la partie (image)
-            String contentType = imagePart.getContentType();
-
-// Déduisez l'extension à partir du type MIME
-            String fileExtension = null;
-            if (contentType != null && contentType.startsWith("image/")) {
-                fileExtension = contentType.substring("image/".length());
-            }
-
-// fileExtension contient maintenant l'extension de l'image (par exemple, "png", "jpeg", etc.)
-            System.out.println("Extension de l'image : " + fileExtension);
-            //-----------------------------------
-
-
-            String imageFileName = idImage + "." + fileExtension;
-            System.out.println("Image FILE NAME" + imageFileName);
-            String imageFilePath = relativePath + imageFileName;
-            System.out.println("Image PATH FILE ajouté : " + imageFilePath );
+            String imageFileName = idImage + ".jpeg";
+            String imageFilePath = uploadPath + imageFileName;
 
             produit.setImagePath(imageFilePath);
-            //imagePart.write(imageFilePath);
-
-            //--------ENREGISTREMENT DE L'IMAGE SANS WRITE (car il passe vers le repertoire de compilation work
-
-            try (InputStream inputStream = imagePart.getInputStream();
-                 FileOutputStream outputStream = new FileOutputStream(imageFilePath)) {
-
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
-                }
-            }
-
-
+            imagePart.write(imageFilePath);
 
             //------------------------------------------------------------
 

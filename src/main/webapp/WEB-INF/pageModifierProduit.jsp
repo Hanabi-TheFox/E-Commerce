@@ -99,18 +99,17 @@
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
 
-    // Retrieve pre-filled values
     String nom = (String) request.getAttribute("nom");
     String description = (String) request.getAttribute("description");
-    String prix = (String) request.getAttribute("prix");
-    String stock = (String) request.getAttribute("stock");
+    Float prix = (Float) request.getAttribute("prix");
+    int stock = (int) request.getAttribute("stock");
 %>
 <div class="header">
     <%@ include file="header.jsp" %>
 </div>
 <h1>Ajouter un Produit</h1>
 <p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
-<form action="ServletModificationProduit" method="post" onsubmit="return validerPrix() && validerStock()" enctype="multipart/form-data">
+<form action="ServletModifierProduit" method="post" onsubmit="return validerPrix() && validerStock()" enctype="multipart/form-data">
     <label for="nom">Nom du Produit:</label>
     <input type="text" id="nom" name="nom" value="<%= nom %>" required placeholder="Nom du produit"><br><br>
 
@@ -124,10 +123,10 @@
     <input type="text" id="stock" name="stock" value="<%= stock %>" pattern="[0-9]+" required placeholder="Veuillez entrer une valeur entière"><br><br>
 
     <label for="image">Image du Produit:</label>
-    <input type="file" id="image" name="image" accept="image/*" required>
+    <input type="file" id="image" name="image" accept="image/*">
     <br>
 
-    <input type="submit" value="Ajouter">
+    <input type="submit" value="Sauvegarder">
 </form>
 </body>
 </html>
