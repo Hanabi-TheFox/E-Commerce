@@ -67,6 +67,16 @@
         .hidden {
             display: none;
         }
+        .button-container {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .button-container button {
+            background-color: #333;
+        }
+        .button-container button:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
@@ -113,10 +123,11 @@
 </table>
 
 <p>Montant total : <%=montantTotal%>  €</p>
-
-<form action="ServletPanier" method="post" style="margin-left: 10px">
-    <button type="submit" name="action" value="vider">Vider le panier</button>
-    <button type="submit" name="action" value="payer">Payer</button>
-</form>
+<div class="button-container">
+    <form action="ServletPanier" method="post">
+        <button type="submit" name="action" value="vider">Vider le panier</button>
+        <button type="submit" name="action" value="payer">Payer</button>
+    </form>
+</div>
 </body>
 </html>
