@@ -93,7 +93,19 @@
 <h1>Modification des droits</h1>
 <form action="ServletModifyRights" method="post">
     <label for="email">Adresse email :</label>
-    <input type="email" id="email" name="email" required><br><br>
+    <select id="email" name="email" required>
+        <option value="" selected disabled hidden>Veuillez choisir un modérateur</option>
+<%
+    List<Utilisateur> listUtilisateur = UtilisateurDAO.getListUtilisateurs();
+    for (Utilisateur user : listUtilisateur){
+        if (user.getTypeDeCompte().equals("Moderateur")){
+%>
+        <option value="<%= user.getMail() %>"><%= user.getMail()%></option>
+<%
+        }
+    }
+%>
+    </select>
     <label for="droits" id="label_droits">Droits (voir détail) :</label>
     <div class="tooltip-container" id="tooltip_droits">
         <div class="tooltip" id="tooltip_droits_content"></div>
