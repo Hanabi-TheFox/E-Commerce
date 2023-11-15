@@ -68,6 +68,22 @@
         .success {
             color: green;
         }
+        .tooltip-container label {
+            position: relative;
+            font-size: 12px; /* Réduisez la police d'écriture selon vos besoins */
+        }
+
+        .tooltip-container .tooltip {
+            position: absolute;
+            display: none;
+            background-color: #f9f9f9;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            color: #333;
+            z-index: 1;
+            font-weight : normal;
+        }
     </style>
 </head>
 <body>
@@ -78,7 +94,10 @@
 <form action="ServletModifyRights" method="post">
     <label for="email">Adresse email :</label>
     <input type="email" id="email" name="email" required><br><br>
-    <label for="droits">Droits :</label>
+    <label for="droits" id="label_droits">Droits (voir détail) :</label>
+    <div class="tooltip-container" id="tooltip_droits">
+        <div class="tooltip" id="tooltip_droits_content"></div>
+    </div>
     <select id="droits" name="droits">
         <option value="000">000</option>
         <option value="001">001</option>
@@ -100,5 +119,31 @@
         }
     %>
 </form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Fonction pour afficher la boîte de dialogue
+        function afficherBoiteDialogue() {
+            var tooltipBox = document.getElementById('tooltip_droits_content');
+            tooltipBox.innerHTML = '1er droit : Ajouter un produit<br>2ème droit : Supprimer un produit<br>' +
+                '3ème droit : Ajouter un Modérateur<br><br>1 : Possède le droit <br>0 : Ne possède pas le droit';
+            tooltipBox.style.display = 'block';
+        }
+
+        // Attachez un gestionnaire d'événements au label "Droits"
+        var labelDroits = document.querySelector('label[for="droits"]');
+
+        labelDroits.addEventListener('mouseover', function () {
+            // Affichez la boîte de dialogue lorsque la souris survole le label "Droits"
+            afficherBoiteDialogue();
+        });
+
+        labelDroits.addEventListener('mouseout', function () {
+            // Cachez la boîte de dialogue lorsque la souris quitte le label "Droits"
+            var tooltipBox = document.getElementById('tooltip_droits_content');
+            tooltipBox.style.display = 'none';
+        });
+    });
+</script>
+
 </body>
 </html>
