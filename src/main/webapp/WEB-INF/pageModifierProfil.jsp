@@ -34,10 +34,10 @@
     <h1>Modifier le Profil</h1>
     <form action="ServletModifierProfil" method="post">
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" value="<%= u.getNom() %>"><br>
+        <input type="text" id="nom" name="nom"  pattern="[A-Za-zÀ-ÿ\s\-]+" value="<%= u.getNom() %>"><br>
 
         <label for="prenom">Prenom :</label>
-        <input type="text" id="prenom" name="prenom" value="<%= u.getPrenom() %>"><br>
+        <input type="text" id="prenom" name="prenom"  pattern="[A-Za-zÀ-ÿ\s\-]+" value="<%= u.getPrenom() %>"><br>
 
         <label for="email">Email :</label>
         <input type="text" id="email" name="email" value="<%= u.getMail() %>"><br>
