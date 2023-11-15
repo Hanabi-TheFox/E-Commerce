@@ -44,9 +44,12 @@ public class ServletPanier extends HttpServlet {
                     boolean produitExisteDeja = false;
                     for (Produit p : panier) {
                         if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
-                            p.setStock(p.getStock() + produitQuantite);
-                            ajouterPrix(p);
-                            Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            if (!stockIsReach(p, produitQuantite)){
+                                ajouterPrix(p);
+                                p.setStock(p.getStock() + produitQuantite);
+                                Controller.getInstanceController().requestGetCommande().setPanier(panier);
+                            }
+                            // Marquer un message pour dire que le stock a été atteint => pas d'ajout dans le panier
                             produitExisteDeja = true;
                             break;
                         }
@@ -99,35 +102,26 @@ public class ServletPanier extends HttpServlet {
             Controller.getInstanceController().requestGetCommande().setPrix(0);
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         }else if(action.equals("payer")){
-            /*Commande commande = Controller.getInstanceController().requestGetCommande();
-            List<Produit> panier = commande.getPanier();
-            Commande commandeBDD = new Commande();
-            commandeBDD.setIdClient(commande.getIdClient());
-            commandeBDD.setPrix(commande.getPrix());
-            commandeBDD.setStatus("payé");
-            CommandeDAO.addCommande(commandeBDD);
-            // on recupere l'id de la commande qu'on vient d'ajouter
-            int idCommandeBDD = CommandeDAO.getIdFromLastCommande();
-            System.out.println("ID commande ajouté = " + idCommandeBDD);
-            CommandeProduit panierBDD = new CommandeProduit();
-            for (Produit produit : panier){
-                panierBDD.setIdCommande(idCommandeBDD);
-                panierBDD.setIdProduit(produit.getIdProduit());
-                panierBDD.setQuantite(produit.getStock());
-                CommandeProduitDAO.addCommandeProduit(panierBDD);
-            }
-            Controller.getInstanceController().requestCreateCommande(commande.getIdClient());*/
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
         }
     }
 
     private void ajouterPrix(Produit p){
-        System.out.println("test oh");
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix + (p.getPrix() * p.getStock()));
     }
     private void supprimerPrix(Produit p){
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix - (p.getPrix() * p.getStock()));
+    }
+
+    private boolean stockIsReach(Produit produit, int stock){
+        List<Produit> prods = ProduitDAO.getListProduits();
+        for(Produit p : prods){
+            if(p.getIdProduit() == produit.getIdProduit()){
+                return produit.getStock() + stock > p.getStock();
+            }
+        }
+        return false;
     }
 }

@@ -104,7 +104,7 @@
             %>
                         <form action="ServletPanier" method="get">
                         <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
-                        <input type="number" name="produitQuantite" min="1" value="1"><br>
+                        <input type="number" name="produitQuantite" min="1" max="<%= produit.getStock() %>" value="1"><br>
                         <input type="submit" name="action" value="ajouter">
                         </form>
             <%
