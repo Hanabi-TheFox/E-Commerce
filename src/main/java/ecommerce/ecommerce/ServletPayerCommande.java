@@ -25,52 +25,29 @@ public class ServletPayerCommande extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String carte = request.getParameter("numeroCarte");
+        String errorMessage="";
         Client client = Controller.getInstanceController().requestGetClient();
         if(client.getCompteBancaireNum().equals("0000 0000 0000 000")){ // si le client n'a pas de CB
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            System.out.println("Le client doit ajouter une carte bleue");
-            response.sendRedirect("ServletProduits");
+            errorMessage = "Vous devez d'abord ajouter une carte bancaire ";
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
         }
         else if(carte.equals(client.getCompteBancaireNum())){
             Commande commande = Controller.getInstanceController().requestGetCommande();
             List<Produit> panier = commande.getPanier();
             if(client.getCompteBancaireSolde().floatValue() >= commande.getPrix()){
                 List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
-                for (Produit panierProd : panier){
-                    for(Produit p : listeProduits){
-                        if ( panierProd.getIdProduit() == p.getIdProduit() && panierProd.getStock() > p.getStock()){
-                            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                            System.out.println("Pas assez de stock pour le produit '" + p.getNom() + "', stock actuel : " + p.getStock() + "< " + panierProd.getStock() + "(stock demande)");
-                            response.sendRedirect("ServletProduits");
-                        }
-                    }
-                }
                 acceptPayment(commande, panier, listeProduits);
-                response.sendRedirect("ServletProduits");
+                request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }else {
-                // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-                System.out.println("Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ") => retour à l'accueil");
-                response.sendRedirect("ServletProduits");
+                errorMessage = "Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ")";
+                request.setAttribute("errorMessage", errorMessage);
+                request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }
-        }else { // numero de carte invalide
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            // /!\ A retravailler : mise ne place d'un message d'erreur + rester sur le form si possible /!\
-            System.out.println("Numero de carte invalide : carte != " + client.getCompteBancaireNum() + " => retour à l'accueil");
-            response.sendRedirect("ServletProduits");
+        }else {
+            errorMessage = "Numéro de carte incorrect";
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
         }
     }
 

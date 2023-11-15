@@ -83,7 +83,7 @@
     <% } %>
     <p>Votre solde actuel est de : <%= client.getCompteBancaireSolde() %></p>
     <label for="numeroCarte">Numéro de Carte Bleue:</label>
-    <input type="text" id="numeroCarte" name="numeroCarte" required placeholder="4856 1789 0254 5623"><br><br>
+    <input type="text" id="numeroCarte" name="numeroCarte" required placeholder="Exemple : **** **** **** ****"><br><br>
 
     <label for="montant">Montant</label>
     <input type="text" id="montant" name="montant" pattern="[0-9]+" required placeholder="Veuillez entrer le montant"><br><br>

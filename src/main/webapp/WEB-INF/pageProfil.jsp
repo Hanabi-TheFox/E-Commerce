@@ -37,6 +37,9 @@
             background-color: #45a049;
             color: #fff;
         }
+        .left{
+            margin-left : 8%;
+        }
     </style>
 </head>
 <body>
@@ -79,8 +82,9 @@
         <%
         } else if (typeCompte.equals("Moderateur")) {
             Moderateur m = UtilisateurDAO.findModByUtilisateur(u);
+            String droits = getRightsPrint(m);
         %>
-        <li><strong>Droits :</strong> <%= m.getDroits() %></li>
+        <li><strong>Droits :</strong> <div class="left"><%= droits %></div></li>
         <%
             }
         %>
@@ -88,6 +92,7 @@
     <%
         if (typeCompte.equals("Client")) {
             Client c = UtilisateurDAO.findClientByUtilisateur(u);
+            assert c != null;
             String carteBancaireNum = c.getCompteBancaireNum();
             String buttonText = "Ajouter";
             if (!"0000 0000 0000 0000".equals(carteBancaireNum)) {
@@ -105,3 +110,22 @@
 </div>
 </body>
 </html>
+<%! private static String getRightsPrint(Moderateur m) {
+    String droits = "";
+    if (m.getDroits().equals("000")){
+        droits="- Aucun droit";
+    }
+    else {
+        if (m.getDroits().charAt(0) == '1') {
+            droits += "- Ajouter un produit" + "<br>";
+        }
+        if (m.getDroits().charAt(1) == '1') {
+            droits += "- Supprimer un produit" + "<br>";
+        }
+        if (m.getDroits().charAt(2) == '1') {
+            droits += "- Ajouter un modérateur" + "<br>";
+        }
+    }
+    return droits;
+}
+%>

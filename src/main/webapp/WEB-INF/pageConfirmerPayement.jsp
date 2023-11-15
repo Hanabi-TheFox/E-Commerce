@@ -78,12 +78,18 @@
     </style>
 </head>
 <body>
+<%
+    String errorMessage = (String) request.getAttribute("errorMessage");
+%>
 <div class="header">
     <%@ include file="header.jsp" %>
 </div>
 <div class="title">
     <h1>Confirmer le Paiement</h1>
 </div>
+<% if(errorMessage != null){ %>
+<p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+<% } %>
 <div class="content">
     <form action="ServletPayerCommande" method="post">
         <label for="numeroCarte">Numéro de carte :</label>
