@@ -3,6 +3,8 @@
 <%@ page import="ecommerce.ecommerce.controller.Controller" %>
 <%@ page import="ecommerce.ecommerce.model.DAO.UtilisateurDAO" %>
 <%@ page import="entity.Commande" %>
+<%@ page import="entity.Produit" %>
+<%@ page import="java.util.List" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -122,10 +124,20 @@
             <%--<li class="current"><a href="index.php"><img src="../../img/logo.png" alt="logo_du_site" width="175px"></a></li>--%>
             <li><a href='ServletProduits' style='display: flex; align-items: center; text-decoration: none;'>
                 <img src="logo/logo.png" alt="Logo Azur Shop" width="50px" style='margin-right: 10px;'>
-                <span style='color: #3498db; font-size: 24px; font-weight: bold;'>Azur Shop</span></a></li>
+                <span style='color: #fff; font-size: 24px; font-weight: bold;'>Azur Shop</span></a></li>
             <%
                 Utilisateur header = Controller.getInstanceController().requestGetUtilisateur();
                 Commande headerCommande = Controller.getInstanceController().requestGetCommande();
+                int nbProduct = 0;
+                if (headerCommande != null){
+                    List<Produit> headerPanier = headerCommande.getPanier();
+                    for(Produit p : headerPanier){
+                        nbProduct += p.getStock();
+                    }
+                }
+
+
+
                 if (header == null) {
             %>
                 <li class='style se-connecter'><a href="ServletDeConnexion" class='lien'>Se Connecter</a></li>
@@ -141,7 +153,10 @@
                     if (header.getTypeDeCompte().equals("Client")) {
 
             %>
-                    <li class='style'><a href='ServletPanier' class='lien'>Panier : <%= headerCommande.getPrix() %> euros</a></li>
+                    <%--<li class='style'><a href='ServletPanier' class='lien'>Panier : <%= headerCommande.getPrix() %> euros</a></li>--%>
+                    <li><a href='ServletPanier' style='display: flex; align-items: center; text-decoration: none;'>
+                    <img src="logo/panier.png" alt="Panier" width="50px" style='margin-right: 10px;'>
+                    <span style='color: #fff; font-size: 16px; font-weight: bold;'> <%= nbProduct %> </span>
             <%
                     } else {
             %>
