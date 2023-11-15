@@ -25,7 +25,7 @@ public class ServletModifyRights extends HttpServlet {
         Utilisateur utilisateur = ExisteModerateur(email);
         if(utilisateur != null) {
             Moderateur m = UtilisateurDAO.findModByUtilisateur(utilisateur);
-            UtilisateurDAO.modifyModerateurDroits(m.getIdModerateur(),droits);
+            UtilisateurDAO.modifyModerateurDroits(m, droits);
             Boolean modification = true;
             request.setAttribute("modification",modification);
             request.getRequestDispatcher("/WEB-INF/modifierDroitsModerateur.jsp").forward(request, response);

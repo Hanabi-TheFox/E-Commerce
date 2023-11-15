@@ -25,6 +25,7 @@ public class ServletConvertPoints extends HttpServlet {
         request.setAttribute("errorMessage", errorMessage);
         String action = request.getParameter("action");
         Client client = Controller.getInstanceController().requestGetClient();
+        System.out.println("id client : " + client.getIdClient());
         if ("convertir".equals(action)) {
             // L'utilisateur a choisi de convertir les points en solde
             int quantite = Integer.parseInt(request.getParameter("quantite"));
