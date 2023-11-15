@@ -83,17 +83,10 @@
     <% } %>
     <p>Votre solde actuel est de : <%= client.getCompteBancaireSolde() %></p>
     <label for="numeroCarte">Numéro de Carte Bleue:</label>
-    <input type="text" id="numeroCarte" name="numeroCarte"><br><br>
+    <input type="text" id="numeroCarte" name="numeroCarte" required placeholder="4856 1789 0254 5623"><br><br>
 
-    <label for="montant">Option de Choix:</label>
-    <select id="montant" name="montant" required>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="100">100</option>
-        <option value="100">500</option>
-        <option value="100">1000</option>
-    </select>
+    <label for="montant">Montant</label>
+    <input type="text" id="montant" name="montant" pattern="[0-9]+" required placeholder="Veuillez entrer le montant"><br><br>
 
 
     <!-- Autres champs du formulaire si nécessaire -->

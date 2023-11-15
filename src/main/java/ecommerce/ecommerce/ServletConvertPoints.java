@@ -36,14 +36,14 @@ public class ServletConvertPoints extends HttpServlet {
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
             }
-            else if(quantite <= 1){
-                errorMessage = "Vous devez convertir 2 points au minimum";
+            else if(quantite < 1){
+                errorMessage = "Vous devez convertir au moins 1 point";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
             }
             else { // Logique de conversion des points en solde (exemple : 2 points = 1 euro)
                 System.out.println("nombre de pts a convertir :" + quantite);
-                BigDecimal montantSolde = BigDecimal.valueOf(quantite / 2.0);
+                BigDecimal montantSolde = BigDecimal.valueOf(quantite);
                 System.out.println("montant solde à ajouter :" + montantSolde);
                 BigDecimal soldeActuel = client.getCompteBancaireSolde();
                 System.out.println("Solde actuel:" + client.getCompteBancaireSolde());
@@ -59,10 +59,6 @@ public class ServletConvertPoints extends HttpServlet {
                 response.sendRedirect("ServletProfil");
                 response.getWriter().println("Conversion réussie. Montant ajouté au solde : " + montantSolde);
             }
-            // Ajoutez votre logique pour mettre à jour le solde de l'utilisateur avec montantSolde
-            /*
-            BDD
-             */
 
         } else if ("annuler".equals(action)) {
             // L'utilisateur a choisi de ne pas convertir les points
