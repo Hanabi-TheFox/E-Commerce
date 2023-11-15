@@ -4,6 +4,7 @@
 <%@ page import="java.math.BigDecimal" %>
 <%@ page import="ecommerce.ecommerce.model.DAO.ProduitDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%Boolean panierVide = (Boolean) request.getAttribute("panierVide");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,6 +134,11 @@
         <button type="submit" name="action" value="vider">Vider le panier</button>
         <button type="submit" name="action" value="payer">Payer</button>
     </form>
+
+    <% if (panierVide != null && panierVide) { %>
+    <h3 style="color: red;">Ajoutez des produits pour les acheter!</h3>
+    <% } %>
+
 </div>
 </body>
 </html>

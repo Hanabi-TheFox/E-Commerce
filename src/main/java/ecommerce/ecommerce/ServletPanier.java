@@ -102,6 +102,12 @@ public class ServletPanier extends HttpServlet {
             Controller.getInstanceController().requestGetCommande().setPrix(0);
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         }else if(action.equals("payer")){
+            if (Controller.getInstanceController().requestGetCommande().getPanier().isEmpty()) {
+                //Aucun produit a été ajoutée pour acheter et payer
+                Boolean panierVide = true;
+                request.setAttribute("panierVide",panierVide);
+                request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
+            }
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
         }
     }
