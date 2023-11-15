@@ -4,12 +4,15 @@
     String errorMessage = (String) request.getAttribute("errorMessage");
 %>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de Connexion</title>
     <link rel="icon" href="logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,7 +39,7 @@
         }
         input[type="text"],
         input[type="password"] {
-            width: 80%;
+            width: 100%;
             padding: 10px;
             margin: 5px 0;
             border: 1px solid #ccc;
@@ -49,7 +52,6 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            width: 80%;
         }
         input[type="submit"]:hover {
             background-color: #555;
@@ -76,14 +78,18 @@
 <div class="header">
     <%@ include file="header.jsp" %>
 </div>
-<h1>Connexion</h1>
+<h1 class="display-4">Connexion</h1>
 <div class="container">
     <form action="ServletDeConnexion" method="post">
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" required>
-        <label for="motDePasse">Mot de passe :</label>
-        <input type="password" id="motDePasse" name="motDePasse" required>
-        <input type="submit" value="Se connecter">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="motDePasse">Mot de passe :</label>
+            <input type="password" id="motDePasse" name="motDePasse" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
     </form>
     <p class="error"><%= errorMessage %></p>
 </div>
@@ -91,5 +97,8 @@
 <div class="footer">
     <p>&copy; 2023 LE NIL+. Tous droits réservés.</p>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
