@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import ecommerce.ecommerce.controller.Controller;
 import entity.Moderateur;
 import entity.Produit;
 import entity.Utilisateur;
@@ -71,6 +72,7 @@ public class UtilisateurDAO
             session.update(utilisateurExistant);
             
             session.getTransaction().commit();
+            Controller.getInstanceController().requestSetUtilisateur(e);
         } catch (Exception ex) {
             // Gérer les exceptions ici (enregistrement des journaux, etc.)
             if (session.getTransaction() != null) {
@@ -196,6 +198,7 @@ public class UtilisateurDAO
             session.update(clientExistant);
 
             session.getTransaction().commit();
+            Controller.getInstanceController().requestSetClient(c);
         } catch (Exception ex) {
             // Gérer les exceptions ici (enregistrement des journaux, etc.)
             if (session.getTransaction() != null) {
@@ -221,7 +224,8 @@ public class UtilisateurDAO
         return moderateur;
     }
 
-    public static void modifyModerateurDroits(int moderatorId, String nouveauxDroits) {
+
+    public static void modifyModerateurDroits(Moderateur moderator, String nouveauxDroits) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaUpdate<Moderateur> updateCriteria = criteriaBuilder.createCriteriaUpdate(Moderateur.class);
@@ -231,16 +235,16 @@ public class UtilisateurDAO
             updateCriteria.set(root.get("droits"), nouveauxDroits);
 
             // on trouve cet attribut grace à l'id_moderateur correspondant
-            updateCriteria.where(criteriaBuilder.equal(root.get("idModerateur"), moderatorId));
+            updateCriteria.where(criteriaBuilder.equal(root.get("idModerateur"), moderator.getIdModerateur()));
 
             Transaction transaction = session.beginTransaction();
             int updatedCount = session.createQuery(updateCriteria).executeUpdate();
             transaction.commit();
-
+            Controller.getInstanceController().requestSetModerateur(moderator);
             if (updatedCount > 0) {
                 System.out.println("Droits du modérateur mis à jour avec succès.");
             } else {
-                System.out.println("Modérateur introuvable avec l'ID : " + moderatorId);
+                System.out.println("Modérateur introuvable avec l'ID : " + moderator.getIdModerateur());
             }
         } catch (Exception e) {
             System.out.println("Erreur lors de la mise à jour des droits du modérateur.");
