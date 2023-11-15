@@ -37,6 +37,9 @@ public class ServletAjouterSolde extends HttpServlet {
         else {
             BigDecimal soldeAjoute = BigDecimal.valueOf(Integer.parseInt(request.getParameter("montant")));
             BigDecimal soldeActuel = client.getCompteBancaireSolde();
+            if (soldeActuel == null) {
+                soldeActuel = BigDecimal.ZERO;
+            }
             BigDecimal soldeApresModif = soldeActuel.add(soldeAjoute);
             client.setCompteBancaireSolde(soldeApresModif);
             Controller.getInstanceController().requestSetClient(client);

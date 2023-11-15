@@ -83,7 +83,7 @@ public class ServletModifierProduit extends HttpServlet {
         }
     }
 
-    
+
     private boolean existeProduit(String nomProduit){
         List<Produit> listeProduits = ProduitDAO.getListProduits();
         for (Produit produit : listeProduits) {

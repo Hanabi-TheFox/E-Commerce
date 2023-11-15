@@ -97,7 +97,7 @@
     %>
 </div>
 <div class="footer">
-    <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
+    <p>&copy; 2023 AZUR. Tous droits réservés.</p>
 </div>
 </body>
 </html>
