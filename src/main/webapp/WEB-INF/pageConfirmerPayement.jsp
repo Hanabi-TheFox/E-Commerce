@@ -67,6 +67,9 @@
 <div class="title">
     <h1>Confirmer le Paiement</h1>
 </div>
+<% if(errorMessage != null){ %>
+<p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+<% } %>
 <div class="container">
     <div class="content">
         <%
@@ -80,7 +83,7 @@
         <form action="ServletPayerCommande" method="post">
             <div class="form-group">
                 <label for="numeroCarte">Confirmez votre carte bancaire :</label>
-                <input type="password" class="form-control" id="numeroCarte" name="numeroCarte" required pattern="[0-9]*">
+                <input type="text" class="form-control" id="numeroCarte" name="numeroCarte" required pattern="[0-9 ]+">
             </div>
             <button type="submit" class="btn btn-dark">Payer</button>
         </form>

@@ -45,6 +45,8 @@ public class ServletPayerCommande extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }
         }else {
+            System.out.println(client.getCompteBancaireNum());
+            System.out.println(carte);
             errorMessage = "Numéro de carte incorrect";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);

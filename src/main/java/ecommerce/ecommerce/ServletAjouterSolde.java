@@ -23,7 +23,7 @@ public class ServletAjouterSolde extends HttpServlet {
         String numCompte = request.getParameter("numeroCarte");
         Client client = Controller.getInstanceController().requestGetClient();
         if(client.getCompteBancaireNum().equals("0000 0000 0000 0000") || numCompte.isEmpty()){
-            String errorMessage = "Vous devez d'abord ajouter votre carte bleue avant de pouvoir ajouter de l'argent sur votre compte";
+            String errorMessage = "Vous devez ajouter votre carte bleue sur votre profil avant de pouvoir ajouter de l'argent sur votre compte";
                     /*"l'argent sur votre compte" + "<form action=\"ServletAjouterMoyenDePaiement\" method=\"get\"> " +
                     "<button type=\"submit\">Ajouter Carte Bancaire</button></form>";*/
             request.setAttribute("errorMessage", errorMessage);
