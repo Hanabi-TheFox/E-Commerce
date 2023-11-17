@@ -14,7 +14,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Properties;
 
 @WebServlet(name = "ServletPayerCommande", value = "/ServletPayerCommande")
 public class ServletPayerCommande extends HttpServlet {
@@ -38,6 +42,7 @@ public class ServletPayerCommande extends HttpServlet {
             if(client.getCompteBancaireSolde().floatValue() >= commande.getPrix()){
                 List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
                 acceptPayment(commande, panier, listeProduits);
+                // mailDuPayment(commande, panier, listeProduits); // /!\ NON FONCTIONNEL
                 request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }else {
                 errorMessage = "Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ")";
@@ -95,6 +100,62 @@ public class ServletPayerCommande extends HttpServlet {
         client.setPoints(client.getPoints()+pointsFidelite);
 
         UtilisateurDAO.updateClient(client);
+    }
+
+    private void mailDuPayment(Commande commande, List<Produit> panier, List<Produit> prods){
+        Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
+        String API_KEY = "pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E";
+        String COMPANY_NAME = "NomDeVotreEntreprise";
+
+        // Récupération des informations nécessaires pour construire l'email
+        String userName = user.getPrenom() + " " + user.getNom(); // Fonction pour obtenir le nom du client
+        // Génération de la date et de l'heure actuelles
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        // Formatage de la date et de l'heure
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        String paymentDate = currentDate.format(dateFormatter);
+        String paymentTime = currentTime.format(timeFormatter);
+        String currency = "EUR"; // Changez en la devise appropriée si nécessaire
+
+        // Préparation du contenu de l'email
+        StringBuilder emailContent = new StringBuilder();
+        emailContent.append("Cher ").append(userName).append(",\n\n");
+        emailContent.append("Nous vous confirmons le paiement effectué le ").append(paymentDate);
+        emailContent.append(" à ").append(paymentTime).append(". Votre achat comprend les articles suivants :\n\n");
+
+        float totalPrice = 0; // Initialisation du prix total
+
+        // Boucle pour ajouter les détails de chaque produit dans l'email
+        for (Produit produit : panier) {
+            String productName = produit.getNom();
+            int productQuantity = produit.getStock();
+            float productPrice = produit.getPrix();
+            float productGroupPrice = productQuantity > 1 ? (productQuantity * productPrice) : productPrice;
+
+            emailContent.append(productName).append(", x").append(productQuantity);
+            emailContent.append(" - ").append(productPrice).append(" ").append(currency).append(" l'unité");
+            emailContent.append(" - ").append(productGroupPrice).append(" ").append(currency).append(" le groupe\n");
+
+            totalPrice += productGroupPrice;
+        }
+
+        emailContent.append("\nPrix total : ").append(totalPrice).append(" ").append(currency).append(".\n\n");
+        emailContent.append("Merci pour votre achat chez nous.\n\n");
+        emailContent.append("Cordialement,\nL'équipe de ").append(COMPANY_NAME);
+
+        // Envoi de l'email
+        String recipientEmail = user.getMail();
+        String subject = "Confirmation de paiement";
+
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com"); // Serveur SMTP - À adapter si nécessaire
+        properties.put("mail.smtp.port", "587"); // Port SMTP - À adapter si nécessaire
+
     }
 
 }
