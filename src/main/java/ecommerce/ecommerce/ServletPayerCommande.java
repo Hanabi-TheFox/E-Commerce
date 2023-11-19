@@ -49,7 +49,7 @@ public class ServletPayerCommande extends HttpServlet {
                 List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
                 acceptPayment(commande, panier, listeProduits);
                 mailDuPayment(panier);
-                request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/pageRemerciement.jsp").forward(request, response);
             }else {
                 errorMessage = "Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ")";
                 request.setAttribute("errorMessage", errorMessage);
