@@ -11,12 +11,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import models.SendEnhancedRequestBody;
+import models.SendEnhancedResponseBody;
+import models.SendRequestMessage;
+import services.Courier;
+import services.SendService;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -42,7 +48,7 @@ public class ServletPayerCommande extends HttpServlet {
             if(client.getCompteBancaireSolde().floatValue() >= commande.getPrix()){
                 List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
                 acceptPayment(commande, panier, listeProduits);
-                // mailDuPayment(commande, panier, listeProduits); // /!\ NON FONCTIONNEL
+                mailDuPayment(commande, panier, listeProduits);
                 request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }else {
                 errorMessage = "Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ")";
@@ -104,8 +110,8 @@ public class ServletPayerCommande extends HttpServlet {
 
     private void mailDuPayment(Commande commande, List<Produit> panier, List<Produit> prods){
         Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
-        String API_KEY = "pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E";
-        String COMPANY_NAME = "NomDeVotreEntreprise";
+        Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
+        String COMPANY_NAME = "Azur Shop";
 
         // Récupération des informations nécessaires pour construire l'email
         String userName = user.getPrenom() + " " + user.getNom(); // Fonction pour obtenir le nom du client
@@ -146,16 +152,27 @@ public class ServletPayerCommande extends HttpServlet {
         emailContent.append("Merci pour votre achat chez nous.\n\n");
         emailContent.append("Cordialement,\nL'équipe de ").append(COMPANY_NAME);
 
-        // Envoi de l'email
-        String recipientEmail = user.getMail();
-        String subject = "Confirmation de paiement";
+        // Envoi de l'email via Courier
+        SendEnhancedRequestBody request = new SendEnhancedRequestBody();
+        SendRequestMessage message = new SendRequestMessage();
 
-        Properties properties = System.getProperties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com"); // Serveur SMTP - À adapter si nécessaire
-        properties.put("mail.smtp.port", "587"); // Port SMTP - À adapter si nécessaire
+        HashMap<String, String> to = new HashMap<>();
+        to.put("email", user.getMail()); // Utilisation de l'adresse e-mail du destinataire
+        message.setTo(to);
 
+        HashMap<String, Object> content = new HashMap<>();
+        content.put("title", "Confirmation de paiement");
+        content.put("body", emailContent.toString()); // Utilisation du contenu préparé pour l'email
+        message.setContent(content);
+
+        request.setMessage(message);
+        try {
+            SendEnhancedResponseBody response = new SendService().sendEnhancedMessage(request);
+            System.out.println(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gérer les erreurs liées à l'envoi de l'email
+        }
     }
 
 }
