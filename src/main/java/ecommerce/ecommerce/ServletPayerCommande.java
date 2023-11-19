@@ -48,7 +48,7 @@ public class ServletPayerCommande extends HttpServlet {
             if(client.getCompteBancaireSolde().floatValue() >= commande.getPrix()){
                 List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
                 acceptPayment(commande, panier, listeProduits);
-                mailDuPayment(commande, panier, listeProduits);
+                mailDuPayment(panier);
                 request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }else {
                 errorMessage = "Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ")";
@@ -108,7 +108,7 @@ public class ServletPayerCommande extends HttpServlet {
         UtilisateurDAO.updateClient(client);
     }
 
-    private void mailDuPayment(Commande commande, List<Produit> panier, List<Produit> prods){
+    private void mailDuPayment(List<Produit> panier){
         Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
         Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
         String COMPANY_NAME = "Azur Shop";

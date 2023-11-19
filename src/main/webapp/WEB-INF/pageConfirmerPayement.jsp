@@ -55,6 +55,23 @@
             margin-top: 10px;
         }
     </style>
+    <script>
+        function formatCarteBancaire() {
+            var numeroCarte = document.getElementById("numeroCarte");
+            var regex = /^[0-9 ]+$/;
+
+            // Retirer les espaces de la saisie de l'utilisateur
+            var numeroCarteSansEspaces = numeroCarte.value.replace(/ /g, '');
+
+            // Formater le numéro de carte bancaire avec des espaces tous les 4 caractères
+            var numeroCarteFormatee = numeroCarteSansEspaces.replace(/(.{4})/g, '$1 ');
+
+            // Mettre à jour la valeur dans le champ
+            document.getElementById("numeroCarte").value = numeroCarteFormatee.trim();
+
+            return true;
+        }
+    </script>
 </head>
 <body>
 <%
@@ -80,7 +97,7 @@
         <%
             }
         %>
-        <form action="ServletPayerCommande" method="post">
+        <form action="ServletPayerCommande" method="post" onsubmit="return formatCarteBancaire()">
             <div class="form-group">
                 <label for="numeroCarte">Confirmez votre carte bancaire :</label>
                 <input type="text" class="form-control" id="numeroCarte" name="numeroCarte" required pattern="[0-9 ]+">
