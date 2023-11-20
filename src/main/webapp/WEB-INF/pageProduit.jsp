@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="entity.Produit" %>
+<%@ page import="jdk.jshell.execution.Util" %>
 
 <%
     Produit produit = (Produit) request.getAttribute("produit");
+
 %>
 
 <!DOCTYPE html>
@@ -68,10 +70,22 @@
             <li><strong>Nom du Produit:</strong> <%= produit.getNom() %></li>
             <li><strong>Description:</strong> <%= produit.getDescription() %></li>
             <li><strong>Prix:</strong> <%= produit.getPrix() %> €</li>
-            <li><strong>Stock Disponible:</strong> <%= produit.getStock() %> unités</li>
             <%
-                if(Controller.getInstanceController().requestGetUtilisateur()!=null){
-                    Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
+                Utilisateur user = null;
+                if(Controller.getInstanceController().requestGetUtilisateur()!=null) {
+                    user = Controller.getInstanceController().requestGetUtilisateur();
+                }
+                if ((produit.getStock() > 0 && (user == null || user.getTypeDeCompte().equals("Client")) || (user != null && (!user.getTypeDeCompte().equals("Client")))) ){
+            %>
+                    <li><strong>Stock Disponible:</strong> <%= produit.getStock() %> unités</li>
+            <%
+                }else {
+            %>
+                    <li style="color: red"><strong>Produit indisponible</strong></li>
+            <%
+                }
+                if (user != null){
+
                     if(user.getTypeDeCompte().equals("Admin")){
                         %>
                         <form action="ServletModifierProduit" method="get">
@@ -100,7 +114,7 @@
                                 <input type="submit" value="Supprimer le produit">
                             </form>
             <%          }
-                    }else if(user.getTypeDeCompte().equals("Client")){
+                    }else if(user.getTypeDeCompte().equals("Client") && produit.getStock() > 0){
             %>
                         <form action="ServletPanier" method="get">
                         <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
