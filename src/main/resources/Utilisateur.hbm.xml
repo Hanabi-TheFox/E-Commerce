@@ -18,10 +18,10 @@
             <column name="mail" sql-type="varchar(30)" length="30"/>
         </property>
         <property name="motDePasse">
-            <column name="motDePasse" sql-type="varchar(20)" length="20"/>
+            <column name="mot_de_passe" sql-type="varchar(20)" length="20"/>
         </property>
         <property name="typeDeCompte">
-            <column name="TypeDeCompte" sql-type="enum('admin', 'moderateur', 'client')"/>
+            <column name="type_de_compte" sql-type="enum('admin', 'moderateur', 'client')"/>
         </property>
     </class>
 </hibernate-mapping>

@@ -6,7 +6,7 @@
 
     <class name="entity.CommandeProduit" table="commande_produit" schema="e_commerce">
         <id name="idCommandeProd">
-            <column name="id_commandeProd" sql-type="int"/>
+            <column name="id_commande_prod" sql-type="int"/>
         </id>
         <property name="idCommande">
             <column name="id_commande" sql-type="int" not-null="true"/>

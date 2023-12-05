@@ -9,10 +9,10 @@
             <column name="id_client" sql-type="int"/>
         </id>
         <property name="compteBancaireNum">
-            <column name="compteBancaireNum" sql-type="varchar(19)" length="19"/>
+            <column name="compte_bancaire_num" sql-type="varchar(19)" length="19"/>
         </property>
         <property name="compteBancaireSolde">
-            <column name="compteBancaireSolde" sql-type="decimal(10,2)" precision="10" scale="2" not-null="true"/>
+            <column name="compte_bancaire_solde" sql-type="decimal(10,2)" precision="10" scale="2" not-null="true"/>
         </property>
         <property name="points">
             <column name="points" sql-type="int" not-null="true"/>
