@@ -34,7 +34,6 @@
 
         h1 {
             text-align: center;
-            background-color: #333;
             color: #fff;
             padding: 10px;
         }
@@ -136,5 +135,8 @@
 <%
     }
 %>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

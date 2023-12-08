@@ -21,24 +21,33 @@
         strong {color: #333;}
         a {text-decoration: none; color: #0077cc;}
         button {
-            width: 18%;
-            padding: 10px;
-            margin-bottom: 15px;
+            background-color: #0077cc;
+            color:#f0f0f0;
+            width: 25%;
+            height:8%;
             box-sizing: border-box;
-            border: 1px solid #ccc;
+            border: none;
             border-radius: 4px;
             font-size: 16px;
-            background-color: #f8f8f8;
-            color: #333;
             cursor: pointer;
+            transition: all 0.3s ease; /* Ajout d'une transition pour une animation plus fluide */
         }
 
         button:hover {
-            background-color: #45a049;
-            color: #fff;
+            background-color: #333;
+            transform: scale(1.05); /* Effet de zoom au survol */
         }
         .left{
             margin-left : 8%;
+        }
+        .footer{
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -107,6 +116,9 @@
     <p><a href="ServletChangerMotDePasse">Changer mot de passe</a></p>
     <p><a href="ServletDeDeconnexion">Deconnexion</a></p> <!-- Lien pour se déconnecter -->
 
+</div>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
 </div>
 </body>
 </html>

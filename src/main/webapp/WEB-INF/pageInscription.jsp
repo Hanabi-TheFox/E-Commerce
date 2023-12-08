@@ -111,5 +111,8 @@
     <br>
     <input type="submit" value="S'inscrire">
 </form>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

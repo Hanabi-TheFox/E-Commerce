@@ -85,5 +85,8 @@
     <button type="submit" name="action" value="convertir">Convertir</button>
     <button type="submit" name="action" value="annuler">Retour</button>
 </form>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

@@ -1,24 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
-<header>
-    <nav class="navbar">
-        <ul>
-            <li><a href="#">Accueil</a></li>
-            <li><a href="#">Produits</a></li>
-            <li><a href="#">À propos de nous</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
-</header>
 
 <div id="footer-content">
+    <footer>
     <!-- Contenu du footer spécifique à cette page -->
-    <p>&copy; 2023 Votre Entreprise. Tous droits réservés.</p>
+    <p>&copy; 2023 Azur Shop. Tous droits reserves.</p>
+    <p>Nous contacter : <a href="mailto:azur-shop@gmail.fr">azur-shop@gmail.fr</a></p>
+    </footer>
 </div>
 </body>
 <style>
@@ -26,17 +18,26 @@
     .navbar {
         background-color: #333;
         padding: 10px 0;
+        text-align: center;
     }
-
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 20px 0;
+        position: sticky;
+        bottom: 0;
+        width: 100%;
+    }
     .navbar ul {
         list-style-type: none;
+        margin: 0;
         padding: 0;
-        text-align: center;
     }
 
     .navbar li {
-        display: inline;
-        margin: 0 20px;
+        display: inline-block;
+        margin-right: 20px;
     }
 
     .navbar a {
@@ -58,6 +59,17 @@
         color: #fff;
         padding: 20px 0;
     }
+
+    #footer-content p {
+        margin: 8px 0;
+    }
+
+    #footer-content a {
+        color: #ff8c00;
+    }
+
+    #footer-content a:hover {
+        text-decoration: underline;
+    }
 </style>
 </html>
-
