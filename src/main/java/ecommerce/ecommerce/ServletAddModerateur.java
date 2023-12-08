@@ -1,5 +1,7 @@
 package ecommerce.ecommerce;
 
+import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
+import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,8 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
-import entity.Utilisateur;
 @WebServlet(name = "ServletAddModerateur", value = "/ServletAddModerateur")
 public class ServletAddModerateur extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class ServletAddModerateur extends HttpServlet {
         Utilisateur utilisateur = ExisteUtilisateur(email);
 
         // Si l'utilisateur n'existe pas, l'ajouter dans la base de données
-        if (utilisateur == null){
+        if (utilisateur == null) {
             utilisateur = new Utilisateur();
             utilisateur.setNom(nom);
             utilisateur.setPrenom(prenom);
@@ -50,8 +50,9 @@ public class ServletAddModerateur extends HttpServlet {
         }
 
     }
+
     //Retourne l'utilisateur s'il existe et null sinon
-    private Utilisateur ExisteUtilisateur(String email){
+    private Utilisateur ExisteUtilisateur(String email) {
         try {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
             for (Utilisateur utilisateur : listeUtilisateurs) {

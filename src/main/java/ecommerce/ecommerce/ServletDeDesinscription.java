@@ -1,8 +1,6 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
-import entity.Client;
 import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

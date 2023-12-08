@@ -25,12 +25,12 @@ public class ServletAjouterProduit extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String nom = request.getParameter("nom");
-        if(existeProduit(nom)){
-                // L'utilisateur existe, afficher un message d'erreur
-                String errorMessage = "Un produit avec ce nom existe déjà, veuillez choisir un autre nom";
-                request.setAttribute("errorMessage", errorMessage);
-                request.getRequestDispatcher("/WEB-INF/ajouterProduit.jsp").forward(request, response);
-        }else {
+        if (existeProduit(nom)) {
+            // L'utilisateur existe, afficher un message d'erreur
+            String errorMessage = "Un produit avec ce nom existe déjà, veuillez choisir un autre nom";
+            request.setAttribute("errorMessage", errorMessage);
+            request.getRequestDispatcher("/WEB-INF/ajouterProduit.jsp").forward(request, response);
+        } else {
             String description = request.getParameter("description");
             Float prix = Float.parseFloat(request.getParameter("prix"));
 
@@ -58,8 +58,6 @@ public class ServletAjouterProduit extends HttpServlet {
             //------------------------------------------------------------
 
 
-
-
             // Redirigez l'utilisateur vers une page de confirmation ou une autre page appropriée
             response.sendRedirect("ServletProduits");
         }
@@ -78,16 +76,16 @@ public class ServletAjouterProduit extends HttpServlet {
         return null;
     }
 
-    private boolean existeProduit(String nomProduit){
-            List<Produit> listeProduits = ProduitDAO.getListProduits();
-            for (Produit produit : listeProduits) {
-                if (produit.getNom().equals(nomProduit)) {
-                    // L'utilisateur existe et le mot de passe est correct
-                    return true;
-                }
+    private boolean existeProduit(String nomProduit) {
+        List<Produit> listeProduits = ProduitDAO.getListProduits();
+        for (Produit produit : listeProduits) {
+            if (produit.getNom().equals(nomProduit)) {
+                // L'utilisateur existe et le mot de passe est correct
+                return true;
             }
+        }
 
-            return false;
+        return false;
     }
 
 

@@ -1,16 +1,15 @@
 package ecommerce.ecommerce;
 
-import java.io.IOException;
-import java.util.List;
-
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
-import entity.Moderateur;
 import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ServletDeleteModerateur", value = "/ServletDeleteModerateur")
 public class ServletDeleteModerateur extends HttpServlet {
@@ -22,19 +21,18 @@ public class ServletDeleteModerateur extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         Utilisateur utilisateur = ExisteModerateur(email);
-        if(utilisateur != null) {
+        if (utilisateur != null) {
             UtilisateurDAO.deleteUtilisateur(utilisateur);
             Boolean suppression = true;
-            request.setAttribute("suppression",suppression);
+            request.setAttribute("suppression", suppression);
             request.getRequestDispatcher("/WEB-INF/supprimerModerateur.jsp").forward(request, response);
-        }
-        else {
+        } else {
             System.out.println("Utilisateur null verifié");
         }
 
     }
 
-    private Utilisateur ExisteModerateur(String email){
+    private Utilisateur ExisteModerateur(String email) {
         try {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
             for (Utilisateur utilisateur : listeUtilisateurs) {

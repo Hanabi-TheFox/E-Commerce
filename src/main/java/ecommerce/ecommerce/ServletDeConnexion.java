@@ -8,7 +8,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,24 +26,24 @@ public class ServletDeConnexion extends HttpServlet {
         String motDePasse = request.getParameter("motDePasse");
 
         // Vérifier si l'utilisateur existe dans la base de données (vous devez implémenter cette partie)
-        Utilisateur utilisateur= verifierUtilisateurEnBaseDeDonnees(email, motDePasse);
-        if (utilisateur!= null) {
+        Utilisateur utilisateur = verifierUtilisateurEnBaseDeDonnees(email, motDePasse);
+        if (utilisateur != null) {
             // L'utilisateur existe, rediriger vers la page de profil
             //Il est utilisée le MVC pour sauvagarder les données de l'utilisateur en question
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
 
             //TODO il est geré les differentes types de comptes selon l'utilisateur:
             //TODO pour le client, une commande vide est crée
-            if(utilisateur.getTypeDeCompte().equals("Client")) {
+            if (utilisateur.getTypeDeCompte().equals("Client")) {
                 Controller.getInstanceController().requestSetClient(UtilisateurDAO.findClientByUtilisateur(utilisateur));
                 Controller.getInstanceController().requestCreateCommande(Controller.getInstanceController().requestGetClient().getIdClient());
             }
-            response.sendRedirect("ServletProduits") ;
+            response.sendRedirect("ServletProduits");
 
         } else {
             // L'utilisateur n'existe pas, afficher un message d'erreur
             String errorMessage = "Utilisateur non trouvé, vérifiez l'identifiant et/ou le mot de passe";
-            request.setAttribute("client",Controller.getInstanceController().requestGetClient());
+            request.setAttribute("client", Controller.getInstanceController().requestGetClient());
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);
         }
@@ -63,7 +62,7 @@ public class ServletDeConnexion extends HttpServlet {
 
             return null;
         } catch (Exception e) {
-            System.out.println("L'UTILISATEUR " + email+ " N'A PAS ETE TROUVEE OU N'EXISTE PAS");
+            System.out.println("L'UTILISATEUR " + email + " N'A PAS ETE TROUVEE OU N'EXISTE PAS");
             e.printStackTrace();
             return null;
         }

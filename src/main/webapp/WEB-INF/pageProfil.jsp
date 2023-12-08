@@ -12,19 +12,53 @@
     <link rel="icon" href="logo/logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="logo/logo.png" type="image/x-icon">
     <style>
-        body {font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0; padding: 0;}
-        .container { max-width: 800px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);}
-        h1 {color: #333;}
-        h2 {color: #555;}
-        ul {list-style-type: none; padding: 0;}
-        li {margin: 10px 0;}
-        strong {color: #333;}
-        a {text-decoration: none; color: #0077cc;}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0077cc;
+        }
+
         button {
             background-color: #0077cc;
-            color:#f0f0f0;
+            color: #f0f0f0;
             width: 25%;
-            height:8%;
+            height: 8%;
             box-sizing: border-box;
             border: none;
             border-radius: 4px;
@@ -37,10 +71,12 @@
             background-color: #333;
             transform: scale(1.05); /* Effet de zoom au survol */
         }
-        .left{
-            margin-left : 8%;
+
+        .left {
+            margin-left: 8%;
         }
-        .footer{
+
+        .footer {
             background-color: #333;
             color: #fff;
             text-align: center;
@@ -60,14 +96,18 @@
         Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
         String typeCompte = u.getTypeDeCompte();
     %>
-    <h1>Profil <%= typeCompte %></h1>
+    <h1>Profil <%= typeCompte %>
+    </h1>
     <p style="color: #0077cc;">Bienvenue, <%= u.getPrenom() %> !</p>
 
     <h2> Informations de Profil </h2>
     <ul>
-        <li><strong>Nom :</strong> <%= u.getNom() %> </li>
-        <li><strong>Prenom :</strong> <%= u.getPrenom() %> </li>
-        <li><strong>Email :</strong> <%= u.getMail() %> </li>
+        <li><strong>Nom :</strong> <%= u.getNom() %>
+        </li>
+        <li><strong>Prenom :</strong> <%= u.getPrenom() %>
+        </li>
+        <li><strong>Email :</strong> <%= u.getMail() %>
+        </li>
         <% if (typeCompte.equals("Client")) {
             Client c = UtilisateurDAO.findClientByUtilisateur(u);
             assert c != null;
@@ -76,15 +116,18 @@
                 // Affiche uniquement les 4 derniers chiffres
                 String lastFourDigits = carteBancaireNum.substring(carteBancaireNum.length() - 4);
         %>
-                <li><strong>Carte Bancaire :</strong> **** **** **** <%= lastFourDigits %> </li>
+        <li><strong>Carte Bancaire :</strong> **** **** **** <%= lastFourDigits %>
+        </li>
         <%
             }
         %>
-        <li><strong>Solde :</strong> <%= c.getCompteBancaireSolde() %> </li>
+        <li><strong>Solde :</strong> <%= c.getCompteBancaireSolde() %>
+        </li>
         <form action="ServletAjouterSolde" method="get">
             <button type="submit">Ajouter Solde</button>
         </form>
-        <li><strong>Points de fidélité :</strong> <%= c.getPoints() %> </li>
+        <li><strong>Points de fidélité :</strong> <%= c.getPoints() %>
+        </li>
         <form action="ServletConvertPoints" method="get">
             <button type="submit">Convertir les points</button>
         </form>
@@ -93,11 +136,14 @@
             Moderateur m = UtilisateurDAO.findModByUtilisateur(u);
             String droits = getRightsPrint(m);
         %>
-        <li><strong>Droits :</strong> <div class="left"><%= droits %></div></li>
+        <li><strong>Droits :</strong>
+            <div class="left"><%= droits %>
+            </div>
+        </li>
         <%
             }
         %>
-        </ul>
+    </ul>
     <%
         if (typeCompte.equals("Client")) {
             Client c = UtilisateurDAO.findClientByUtilisateur(u);
@@ -108,7 +154,9 @@
                 buttonText = "Modifier";
             }
     %>
-    <p><a href="ServletAjouterMoyenPaiement"><button><%= buttonText %> carte bancaire</button></a></p>
+    <p><a href="ServletAjouterMoyenPaiement">
+        <button><%= buttonText %> carte bancaire</button>
+    </a></p>
     <%
         }
     %>
@@ -124,10 +172,9 @@
 </html>
 <%! private static String getRightsPrint(Moderateur m) {
     String droits = "";
-    if (m.getDroits().equals("000")){
-        droits="- Aucun droit";
-    }
-    else {
+    if (m.getDroits().equals("000")) {
+        droits = "- Aucun droit";
+    } else {
         if (m.getDroits().charAt(0) == '1') {
             droits += "- Ajouter un produit" + "<br>";
         }

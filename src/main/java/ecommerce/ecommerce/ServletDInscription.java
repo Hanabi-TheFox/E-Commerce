@@ -1,25 +1,23 @@
 package ecommerce.ecommerce;
 
+import ecommerce.ecommerce.controller.Controller;
+import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
+import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.List;
-import services.Courier;
-import services.SendService;
 import models.SendEnhancedRequestBody;
 import models.SendEnhancedResponseBody;
 import models.SendRequestMessage;
-import com.google.gson.Gson;
+import services.Courier;
+import services.SendService;
+
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
-import ecommerce.ecommerce.controller.Controller;
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
-import entity.Utilisateur;
 @WebServlet(name = "ServletDInscription", value = "/ServletDInscription")
 public class ServletDInscription extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +37,7 @@ public class ServletDInscription extends HttpServlet {
         Utilisateur utilisateur = ExisteUtilisateur(email);
 
         // Si l'utilisateur n'existe pas, l'ajouter dans la base de données
-        if (utilisateur == null){
+        if (utilisateur == null) {
             utilisateur = new Utilisateur();
             utilisateur.setNom(nom);
             utilisateur.setPrenom(prenom);
@@ -61,7 +59,7 @@ public class ServletDInscription extends HttpServlet {
             message.setTo(to);
             message.setTemplate("ZHASTSX98ZM89ZGHHKTNQ8RN4P3V");
             HashMap<String, Object> data = new HashMap<String, Object>();
-            data.put("user", prenom+" "+nom);
+            data.put("user", prenom + " " + nom);
             message.setData(data);
             request2.setMessage(message);
             try {
@@ -87,7 +85,7 @@ public class ServletDInscription extends HttpServlet {
     }
 
     //Retourne l'utilisateur s'il existe et null sinon
-    private Utilisateur ExisteUtilisateur(String email){
+    private Utilisateur ExisteUtilisateur(String email) {
         try {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
             for (Utilisateur utilisateur : listeUtilisateurs) {

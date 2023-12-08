@@ -1,5 +1,5 @@
 <%@ page import="entity.Client" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,17 +70,19 @@
     <%@ include file="header.jsp" %>
 </div>
 <h1>Convertir Points en Solde</h1>
-    <%
+<%
     Utilisateur utilisateur = Controller.getInstanceController().requestGetUtilisateur();
     Client client = UtilisateurDAO.findClientByUtilisateur(utilisateur);
     assert client != null;%>
-<% if(errorMessage != null){ %>
-<p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+<% if (errorMessage != null) { %>
+<p class="error" style="color : red;text-align : center"><%= errorMessage %>
+</p>
 <% } %>
 <form action="ServletConvertPoints" method="post">
-    <p>Votre nombre de points de fidélité est de : <%= client.getPoints()%></p>
+    <p>Votre nombre de points de fidélité est de : <%= client.getPoints()%>
+    </p>
     <label for="quantite">Choisissez la quantité à convertir :</label>
-    <input type="number" id="quantite" name="quantite" value ="0" min="0" required>
+    <input type="number" id="quantite" name="quantite" value="0" min="0" required>
 
     <button type="submit" name="action" value="convertir">Convertir</button>
     <button type="submit" name="action" value="annuler">Retour</button>

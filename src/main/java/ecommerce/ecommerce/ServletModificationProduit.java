@@ -32,12 +32,12 @@ public class ServletModificationProduit extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        if(existeProduit(request.getParameter("nom"))){
+        if (existeProduit(request.getParameter("nom"))) {
             //message d'erreur si un produit avec le meme nom existe deja
             String errorMessage = "Un produit avec ce nom existe déjà, veuillez choisir un autre nom";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageModifierProduit.jsp").forward(request, response);
-        }else {
+        } else {
             //les parametres suivants sont convertis
             Float prix = Float.parseFloat(request.getParameter("prix"));
             Integer stock = Integer.parseInt(request.getParameter("stock"));
@@ -65,7 +65,7 @@ public class ServletModificationProduit extends HttpServlet {
         }
     }
 
-    private boolean existeProduit(String nomProduit){
+    private boolean existeProduit(String nomProduit) {
         List<Produit> listeProduits = ProduitDAO.getListProduits();
         for (Produit produit : listeProduits) {
             if (produit.getNom().equals(nomProduit)) {

@@ -11,7 +11,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
-            margin:0;
+            margin: 0;
         }
 
         h1 {
@@ -78,7 +78,7 @@
             var value = champ.value;
             // Utiliser une expression régulière pour vérifier le format de l'adresse e-mail
             var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            
+
             if (!emailPattern.test(value)) {
                 alert("Le champ " + champ.name + " ne contient pas une adresse e-mail valide.");
                 // Réinitialiser la valeur du champ à une chaîne vide

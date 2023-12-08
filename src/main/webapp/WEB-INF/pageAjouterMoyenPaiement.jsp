@@ -13,6 +13,7 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -21,17 +22,21 @@
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
+
         h1 {
             color: #333;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
         }
+
         input {
             padding: 8px;
             margin-bottom: 10px;
         }
+
         input[type="submit"] {
             background-color: #007bff;
             color: #fff;
@@ -41,31 +46,32 @@
             cursor: pointer;
             margin-top: 20px;
         }
+
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
     </style>
     <script>
         function validerCarteBancaire() {
-        var carteBancaire = document.getElementById("carteBancaire").value;
-        var regex = /^[0-9]{16}$/;
+            var carteBancaire = document.getElementById("carteBancaire").value;
+            var regex = /^[0-9]{16}$/;
 
-        // Retirer les espaces de la saisie de l'utilisateur
-        var carteBancaireSansEspaces = carteBancaire.replace(/ /g, '');
+            // Retirer les espaces de la saisie de l'utilisateur
+            var carteBancaireSansEspaces = carteBancaire.replace(/ /g, '');
 
-        if (!regex.test(carteBancaireSansEspaces)) {
-            alert("Veuillez entrer un numéro de carte bancaire valide (16 chiffres).");
-            return false;
+            if (!regex.test(carteBancaireSansEspaces)) {
+                alert("Veuillez entrer un numéro de carte bancaire valide (16 chiffres).");
+                return false;
+            }
+
+            // Formater le numéro de carte bancaire avec des espaces tous les 4 caractères
+            var carteBancaireFormatee = carteBancaireSansEspaces.replace(/(.{4})/g, '$1 ');
+
+            // Mettre à jour la valeur dans le champ
+            document.getElementById("carteBancaire").value = carteBancaireFormatee.trim();
+
+            return true;
         }
-
-        // Formater le numéro de carte bancaire avec des espaces tous les 4 caractères
-        var carteBancaireFormatee = carteBancaireSansEspaces.replace(/(.{4})/g, '$1 ');
-
-        // Mettre à jour la valeur dans le champ
-        document.getElementById("carteBancaire").value = carteBancaireFormatee.trim();
-
-        return true;
-    }
     </script>
 </head>
 <body>

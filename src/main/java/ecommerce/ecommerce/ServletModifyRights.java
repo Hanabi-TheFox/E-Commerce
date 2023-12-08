@@ -1,8 +1,5 @@
 package ecommerce.ecommerce;
 
-import java.io.IOException;
-import java.util.List;
-
 import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Moderateur;
 import entity.Utilisateur;
@@ -11,6 +8,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ServletModifyRights", value = "/ServletModifyRights")
 public class ServletModifyRights extends HttpServlet {
@@ -23,20 +23,19 @@ public class ServletModifyRights extends HttpServlet {
         String email = request.getParameter("email");
         String droits = request.getParameter("droits");
         Utilisateur utilisateur = ExisteModerateur(email);
-        if(utilisateur != null) {
+        if (utilisateur != null) {
             Moderateur m = UtilisateurDAO.findModByUtilisateur(utilisateur);
             UtilisateurDAO.modifyModerateurDroits(m, droits);
             Boolean modification = true;
-            request.setAttribute("modification",modification);
+            request.setAttribute("modification", modification);
             request.getRequestDispatcher("/WEB-INF/modifierDroitsModerateur.jsp").forward(request, response);
-        }
-        else {
+        } else {
             System.out.println("Utilisateur null verifié");
         }
 
     }
 
-    private Utilisateur ExisteModerateur(String email){
+    private Utilisateur ExisteModerateur(String email) {
         try {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
             for (Utilisateur utilisateur : listeUtilisateurs) {

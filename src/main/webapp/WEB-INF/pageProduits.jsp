@@ -85,9 +85,11 @@
     %>
     <div class="produit">
         <a href="ServletProduit?id=<%= produit.getIdProduit() %>">
-            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="100" class="img-fluid">
+            <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" alt="<%= produit.getNom() %>" width="100"
+                 class="img-fluid">
         </a>
-        <h2><%= produit.getNom() %></h2>
+        <h2><%= produit.getNom() %>
+        </h2>
         <p>Prix : <%= produit.getPrix() %> €</p>
         <%--<!-- Formulaire pour ajouter au panier -->
         <form action="ServletPanier" method="get">

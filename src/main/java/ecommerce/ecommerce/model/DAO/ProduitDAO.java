@@ -1,22 +1,18 @@
 package ecommerce.ecommerce.model.DAO;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
-import entity.Client;
-import entity.Moderateur;
+import ecommerce.ecommerce.HibernateUtil;
 import entity.Produit;
-import entity.Utilisateur;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import ecommerce.ecommerce.HibernateUtil;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProduitDAO
 {

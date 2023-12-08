@@ -1,11 +1,7 @@
 package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
-import ecommerce.ecommerce.model.DAO.CommandeDAO;
-import ecommerce.ecommerce.model.DAO.CommandeProduitDAO;
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
-import entity.Commande;
-import entity.CommandeProduit;
 import entity.Produit;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,15 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.security.ProtectionDomain;
-import java.util.ArrayList;
 import java.util.List;
-
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
-import entity.Utilisateur;
-
-import javax.sound.midi.ControllerEventListener;
 
 @WebServlet(name = "ServletPanier", value = "/ServletPanier")
 public class ServletPanier extends HttpServlet {
@@ -44,7 +32,7 @@ public class ServletPanier extends HttpServlet {
                     boolean produitExisteDeja = false;
                     for (Produit p : panier) {
                         if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
-                            if (!stockIsReach(p, produitQuantite)){
+                            if (!stockIsReach(p, produitQuantite)) {
                                 ajouterPrix(p);
                                 p.setStock(p.getStock() + produitQuantite);
                                 Controller.getInstanceController().requestGetCommande().setPanier(panier);
@@ -54,7 +42,7 @@ public class ServletPanier extends HttpServlet {
                             break;
                         }
                     }
-                    if(!produitExisteDeja){
+                    if (!produitExisteDeja) {
                         Produit produit = ProduitDAO.getProduitById(produitId);
                         if (produit != null) {
                             produit.setStock(produitQuantite);
@@ -95,36 +83,38 @@ public class ServletPanier extends HttpServlet {
 
 
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        if(action.equals("vider")){
+        if (action.equals("vider")) {
             Controller.getInstanceController().requestViderPanier();
             Controller.getInstanceController().requestGetCommande().setPrix(0);
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
-        }else if(action.equals("payer")){
+        } else if (action.equals("payer")) {
             if (Controller.getInstanceController().requestGetCommande().getPanier().isEmpty()) {
                 //Aucun produit a été ajoutée pour acheter et payer
                 Boolean panierVide = true;
-                request.setAttribute("panierVide",panierVide);
+                request.setAttribute("panierVide", panierVide);
                 request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
             }
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
         }
     }
 
-    private void ajouterPrix(Produit p){
+    private void ajouterPrix(Produit p) {
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix + (p.getPrix() * p.getStock()));
     }
-    private void supprimerPrix(Produit p){
+
+    private void supprimerPrix(Produit p) {
         float prix = Controller.getInstanceController().requestGetCommande().getPrix();
         Controller.getInstanceController().requestGetCommande().setPrix(prix - (p.getPrix() * p.getStock()));
     }
 
-    private boolean stockIsReach(Produit produit, int stock){
+    private boolean stockIsReach(Produit produit, int stock) {
         List<Produit> prods = ProduitDAO.getListProduits();
-        for(Produit p : prods){
-            if(p.getIdProduit() == produit.getIdProduit()){
+        for (Produit p : prods) {
+            if (p.getIdProduit() == produit.getIdProduit()) {
                 return produit.getStock() + stock > p.getStock();
             }
         }

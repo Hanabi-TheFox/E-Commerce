@@ -94,19 +94,21 @@
 </div>
 <h1>Suppression moderateurs</h1>
 <form action="ServletDeleteModerateur" method="post" class="supp">
-    <label for="email" style="text-align: center">Veuillez renseigner l'Adresse email du moderateur que vous voulez supprimer :</label>
+    <label for="email" style="text-align: center">Veuillez renseigner l'Adresse email du moderateur que vous voulez
+        supprimer :</label>
     <select id="email" name="email" required style="text-align: center">
         <option value="" selected disabled hidden>Veuillez choisir un modérateur</option>
-<%
-    List<Utilisateur> listUtilisateur = UtilisateurDAO.getListUtilisateurs();
-    for (Utilisateur user : listUtilisateur){
-        if (user.getTypeDeCompte().equals("Moderateur")){
-%>
-        <option value="<%= user.getMail() %>"><%= user.getMail()%></option>
-<%
-        }
-    }
-%>
+        <%
+            List<Utilisateur> listUtilisateur = UtilisateurDAO.getListUtilisateurs();
+            for (Utilisateur user : listUtilisateur) {
+                if (user.getTypeDeCompte().equals("Moderateur")) {
+        %>
+        <option value="<%= user.getMail() %>"><%= user.getMail()%>
+        </option>
+        <%
+                }
+            }
+        %>
     </select><br><br>
     <input type="submit" value="Supprimer" style="justify-content: center">
 </form>

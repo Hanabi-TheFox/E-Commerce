@@ -1,8 +1,6 @@
 package ecommerce.ecommerce;
 
-import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
-import entity.Produit;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +16,7 @@ public class ServletDeleteProduct extends HttpServlet {
         int idProduit = Integer.parseInt(request.getParameter("idProduit"));
         ProduitDAO.removeProduit(idProduit);
         Boolean suppression = true;
-        request.setAttribute("suppression",suppression);
+        request.setAttribute("suppression", suppression);
         //Il est recuperée l'id du produit via l'url
         response.sendRedirect("ServletProduits");
     }

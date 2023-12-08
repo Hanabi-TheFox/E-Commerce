@@ -2,9 +2,7 @@ package ecommerce.ecommerce;
 
 import ecommerce.ecommerce.controller.Controller;
 import ecommerce.ecommerce.model.DAO.ProduitDAO;
-import ecommerce.ecommerce.model.DAO.UtilisateurDAO;
 import entity.Produit;
-import entity.Utilisateur;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,11 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @WebServlet(name = "ServletModifierProduit", value = "/ServletModifierProduit")
@@ -30,10 +24,10 @@ public class ServletModifierProduit extends HttpServlet {
         //recuperation de l'id du produit
         Produit produit = Controller.getInstanceController().requestGetProduit(Integer.parseInt(request.getParameter("idProduit")));
         this.produit = produit;
-        request.setAttribute("nom",produit.getNom());
-        request.setAttribute("description",produit.getDescription());
-        request.setAttribute("prix",produit.getPrix());
-        request.setAttribute("stock",produit.getStock());
+        request.setAttribute("nom", produit.getNom());
+        request.setAttribute("description", produit.getDescription());
+        request.setAttribute("prix", produit.getPrix());
+        request.setAttribute("stock", produit.getStock());
         request.getRequestDispatcher("/WEB-INF/pageModifierProduit.jsp").forward(request, response);
     }
 
@@ -43,7 +37,7 @@ public class ServletModifierProduit extends HttpServlet {
         String nom = this.produit.getNom();
         System.out.println("ANCIEN NOM DU PRODUIT MODIFI2  : " + nom);
 
-        if(nouveauNom.equals(nom) || (!nouveauNom.equals(nom) && !existeProduit(nouveauNom)) ) {
+        if (nouveauNom.equals(nom) || (!nouveauNom.equals(nom) && !existeProduit(nouveauNom))) {
             String description = request.getParameter("description");
             Float prix = Float.parseFloat(request.getParameter("prix"));
 
@@ -67,15 +61,11 @@ public class ServletModifierProduit extends HttpServlet {
                 produit.setImagePath(imageFilePath);
                 imagePart.write(imageFilePath);
                 response.sendRedirect("ServletProduits");
-            }
-
-            else {
+            } else {
                 //TODO l'image n'était pas modifié on garde la même
                 response.sendRedirect("ServletProduits");
             }
-        }
-
-        else if(existeProduit(nom)){
+        } else if (existeProduit(nom)) {
             // L'utilisateur existe, afficher un message d'erreur
             String errorMessage = "Un produit avec ce nom existe déjà, veuillez choisir un autre nom";
             request.setAttribute("errorMessage", errorMessage);
@@ -84,7 +74,7 @@ public class ServletModifierProduit extends HttpServlet {
     }
 
 
-    private boolean existeProduit(String nomProduit){
+    private boolean existeProduit(String nomProduit) {
         List<Produit> listeProduits = ProduitDAO.getListProduits();
         for (Produit produit : listeProduits) {
             if (produit.getNom().equals(nomProduit)) {

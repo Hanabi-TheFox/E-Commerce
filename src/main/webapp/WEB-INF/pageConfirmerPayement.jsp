@@ -1,6 +1,6 @@
 <%@ page import="javax.naming.ldap.Control" %>
 <%@ page import="entity.Client" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,17 +16,20 @@
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
         }
+
         .header {
             background-color: #333;
             color: #fff;
             padding: 10px;
             text-align: center;
         }
+
         .title {
             color: #333;
             text-align: center;
             padding: 20px;
         }
+
         .content {
             max-width: 400px;
             margin: 20px auto;
@@ -35,6 +38,7 @@
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         input[type="password"] {
             width: 100%;
             padding: 10px;
@@ -44,6 +48,7 @@
             letter-spacing: 1em;
             -webkit-text-security: disc;
         }
+
         input[type="submit"] {
             background-color: #333;
             color: #fff;
@@ -76,7 +81,7 @@
 <body>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
-    String carteBancaireNum = (String) Controller.getInstanceController().requestGetClient().getCompteBancaireNum();
+    String carteBancaireNum = Controller.getInstanceController().requestGetClient().getCompteBancaireNum();
 %>
 <div class="header">
     <%@ include file="header.jsp" %>
@@ -84,8 +89,9 @@
 <div class="title">
     <h1>Confirmer le Paiement</h1>
 </div>
-<% if(errorMessage != null){ %>
-<p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+<% if (errorMessage != null) { %>
+<p class="error" style="color : red;text-align : center"><%= errorMessage %>
+</p>
 <% } %>
 <div class="container">
     <div class="content">
@@ -93,7 +99,8 @@
             if (carteBancaireNum != null && !carteBancaireNum.equals("0000 0000 0000 0000")) {
                 String lastFourDigits = carteBancaireNum.substring(carteBancaireNum.length() - 4);
         %>
-        <p class="text-center"><strong>Carte Bancaire :</strong> **** **** **** <%= lastFourDigits %> </p>
+        <p class="text-center"><strong>Carte Bancaire :</strong> **** **** **** <%= lastFourDigits %>
+        </p>
         <%
             }
         %>

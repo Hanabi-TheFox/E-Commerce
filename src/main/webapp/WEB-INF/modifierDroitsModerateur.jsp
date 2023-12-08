@@ -16,7 +16,7 @@
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             text-align: center;
-            margin : 0;
+            margin: 0;
         }
 
         h1 {
@@ -68,6 +68,7 @@
         .success {
             color: green;
         }
+
         .tooltip-container label {
             position: relative;
             font-size: 12px; /* Réduisez la police d'écriture selon vos besoins */
@@ -82,7 +83,7 @@
             border-radius: 4px;
             color: #333;
             z-index: 1;
-            font-weight : normal;
+            font-weight: normal;
         }
     </style>
 </head>
@@ -95,16 +96,17 @@
     <label for="email">Adresse email :</label>
     <select id="email" name="email" required>
         <option value="" selected disabled hidden>Veuillez choisir un modérateur</option>
-<%
-    List<Utilisateur> listUtilisateur = UtilisateurDAO.getListUtilisateurs();
-    for (Utilisateur user : listUtilisateur){
-        if (user.getTypeDeCompte().equals("Moderateur")){
-%>
-        <option value="<%= user.getMail() %>"><%= user.getMail()%></option>
-<%
-        }
-    }
-%>
+        <%
+            List<Utilisateur> listUtilisateur = UtilisateurDAO.getListUtilisateurs();
+            for (Utilisateur user : listUtilisateur) {
+                if (user.getTypeDeCompte().equals("Moderateur")) {
+        %>
+        <option value="<%= user.getMail() %>"><%= user.getMail()%>
+        </option>
+        <%
+                }
+            }
+        %>
     </select>
     <label for="droits" id="label_droits">Droits (voir détail) :</label>
     <div class="tooltip-container" id="tooltip_droits">

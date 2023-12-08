@@ -2,14 +2,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Projet JEE</title>
+    <title>Projet JEE</title>
 </head>
 <body>
-<h1><%= "Projet JEE" %></h1>
-<h2><%= "Samy BELBOUAB" %></h2>
-<h2><%="Ethan PINTO"%></h2>
-<h2><%="Warren ANDERSON"%></h2>
-<h2><%="Renato Daniel NASCIMENTO ARDILES"%></h2>
+<h1><%= "Projet JEE" %>
+</h1>
+<h2><%= "Samy BELBOUAB" %>
+</h2>
+<h2><%="Ethan PINTO"%>
+</h2>
+<h2><%="Warren ANDERSON"%>
+</h2>
+<h2><%="Renato Daniel NASCIMENTO ARDILES"%>
+</h2>
 <br/>
 <h3><a href="ServletProduits">Aller sur le site</a><br>
 </h3>

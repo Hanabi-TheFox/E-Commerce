@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,19 +103,23 @@
     <%@ include file="header.jsp" %>
 </div>
 <h1>Ajouter un Produit</h1>
-<p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
-<form action="ServletAjouterProduit" method="post" onsubmit="return validerPrix() && validerStock()" enctype="multipart/form-data">
+<p class="error" style="color : red;text-align : center"><%= errorMessage %>
+</p>
+<form action="ServletAjouterProduit" method="post" onsubmit="return validerPrix() && validerStock()"
+      enctype="multipart/form-data">
     <label for="nom">Nom du Produit:</label>
     <input type="text" id="nom" name="nom" required placeholder="Nom du produit"><br><br>
 
     <label for="description">Description:</label>
-    <textarea id="description" name="description" rows="4" cols="50" required placeholder="Ce produit sert à..."></textarea><br><br>
+    <textarea id="description" name="description" rows="4" cols="50" required
+              placeholder="Ce produit sert à..."></textarea><br><br>
 
     <label for="prix">Prix:</label>
     <input type="text" id="prix" name="prix" required placeholder="Veuillez entrer une valeur numérique"><br><br>
 
     <label for="stock">Stock:</label>
-    <input type="text" id="stock" name="stock" pattern="[0-9]+" required placeholder="Veuillez entrer une valeur entière"><br><br>
+    <input type="text" id="stock" name="stock" pattern="[0-9]+" required
+           placeholder="Veuillez entrer une valeur entière"><br><br>
 
     <!-- Vous pouvez ajouter un champ pour télécharger une image ici si nécessaire -->
     <label for="image">Image du Produit:</label>

@@ -1,20 +1,18 @@
 package ecommerce.ecommerce.model.DAO;
 
+import ecommerce.ecommerce.HibernateUtil;
+import ecommerce.ecommerce.controller.Controller;
+import entity.Client;
+import entity.Moderateur;
+import entity.Utilisateur;
+import jakarta.persistence.criteria.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import ecommerce.ecommerce.controller.Controller;
-import entity.Moderateur;
-import entity.Produit;
-import entity.Utilisateur;
-import entity.Client;
-import jakarta.persistence.criteria.*;
-import org.hibernate.Session;
-import ecommerce.ecommerce.HibernateUtil;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 public class UtilisateurDAO
 {

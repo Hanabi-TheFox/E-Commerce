@@ -24,7 +24,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
 
 @WebServlet(name = "ServletPayerCommande", value = "/ServletPayerCommande")
 public class ServletPayerCommande extends HttpServlet {
@@ -35,27 +34,26 @@ public class ServletPayerCommande extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String carte = request.getParameter("numeroCarte");
-        String errorMessage="";
+        String errorMessage = "";
         Client client = Controller.getInstanceController().requestGetClient();
-        if(client.getCompteBancaireNum().equals("0000 0000 0000 000")){ // si le client n'a pas de CB
+        if (client.getCompteBancaireNum().equals("0000 0000 0000 000")) { // si le client n'a pas de CB
             errorMessage = "Vous devez d'abord ajouter une carte bancaire ";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
-        }
-        else if(carte.equals(client.getCompteBancaireNum())){
+        } else if (carte.equals(client.getCompteBancaireNum())) {
             Commande commande = Controller.getInstanceController().requestGetCommande();
             List<Produit> panier = commande.getPanier();
-            if(client.getCompteBancaireSolde().floatValue() >= commande.getPrix()){
+            if (client.getCompteBancaireSolde().floatValue() >= commande.getPrix()) {
                 List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
                 acceptPayment(commande, panier, listeProduits);
                 mailDuPayment(panier);
                 request.getRequestDispatcher("/WEB-INF/pageRemerciement.jsp").forward(request, response);
-            }else {
+            } else {
                 errorMessage = "Solde trop faible (solde actuel = " + client.getCompteBancaireSolde() + ")";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }
-        }else {
+        } else {
             System.out.println(client.getCompteBancaireNum());
             System.out.println(carte);
             errorMessage = "Numéro de carte incorrect";
@@ -65,7 +63,7 @@ public class ServletPayerCommande extends HttpServlet {
     }
 
 
-    private void acceptPayment(Commande commande, List<Produit> panier, List<Produit> prods){
+    private void acceptPayment(Commande commande, List<Produit> panier, List<Produit> prods) {
         // Manque plus que gérer les points de fidélités et soustraire le prix de la commande au solde actuel du client
 
         // create Commande entity in our bdd
@@ -77,10 +75,10 @@ public class ServletPayerCommande extends HttpServlet {
         // we need the id of the last 'Commande' entity in order to create a 'CommandeProduit' entity
         int idCommandeBDD = CommandeDAO.getIdFromLastCommande();
         CommandeProduit panierBDD = new CommandeProduit();
-        for (Produit produit : panier){
+        for (Produit produit : panier) {
             // change stock
-            for(Produit p : prods){
-                if (p.getIdProduit() == produit.getIdProduit()){
+            for (Produit p : prods) {
+                if (p.getIdProduit() == produit.getIdProduit()) {
                     p.setStock(p.getStock() - produit.getStock());
                     ProduitDAO.updateProduct(p);
                     break;
@@ -103,12 +101,12 @@ public class ServletPayerCommande extends HttpServlet {
 
         // Point de fidélité
         int pointsFidelite = (int) (Math.floor(commande.getPrix()) / 10);
-        client.setPoints(client.getPoints()+pointsFidelite);
+        client.setPoints(client.getPoints() + pointsFidelite);
 
         UtilisateurDAO.updateClient(client);
     }
 
-    private void mailDuPayment(List<Produit> panier){
+    private void mailDuPayment(List<Produit> panier) {
         Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
         Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
         String COMPANY_NAME = "Azur Shop";

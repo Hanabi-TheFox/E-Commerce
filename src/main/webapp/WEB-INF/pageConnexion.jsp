@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.lang.String" %>
 <%
     String errorMessage = (String) request.getAttribute("errorMessage");
@@ -20,11 +20,13 @@
             margin: 0;
             padding: 0;
         }
+
         h1 {
             color: #333;
             text-align: center;
             padding: 20px;
         }
+
         .container {
             max-width: 400px;
             margin: 0 auto;
@@ -33,10 +35,12 @@
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         label {
             font-weight: bold;
             display: block;
         }
+
         input[type="text"],
         input[type="password"] {
             width: 100%;
@@ -45,6 +49,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
+
         input[type="submit"] {
             background-color: #333;
             color: #fff;
@@ -53,19 +58,23 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         input[type="submit"]:hover {
             background-color: #555;
         }
+
         p.error {
             color: red;
             text-align: center;
             margin-top: 10px;
             display: <%=(errorMessage != null && !errorMessage.isEmpty()) ? "block" : "none"%>;
         }
+
         a {
             color: #333;
             text-decoration: none;
         }
+
         .footer {
             text-align: center;
             background-color: #333;
@@ -91,7 +100,8 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
     </form>
-    <p class="error"><%= errorMessage %></p>
+    <p class="error"><%= errorMessage %>
+    </p>
 </div>
 <p style="text-align: center;">Pas encore de compte ? <a href="ServletDInscription">Inscrivez-vous ici</a></p>
 <div class="footer">

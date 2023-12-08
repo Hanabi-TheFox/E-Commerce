@@ -21,24 +21,22 @@ public class ServletConvertPoints extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String errorMessage="";
+        String errorMessage = "";
         request.setAttribute("errorMessage", errorMessage);
         String action = request.getParameter("action");
         Client client = Controller.getInstanceController().requestGetClient();
         if ("convertir".equals(action)) {
             // L'utilisateur a choisi de convertir les points en solde
             int quantite = Integer.parseInt(request.getParameter("quantite"));
-            if(quantite > client.getPoints()){
+            if (quantite > client.getPoints()) {
                 errorMessage = "Vous n'avez pas assez de points pour convertir " + quantite + " points.";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
-            }
-            else if(quantite < 1){
+            } else if (quantite < 1) {
                 errorMessage = "Vous devez convertir au moins 1 point";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
-            }
-            else { // Logique de conversion des points en solde (exemple : 1 points = 1 euro)
+            } else { // Logique de conversion des points en solde (exemple : 1 points = 1 euro)
                 BigDecimal montantSolde = BigDecimal.valueOf(quantite);
                 BigDecimal soldeActuel = client.getCompteBancaireSolde();
                 BigDecimal soldeApresModif = soldeActuel.add(montantSolde);

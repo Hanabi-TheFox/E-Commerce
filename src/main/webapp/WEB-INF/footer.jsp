@@ -7,9 +7,9 @@
 
 <div id="footer-content">
     <footer>
-    <!-- Contenu du footer spécifique à cette page -->
-    <p>&copy; 2023 Azur Shop. Tous droits reserves.</p>
-    <p>Nous contacter : <a href="mailto:azur-shop@gmail.fr">azur-shop@gmail.fr</a></p>
+        <!-- Contenu du footer spécifique à cette page -->
+        <p>&copy; 2023 Azur Shop. Tous droits reserves.</p>
+        <p>Nous contacter : <a href="mailto:azur-shop@gmail.fr">azur-shop@gmail.fr</a></p>
     </footer>
 </div>
 </body>
@@ -20,6 +20,7 @@
         padding: 10px 0;
         text-align: center;
     }
+
     footer {
         background-color: #333;
         color: #fff;
@@ -29,6 +30,7 @@
         bottom: 0;
         width: 100%;
     }
+
     .navbar ul {
         list-style-type: none;
         margin: 0;

@@ -66,60 +66,63 @@
     <div class="product-details">
         <img src="imagesProduct/<%= produit.getIdProduit() %>.jpeg" class="product-image" alt="<%= produit.getNom() %>">
         <ul>
-            <li><strong>Nom du Produit:</strong> <%= produit.getNom() %></li>
-            <li><strong>Description:</strong> <%= produit.getDescription() %></li>
+            <li><strong>Nom du Produit:</strong> <%= produit.getNom() %>
+            </li>
+            <li><strong>Description:</strong> <%= produit.getDescription() %>
+            </li>
             <li><strong>Prix:</strong> <%= produit.getPrix() %> €</li>
             <%
                 Utilisateur user = null;
-                if(Controller.getInstanceController().requestGetUtilisateur()!=null) {
+                if (Controller.getInstanceController().requestGetUtilisateur() != null) {
                     user = Controller.getInstanceController().requestGetUtilisateur();
                 }
-                if ((produit.getStock() > 0 && (user == null || user.getTypeDeCompte().equals("Client")) || (user != null && (!user.getTypeDeCompte().equals("Client")))) ){
+                if ((produit.getStock() > 0 && (user == null || user.getTypeDeCompte().equals("Client")) || (user != null && (!user.getTypeDeCompte().equals("Client"))))) {
             %>
-                    <li><strong>Stock Disponible:</strong> <%= produit.getStock() %> unités</li>
+            <li><strong>Stock Disponible:</strong> <%= produit.getStock() %> unités</li>
             <%
-                }else {
+            } else {
             %>
-                    <li style="color: red"><strong>Produit indisponible</strong></li>
+            <li style="color: red"><strong>Produit indisponible</strong></li>
             <%
                 }
-                if (user != null){
+                if (user != null) {
 
-                    if(user.getTypeDeCompte().equals("Admin")){
-                        %>
-                        <form action="ServletModifierProduit" method="get">
-                            <!-- Autres champs du formulaire pour la modification si nécessaire -->
-                            <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
-                            <input type="submit" value="Modifier le produit">
-                        </form>
-                        <form action="ServletDeleteProduct" method="get">
-                            <!-- Autres champs du formulaire si nécessaire -->
-                            <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
-                            <input type="submit" value="Supprimer le produit">
-                        </form>
-                    <%}
-                    if(user.getTypeDeCompte().equals("Moderateur")){
-                        Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(user);
-                        if(moderateur.getDroits().charAt(1) == '1' ){
-                            %>
-                                <form action="ServletModifierProduit" method="get">
-                                    <!-- Autres champs du formulaire pour la modification si nécessaire -->
-                                    <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
-                                    <input type="submit" value="Modifier le produit">
-                                </form>
-                            <form action="ServletDeleteProduct" method="get">
-                                <!-- Autres champs du formulaire si nécessaire -->
-                                <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
-                                <input type="submit" value="Supprimer le produit">
-                            </form>
-            <%          }
-                    }else if(user.getTypeDeCompte().equals("Client") && produit.getStock() > 0){
+                    if (user.getTypeDeCompte().equals("Admin")) {
             %>
-                        <form action="ServletPanier" method="get">
-                        <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
-                        <input type="number" name="produitQuantite" min="1" max="<%= produit.getStock() %>" value="1"><br>
-                        <input type="submit" name="action" value="ajouter">
-                        </form>
+            <form action="ServletModifierProduit" method="get">
+                <!-- Autres champs du formulaire pour la modification si nécessaire -->
+                <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                <input type="submit" value="Modifier le produit">
+            </form>
+            <form action="ServletDeleteProduct" method="get">
+                <!-- Autres champs du formulaire si nécessaire -->
+                <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                <input type="submit" value="Supprimer le produit">
+            </form>
+            <%
+                }
+                if (user.getTypeDeCompte().equals("Moderateur")) {
+                    Moderateur moderateur = UtilisateurDAO.findModByUtilisateur(user);
+                    if (moderateur.getDroits().charAt(1) == '1') {
+            %>
+            <form action="ServletModifierProduit" method="get">
+                <!-- Autres champs du formulaire pour la modification si nécessaire -->
+                <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                <input type="submit" value="Modifier le produit">
+            </form>
+            <form action="ServletDeleteProduct" method="get">
+                <!-- Autres champs du formulaire si nécessaire -->
+                <input type="hidden" name="idProduit" value="<%= produit.getIdProduit() %>">
+                <input type="submit" value="Supprimer le produit">
+            </form>
+            <% }
+            } else if (user.getTypeDeCompte().equals("Client") && produit.getStock() > 0) {
+            %>
+            <form action="ServletPanier" method="get">
+                <input type="hidden" name="produitId" value="<%= produit.getIdProduit() %>">
+                <input type="number" name="produitQuantite" min="1" max="<%= produit.getStock() %>" value="1"><br>
+                <input type="submit" name="action" value="ajouter">
+            </form>
             <%
                     }
                 }

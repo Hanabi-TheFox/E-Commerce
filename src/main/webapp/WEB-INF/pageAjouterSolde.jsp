@@ -1,6 +1,6 @@
 <%@ page import="javax.naming.ldap.Control" %>
 <%@ page import="entity.Client" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,15 +78,18 @@
 
 
 <form action="ServletAjouterSolde" method="post">
-    <% if(errorMessage != null){ %>
-    <p class="error" style="color : red;text-align : center"><%= errorMessage %></p>
+    <% if (errorMessage != null) { %>
+    <p class="error" style="color : red;text-align : center"><%= errorMessage %>
+    </p>
     <% } %>
-    <p>Votre solde actuel est de : <%= client.getCompteBancaireSolde() %></p>
+    <p>Votre solde actuel est de : <%= client.getCompteBancaireSolde() %>
+    </p>
     <label for="numeroCarte">Numéro de Carte Bleue:</label>
     <input type="text" id="numeroCarte" name="numeroCarte" required placeholder="Exemple : **** **** **** ****"><br><br>
 
     <label for="montant">Montant</label>
-    <input type="text" id="montant" name="montant" pattern="[0-9]+" required placeholder="Veuillez entrer le montant"><br><br>
+    <input type="text" id="montant" name="montant" pattern="[0-9]+" required
+           placeholder="Veuillez entrer le montant"><br><br>
 
 
     <!-- Autres champs du formulaire si nécessaire -->
