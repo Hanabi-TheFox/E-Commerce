@@ -111,5 +111,8 @@
     <br>
     <input type="submit" value="Inscrire le modérateur">
 </form>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

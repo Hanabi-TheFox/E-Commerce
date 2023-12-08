@@ -118,5 +118,8 @@
 <%
     }
 %>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

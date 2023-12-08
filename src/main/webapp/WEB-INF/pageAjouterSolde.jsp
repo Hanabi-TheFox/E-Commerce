@@ -94,5 +94,8 @@
     <!-- Bouton de soumission du formulaire -->
     <button type="submit">Ajouter Solde</button>
 </form>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

@@ -128,5 +128,8 @@
 
     <input type="submit" value="Sauvegarder">
 </form>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>

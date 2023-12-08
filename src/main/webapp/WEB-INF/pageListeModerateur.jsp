@@ -16,6 +16,15 @@
             font-family: Arial, sans-serif;
             margin : 0;
         }
+        .footer{
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
         .moderators {
             width: 80%;
             margin: 0 auto;
@@ -185,7 +194,9 @@
         });
     });
 </script>
-
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>
 

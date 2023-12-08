@@ -63,6 +63,7 @@
             font-size: 18px;
             font-weight: bold;
         }
+
         .payment-form {
             display: none;
         }
@@ -139,6 +140,9 @@
     <h3 style="color: red;">Ajoutez des produits pour les acheter!</h3>
     <% } %>
 
+</div>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
 </div>
 </body>
 </html>

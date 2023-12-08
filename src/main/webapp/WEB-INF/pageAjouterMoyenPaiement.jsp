@@ -81,5 +81,8 @@
         <input type="submit" value="Valider">
     </form>
 </div>
+<div class="footer">
+    <%@ include file="footer.jsp" %>
+</div>
 </body>
 </html>
