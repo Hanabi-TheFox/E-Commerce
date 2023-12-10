@@ -14,7 +14,6 @@ import java.util.List;
 @WebServlet(name = "ServletDeleteModerateur", value = "/ServletDeleteModerateur")
 public class ServletDeleteModerateur extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
         request.getRequestDispatcher("/WEB-INF/supprimerModerateur.jsp").forward(request, response);
     }
 
@@ -22,7 +21,9 @@ public class ServletDeleteModerateur extends HttpServlet {
         String email = request.getParameter("email");
         Utilisateur utilisateur = ExisteModerateur(email);
         if (utilisateur != null) {
+            /* if user exists */
             UtilisateurDAO.deleteUtilisateur(utilisateur);
+            /* delete it*/
             Boolean suppression = true;
             request.setAttribute("suppression", suppression);
             request.getRequestDispatcher("/WEB-INF/supprimerModerateur.jsp").forward(request, response);
@@ -37,7 +38,7 @@ public class ServletDeleteModerateur extends HttpServlet {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
             for (Utilisateur utilisateur : listeUtilisateurs) {
                 if (utilisateur.getMail() != null && utilisateur.getMail().equals(email) && utilisateur.getTypeDeCompte().equals("Moderateur")) {
-                    // L'utilisateur existe et le mot de passe est correct
+                    // User exists and password is correct
                     System.out.println(utilisateur.getMail());
                     return utilisateur;
                 }
@@ -45,7 +46,6 @@ public class ServletDeleteModerateur extends HttpServlet {
 
             return null;
         } catch (Exception e) {
-            System.out.println("L'UTILISATEUR " + email + " N'A PAS ETE TROUVEE OU N'EXISTE PAS");
             e.printStackTrace();
             return null;
         }

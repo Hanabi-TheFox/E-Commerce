@@ -19,16 +19,16 @@ public class ServletModifierProfil extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupérer les données du formulaire
+        // Retrieves form data
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
         String motDePasse = request.getParameter("mdp");
 
-        // Vérifier si le mot de passe est correct
+        // Vérifies if user password is ok
         Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
         if (u.getMotDePasse().equals(motDePasse)) {
-            // Le mot de passe est correct, on modifie les données de l'utilisateur
+            // We update user info
             u.setNom(nom);
             u.setPrenom(prenom);
             u.setMail(email);
@@ -37,7 +37,7 @@ public class ServletModifierProfil extends HttpServlet {
             UtilisateurDAO.updateUtilisateur(u);
             response.sendRedirect("ServletProfil");
         } else {
-            // Le mot de passe est incorrect, on affiche un message d'erreur
+            // Incorrect password, we show the error message
             String errorMessage = "Mot de passe incorrect";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageModifierProfil.jsp").forward(request, response);

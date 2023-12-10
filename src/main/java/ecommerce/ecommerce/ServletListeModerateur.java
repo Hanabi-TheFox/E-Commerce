@@ -17,9 +17,9 @@ import java.util.Objects;
 public class ServletListeModerateur extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
         List<Utilisateur> listUtilisateurs = Controller.getInstanceController().requestGetListUtilisateurs();
         List<Utilisateur> listModerateur = new ArrayList<Utilisateur>();
+        /* we check for each user if it's a moderator, the nwe add it to the list */
         for (Utilisateur utilisateur : listUtilisateurs) {
             String typeCompte = utilisateur.getTypeDeCompte();
             if (Objects.equals(typeCompte, "Moderateur")) {
@@ -27,8 +27,6 @@ public class ServletListeModerateur extends HttpServlet {
             }
         }
         request.setAttribute("listModerateur", listModerateur);
-        /*String message = request.getParameter("message");
-        request.setAttribute("Ajouter", message);*/
         request.getRequestDispatcher("/WEB-INF/pageListeModerateur.jsp").forward(request, response);
     }
 

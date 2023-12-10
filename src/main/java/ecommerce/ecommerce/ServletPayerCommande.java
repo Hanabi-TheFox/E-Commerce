@@ -28,15 +28,11 @@ import java.util.List;
 @WebServlet(name = "ServletPayerCommande", value = "/ServletPayerCommande")
 public class ServletPayerCommande extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // TODO
-    }
-
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String carte = request.getParameter("numeroCarte");
         String errorMessage = "";
         Client client = Controller.getInstanceController().requestGetClient();
-        if (client.getCompteBancaireNum().equals("0000 0000 0000 000")) { // si le client n'a pas de CB
+        if (client.getCompteBancaireNum().equals("0000 0000 0000 000")) { // Client has no credit card
             errorMessage = "Vous devez d'abord ajouter une carte bancaire ";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
@@ -64,19 +60,17 @@ public class ServletPayerCommande extends HttpServlet {
 
 
     private void acceptPayment(Commande commande, List<Produit> panier, List<Produit> prods) {
-        // Manque plus que gérer les points de fidélités et soustraire le prix de la commande au solde actuel du client
-
-        // create Commande entity in our bdd
+        // create Commande entity in our DB
         Commande commandeBDD = new Commande();
         commandeBDD.setIdClient(commande.getIdClient());
         commandeBDD.setPrix(commande.getPrix());
         commandeBDD.setStatus("payé");
         CommandeDAO.addCommande(commandeBDD);
-        // we need the id of the last 'Commande' entity in order to create a 'CommandeProduit' entity
+        // We need the id of the last 'Commande' entity in order to create a 'CommandeProduit' entity
         int idCommandeBDD = CommandeDAO.getIdFromLastCommande();
         CommandeProduit panierBDD = new CommandeProduit();
         for (Produit produit : panier) {
-            // change stock
+            // Change stock
             for (Produit p : prods) {
                 if (p.getIdProduit() == produit.getIdProduit()) {
                     p.setStock(p.getStock() - produit.getStock());
@@ -92,14 +86,14 @@ public class ServletPayerCommande extends HttpServlet {
             CommandeProduitDAO.addCommandeProduit(panierBDD);
         }
         Controller.getInstanceController().requestCreateCommande(commande.getIdClient());
-        // maj du solde client
+        // Client balance update
         Utilisateur user = Controller.getInstanceController().requestGetUtilisateur();
         Client client = UtilisateurDAO.findClientByUtilisateur(user);
         assert client != null;
         float newSolde = client.getCompteBancaireSolde().floatValue() - commande.getPrix();
         client.setCompteBancaireSolde(new BigDecimal(newSolde));
 
-        // Point de fidélité
+        // Fidelity points
         int pointsFidelite = (int) (Math.floor(commande.getPrix()) / 10);
         client.setPoints(client.getPoints() + pointsFidelite);
 
@@ -111,28 +105,28 @@ public class ServletPayerCommande extends HttpServlet {
         Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
         String COMPANY_NAME = "Azur Shop";
 
-        // Récupération des informations nécessaires pour construire l'email
-        String userName = user.getPrenom() + " " + user.getNom(); // Fonction pour obtenir le nom du client
-        // Génération de la date et de l'heure actuelles
+        // Retrieving the information needed to build the email
+        String userName = user.getPrenom() + " " + user.getNom(); // Function to get customer name
+        // Generate current date and time
         LocalDate currentDate = LocalDate.now();
         LocalTime currentTime = LocalTime.now();
 
-        // Formatage de la date et de l'heure
+        // Date and time formatting
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         String paymentDate = currentDate.format(dateFormatter);
         String paymentTime = currentTime.format(timeFormatter);
-        String currency = "EUR"; // Changez en la devise appropriée si nécessaire
+        String currency = "EUR"; // Change to the appropriate currency if necessary
 
-        // Préparation du contenu de l'email
+        // Preparation of email content
         StringBuilder emailContent = new StringBuilder();
         emailContent.append("Cher ").append(userName).append(",\n\n");
         emailContent.append("Nous vous confirmons le paiement effectué le ").append(paymentDate);
         emailContent.append(" à ").append(paymentTime).append(". Votre achat comprend les articles suivants :\n\n");
 
-        float totalPrice = 0; // Initialisation du prix total
+        float totalPrice = 0; // Initialization of the total price
 
-        // Boucle pour ajouter les détails de chaque produit dans l'email
+        // Loop to add the details of each product in the email
         for (Produit produit : panier) {
             String productName = produit.getNom();
             int productQuantity = produit.getStock();
@@ -150,17 +144,17 @@ public class ServletPayerCommande extends HttpServlet {
         emailContent.append("Merci pour votre achat chez nous.\n\n");
         emailContent.append("Cordialement,\nL'équipe de ").append(COMPANY_NAME);
 
-        // Envoi de l'email via Courier
+        // Sending the mail
         SendEnhancedRequestBody request = new SendEnhancedRequestBody();
         SendRequestMessage message = new SendRequestMessage();
 
         HashMap<String, String> to = new HashMap<>();
-        to.put("email", user.getMail()); // Utilisation de l'adresse e-mail du destinataire
+        to.put("email", user.getMail()); // Use of the recipient’s email address
         message.setTo(to);
 
         HashMap<String, Object> content = new HashMap<>();
         content.put("title", "Confirmation de paiement");
-        content.put("body", emailContent.toString()); // Utilisation du contenu préparé pour l'email
+        content.put("body", emailContent.toString()); // Use of content prepared for email
         message.setContent(content);
 
         request.setMessage(message);
@@ -169,7 +163,7 @@ public class ServletPayerCommande extends HttpServlet {
             System.out.println(response);
         } catch (IOException e) {
             e.printStackTrace();
-            // Gérer les erreurs liées à l'envoi de l'email
+            // Manage errors related to sending the email
         }
     }
 

@@ -21,7 +21,7 @@ public class ServletModifierProduit extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("errorMessage", "");
-        //recuperation de l'id du produit
+        //Retrieves product id
         Produit produit = Controller.getInstanceController().requestGetProduit(Integer.parseInt(request.getParameter("idProduit")));
         this.produit = produit;
         request.setAttribute("nom", produit.getNom());
@@ -33,26 +33,23 @@ public class ServletModifierProduit extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nouveauNom = request.getParameter("nom");
-        System.out.println("NOUVEAU NOM : " + nouveauNom);
         String nom = this.produit.getNom();
-        System.out.println("ANCIEN NOM DU PRODUIT MODIFI2  : " + nom);
 
-        if (nouveauNom.equals(nom) || (!nouveauNom.equals(nom) && !existeProduit(nouveauNom))) {
+        if (nouveauNom.equals(nom) || !existeProduit(nouveauNom)) {
             String description = request.getParameter("description");
             Float prix = Float.parseFloat(request.getParameter("prix"));
 
             Integer stock = Integer.parseInt(request.getParameter("stock"));
 
-            //le produit est mis à jour dans la bdd
+            // We update the product
             this.produit.setNom(nouveauNom);
             this.produit.setPrix(prix);
             this.produit.setDescription(description);
             this.produit.setStock(stock);
             ProduitDAO.updateProduit(this.produit);
 
-            //Modification de l'image
+            //We update the image
             if (request.getPart("image") != null && request.getPart("image").getSize() > 0) {
-                //TODO l'image sera modifiée, on supprime la precedente
                 String uploadPath = getServletContext().getRealPath("/") + "imagesProduct/";
                 Part imagePart = request.getPart("image");
                 String imageFileName = this.produit.getIdProduit() + ".jpeg";
@@ -62,11 +59,10 @@ public class ServletModifierProduit extends HttpServlet {
                 imagePart.write(imageFilePath);
                 response.sendRedirect("ServletProduits");
             } else {
-                //TODO l'image n'était pas modifié on garde la même
                 response.sendRedirect("ServletProduits");
             }
         } else if (existeProduit(nom)) {
-            // L'utilisateur existe, afficher un message d'erreur
+            // User exists, show an errorMessage
             String errorMessage = "Un produit avec ce nom existe déjà, veuillez choisir un autre nom";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/ajouterProduit.jsp").forward(request, response);

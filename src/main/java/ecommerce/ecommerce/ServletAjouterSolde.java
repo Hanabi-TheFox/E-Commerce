@@ -15,25 +15,25 @@ import java.math.BigDecimal;
 @WebServlet(name = "ServletAjouterSolde", value = "/ServletAjouterSolde")
 public class ServletAjouterSolde extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
         request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupérez les données du formulaire
+        // Retrieves form data
         String numCompte = request.getParameter("numeroCarte");
         Client client = Controller.getInstanceController().requestGetClient();
         if (client.getCompteBancaireNum().equals("0000 0000 0000 0000") || numCompte.isEmpty()) {
+            /* if clients didn't add his credit card yet */
             String errorMessage = "Vous devez ajouter votre carte bleue sur votre profil avant de pouvoir ajouter de l'argent sur votre compte";
-                    /*"l'argent sur votre compte" + "<form action=\"ServletAjouterMoyenDePaiement\" method=\"get\"> " +
-                    "<button type=\"submit\">Ajouter Carte Bancaire</button></form>";*/
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
         } else if (!numCompte.equals(client.getCompteBancaireNum())) {
+            /* if the credit card value is incorrect */
             String errorMessage = "Numéro de carte bleue incorrect";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageAjouterSolde.jsp").forward(request, response);
         } else {
+            /* if everything is good we add the money on his account */
             BigDecimal soldeAjoute = BigDecimal.valueOf(Integer.parseInt(request.getParameter("montant")));
             BigDecimal soldeActuel = client.getCompteBancaireSolde();
             if (soldeActuel == null) {
@@ -45,8 +45,5 @@ public class ServletAjouterSolde extends HttpServlet {
             UtilisateurDAO.updateClient(client);
             response.sendRedirect("ServletProfil");
         }
-        /* Il faut maintenant update la bdd avec nouveau solde et ajouter errorMessage dans pageAjouterSolde.jsp
-        A faire plus tard
-         */
     }
 }

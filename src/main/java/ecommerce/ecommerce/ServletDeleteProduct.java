@@ -12,18 +12,11 @@ import java.io.IOException;
 @WebServlet(name = "ServletDeleteProduct", value = "/ServletDeleteProduct")
 public class ServletDeleteProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
         int idProduit = Integer.parseInt(request.getParameter("idProduit"));
+        // We retrieve productId from URL*/
         ProduitDAO.removeProduit(idProduit);
         Boolean suppression = true;
         request.setAttribute("suppression", suppression);
-        //Il est recuperée l'id du produit via l'url
         response.sendRedirect("ServletProduits");
     }
-
-   /* protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
-        //Il est recuperée l'id du produit via l'url
-        request.getRequestDispatcher("/WEB-INF/pageProduits.jsp").forward(request, response);
-    }*/
 }

@@ -17,9 +17,6 @@ public class ServletPanier extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
-        //Commande panier = new Commande();
-
         String action = request.getParameter("action");
         if (action == null) { // action is null if we click on header button 'Panier'
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
@@ -31,13 +28,13 @@ public class ServletPanier extends HttpServlet {
                     int produitQuantite = Integer.parseInt(request.getParameter("produitQuantite"));
                     boolean produitExisteDeja = false;
                     for (Produit p : panier) {
-                        if (p.getIdProduit() == produitId) { // le produit existe deja dans le panier
+                        if (p.getIdProduit() == produitId) { // Product already is in the basket
                             if (!stockIsReach(p, produitQuantite)) {
                                 ajouterPrix(p);
                                 p.setStock(p.getStock() + produitQuantite);
                                 Controller.getInstanceController().requestGetCommande().setPanier(panier);
                             }
-                            // Marquer un message pour dire que le stock a été atteint => pas d'ajout dans le panier
+                            // Stock has been reached => no addition in the cart
                             produitExisteDeja = true;
                             break;
                         }
@@ -92,7 +89,7 @@ public class ServletPanier extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);
         } else if (action.equals("payer")) {
             if (Controller.getInstanceController().requestGetCommande().getPanier().isEmpty()) {
-                //Aucun produit a été ajoutée pour acheter et payer
+                //No product is in the basket
                 Boolean panierVide = true;
                 request.setAttribute("panierVide", panierVide);
                 request.getRequestDispatcher("/WEB-INF/panier.jsp").forward(request, response);

@@ -21,22 +21,21 @@ import java.util.List;
 @WebServlet(name = "ServletDInscription", value = "/ServletDInscription")
 public class ServletDInscription extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
         request.getRequestDispatcher("/WEB-INF/pageInscription.jsp").forward(request, response);
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupérer les attributs d'inscription
+        // Retrieves registration data
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String email = request.getParameter("email");
         String motDePasse = request.getParameter("motDePasse");
 
-        // Vérifier si l'utilisateur existe dans la base de données
+        // Checks if user exists in the DB
         Utilisateur utilisateur = ExisteUtilisateur(email);
 
-        // Si l'utilisateur n'existe pas, l'ajouter dans la base de données
+        // Si user doesn't exist, create it
         if (utilisateur == null) {
             utilisateur = new Utilisateur();
             utilisateur.setNom(nom);
@@ -48,7 +47,7 @@ public class ServletDInscription extends HttpServlet {
             utilisateur = ExisteUtilisateur(email);
             Controller.getInstanceController().requestSetUtilisateur(utilisateur);
 
-            // L'utilisateur à été créer, on envoie un mail de confirmation
+            // User has been created, we send a confirmation mail
             Courier.init("pk_prod_RW21FPAESN4DD3N8YK0RWH3YEC0E");
 
             SendEnhancedRequestBody request2 = new SendEnhancedRequestBody();
@@ -69,14 +68,11 @@ public class ServletDInscription extends HttpServlet {
                 e.printStackTrace();
             }
 
-            // Rediriger vers la page de profil
-// --------------------------------------------------------------------------------------------------
-            // Pour aller sur profil il faut recuperer l'utilisateur que l'on a ajouté != de la variable local au dessus
             Controller.getInstanceController().requestSetClient(UtilisateurDAO.findClientByUtilisateur(utilisateur));
             Controller.getInstanceController().requestCreateCommande(Controller.getInstanceController().requestGetClient().getIdClient());
             response.sendRedirect("ServletProfil");
         } else {
-            // L'utilisateur existe, afficher un message d'erreur
+            // User already exists, show errorMessage
             String errorMessage = "Utilisateur déjà existant, veuillez vous connecter";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConnexion.jsp").forward(request, response);

@@ -14,15 +14,10 @@ import java.io.IOException;
 public class ServletProduit extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
-        //Il est recuperée l'id du produit via l'url
         String idProduit = request.getParameter("id");
         Produit produit = Controller.getInstanceController().requestGetProduit(Integer.parseInt(idProduit));
         request.setAttribute("produit", produit);
         request.getRequestDispatcher("/WEB-INF/pageProduit.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode POST
-    }
 }

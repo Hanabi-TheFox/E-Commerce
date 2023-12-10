@@ -15,15 +15,10 @@ import java.util.List;
 public class ServletProduits extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
         List<Produit> listeProduits = Controller.getInstanceController().requestGetProduits();
         request.setAttribute("listeProduits", listeProduits);
         request.setAttribute("client", Controller.getInstanceController().requestGetClient());
         request.getRequestDispatcher("/WEB-INF/pageProduits.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode POST
-
-    }
 }

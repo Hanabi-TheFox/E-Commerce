@@ -15,7 +15,6 @@ import java.util.List;
 @WebServlet(name = "ServletModifyRights", value = "/ServletModifyRights")
 public class ServletModifyRights extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET
         request.getRequestDispatcher("/WEB-INF/modifierDroitsModerateur.jsp").forward(request, response);
     }
 
@@ -40,7 +39,7 @@ public class ServletModifyRights extends HttpServlet {
             List<Utilisateur> listeUtilisateurs = UtilisateurDAO.getListUtilisateurs();
             for (Utilisateur utilisateur : listeUtilisateurs) {
                 if (utilisateur.getMail() != null && utilisateur.getMail().equals(email) && utilisateur.getTypeDeCompte().equals("Moderateur")) {
-                    // L'utilisateur existe et le mot de passe est correct
+                    // User exists and password is correct
                     System.out.println(utilisateur.getMail());
                     return utilisateur;
                 }

@@ -26,7 +26,7 @@ public class ServletAjouterProduit extends HttpServlet {
 
         String nom = request.getParameter("nom");
         if (existeProduit(nom)) {
-            // L'utilisateur existe, afficher un message d'erreur
+            // If it exists, prints a message
             String errorMessage = "Un produit avec ce nom existe déjà, veuillez choisir un autre nom";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/ajouterProduit.jsp").forward(request, response);
@@ -44,43 +44,25 @@ public class ServletAjouterProduit extends HttpServlet {
 
             ProduitDAO.addProduit(produit);
 
-            //le produit est ajouté dans la bdd pour qu'un id lui soit attribué
+            //We assign the productId to the imageId
             int idImage = ProduitDAO.findIdProductdByProduct(produit);
 
+            /* Get the path of where the image is going to be stocked */
             String uploadPath = getServletContext().getRealPath("/") + "imagesProduct/";
             Part imagePart = request.getPart("image");
             String imageFileName = idImage + ".jpeg";
             String imageFilePath = uploadPath + imageFileName;
-
             produit.setImagePath(imageFilePath);
             imagePart.write(imageFilePath);
-
-            //------------------------------------------------------------
-
-
-            // Redirigez l'utilisateur vers une page de confirmation ou une autre page appropriée
             response.sendRedirect("ServletProduits");
         }
-    }
-
-    private String getExtension(Part part) {
-        //TODO recupere l'extention de l'image
-        String contentDisposition = part.getHeader("content-disposition");
-        String[] tokens = contentDisposition.split(";");
-        for (String token : tokens) {
-            if (token.trim().startsWith("filename")) {
-                String fileName = token.substring(token.indexOf('=') + 1).trim().replace("\"", "");
-                return fileName.substring(fileName.lastIndexOf('.') + 1);
-            }
-        }
-        return null;
     }
 
     private boolean existeProduit(String nomProduit) {
         List<Produit> listeProduits = ProduitDAO.getListProduits();
         for (Produit produit : listeProduits) {
             if (produit.getNom().equals(nomProduit)) {
-                // L'utilisateur existe et le mot de passe est correct
+                // If already exists a product with the same name
                 return true;
             }
         }

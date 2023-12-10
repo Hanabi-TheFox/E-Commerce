@@ -12,11 +12,7 @@ import java.io.IOException;
 public class ServletProfil extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
         request.getRequestDispatcher("/WEB-INF/pageProfil.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement POST
-    }
 }

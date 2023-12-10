@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 @WebServlet(name = "ServletConvertPoints", value = "/ServletConvertPoints")
 public class ServletConvertPoints extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO : Traitement pour la méthode GET (par exemple, affichage de la page de connexion)
         request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
     }
 
@@ -26,17 +25,19 @@ public class ServletConvertPoints extends HttpServlet {
         String action = request.getParameter("action");
         Client client = Controller.getInstanceController().requestGetClient();
         if ("convertir".equals(action)) {
-            // L'utilisateur a choisi de convertir les points en solde
+            // If user chose to convert his points
             int quantite = Integer.parseInt(request.getParameter("quantite"));
             if (quantite > client.getPoints()) {
+                /* if client requires too much points */
                 errorMessage = "Vous n'avez pas assez de points pour convertir " + quantite + " points.";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
             } else if (quantite < 1) {
+                /* if client chooses to convert less that 1 point */
                 errorMessage = "Vous devez convertir au moins 1 point";
                 request.setAttribute("errorMessage", errorMessage);
                 request.getRequestDispatcher("/WEB-INF/pageConvertPoints.jsp").forward(request, response);
-            } else { // Logique de conversion des points en solde (exemple : 1 points = 1 euro)
+            } else { // Conversion 1 point = 1 euro
                 BigDecimal montantSolde = BigDecimal.valueOf(quantite);
                 BigDecimal soldeActuel = client.getCompteBancaireSolde();
                 BigDecimal soldeApresModif = soldeActuel.add(montantSolde);
@@ -52,8 +53,8 @@ public class ServletConvertPoints extends HttpServlet {
             }
 
         } else if ("annuler".equals(action)) {
-            // L'utilisateur a choisi de ne pas convertir les points
-            response.sendRedirect("ServletProfil"); // Redirection vers la page de profil
+            // User chooses to go back
+            response.sendRedirect("ServletProfil");
         }
     }
 }

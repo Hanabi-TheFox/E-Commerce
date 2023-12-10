@@ -11,7 +11,7 @@ public class HibernateUtil {
 
     static {
         try {
-            // Création de la configuration Hibernate
+            // Hibernate Configuration
             StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
                     .configure("hibernate.cfg.xml")
                     .build();
