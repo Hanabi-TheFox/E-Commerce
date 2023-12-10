@@ -155,7 +155,7 @@
     <% } %>
 
 </div>
-<div class="footer">
+<div class="footer" style="margin-top: 100px">
     <%@ include file="footer.jsp" %>
 </div>
 </body>

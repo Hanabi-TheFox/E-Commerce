@@ -28,7 +28,7 @@
             background-color: #fff;
             display: inline-block;
             text-align: left;
-            margin: 20px auto;
+            margin: 20px auto 200px;
             padding: 30px;
             width: 60%;
             border: 1px solid #ddd;

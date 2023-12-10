@@ -34,7 +34,7 @@
 
         h1 {
             text-align: center;
-            color: #fff;
+            color: #000;
             padding: 10px;
         }
 
@@ -49,6 +49,7 @@
             padding: 20px;
             width: 300px;
             text-align: center;
+            margin-bottom: 50px;
         }
 
         .product-image {

@@ -176,6 +176,7 @@
             %>
     </div>
 </div>
+<div style="margin-bottom: 240px;"></div>
 <!-- Ajoutez ce code JavaScript à votre page -->
 <script>
     // Fonction pour afficher la boîte de dialogue
