@@ -21,7 +21,7 @@
         form {
             background-color: #fff;
             max-width: 400px;
-            margin: 0 auto;
+            margin: 0 auto 50px;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -109,7 +109,7 @@
     <label for="motDePasse">Mot de passe :</label>
     <input type="password" id="motDePasse" name="motDePasse" required onblur="validerMotDePasse(this)">
     <br>
-    <input type="submit" value="S'inscrire">
+    <input type="submit" value="S'inscrire" >
 </form>
 <div class="footer">
     <%@ include file="footer.jsp" %>

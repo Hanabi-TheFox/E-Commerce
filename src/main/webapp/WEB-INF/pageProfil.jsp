@@ -21,7 +21,7 @@
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 0 auto 100px;
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
@@ -91,6 +91,7 @@
 <div class="header">
     <%@ include file="header.jsp" %>
 </div>
+<div style="margin-bottom: 50px;"></div>
 <div class="container">
     <%
         Utilisateur u = Controller.getInstanceController().requestGetUtilisateur();
