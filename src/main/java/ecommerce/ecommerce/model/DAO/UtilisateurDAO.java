@@ -100,7 +100,6 @@ public class UtilisateurDAO
                 Root<Moderateur> moderateurRoot = deleteModerateurCriteria.from(Moderateur.class);
                 deleteModerateurCriteria.where(criteriaBuilder.equal(moderateurRoot.get("idModerateur"), utilisateurId));
                 session.createQuery(deleteModerateurCriteria).executeUpdate();
-                System.out.println("Moderateur supprimé");
             }
             CriteriaDelete<Utilisateur> deleteCriteria = criteriaBuilder.createCriteriaDelete(Utilisateur.class);
             Root<Utilisateur> root = deleteCriteria.from(Utilisateur.class);
@@ -110,7 +109,6 @@ public class UtilisateurDAO
 
             if (deletedCount > 0) {
                 transaction.commit();
-                System.out.println("Utilisateur supprimé avec succès.");
             } else {
                 transaction.rollback();
                 System.out.println("Utilisateur introuvable avec l'ID : " + utilisateurId);

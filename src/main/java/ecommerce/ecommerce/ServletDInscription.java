@@ -63,7 +63,6 @@ public class ServletDInscription extends HttpServlet {
             request2.setMessage(message);
             try {
                 SendEnhancedResponseBody response2 = new SendService().sendEnhancedMessage(request2);
-                System.out.println(response);
             } catch (IOException e) {
                 e.printStackTrace();
             }

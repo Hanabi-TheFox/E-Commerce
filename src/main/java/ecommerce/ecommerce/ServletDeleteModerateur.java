@@ -39,7 +39,6 @@ public class ServletDeleteModerateur extends HttpServlet {
             for (Utilisateur utilisateur : listeUtilisateurs) {
                 if (utilisateur.getMail() != null && utilisateur.getMail().equals(email) && utilisateur.getTypeDeCompte().equals("Moderateur")) {
                     // User exists and password is correct
-                    System.out.println(utilisateur.getMail());
                     return utilisateur;
                 }
             }

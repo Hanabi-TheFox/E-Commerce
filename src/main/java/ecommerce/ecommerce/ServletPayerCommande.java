@@ -50,8 +50,6 @@ public class ServletPayerCommande extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
             }
         } else {
-            System.out.println(client.getCompteBancaireNum());
-            System.out.println(carte);
             errorMessage = "Numéro de carte incorrect";
             request.setAttribute("errorMessage", errorMessage);
             request.getRequestDispatcher("/WEB-INF/pageConfirmerPayement.jsp").forward(request, response);
@@ -160,7 +158,6 @@ public class ServletPayerCommande extends HttpServlet {
         request.setMessage(message);
         try {
             SendEnhancedResponseBody response = new SendService().sendEnhancedMessage(request);
-            System.out.println(response);
         } catch (IOException e) {
             e.printStackTrace();
             // Manage errors related to sending the email
